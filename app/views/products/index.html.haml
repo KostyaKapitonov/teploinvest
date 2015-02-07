@@ -1,0 +1,18 @@
+%table.product_table{style:'border-collapse: collapse;'}
+  %tr{style: 'height: 36px;', 'x-ng-show'=>'currentUser && admin'}
+    %td
+      %a.button{href: new_product_path+'{{$parent.paramsPart}}'}
+        Добавить товар
+  %tr.product_row
+    %td
+      .pr_list_block{'dir-paginate'=>'product in product_list | onlySelected:$parent.selectedFirm:$parent.selectedCategory | itemsPerPage: setting.products_per_page', title: '<b class="name">{{product.name}}</b><br/>Есть в наличии: {{product.exist? "<b class=\"green\">Да":"<b class=\"red\">Нет"}}</b>{{admin ? ("<br/>Скрыт: "+(product.hidden ?  "<b class=\"red\">Да" : "<b class=\"green\">Нет")+"</b>"):""}}<br/>Цена: <b>{{product.price | currency:"":2}} руб.</b>'}
+        %a{'x-ng-href'=>'/products/{{product.id}}{{$parent.paramsPart}}#glob', style:'margin-right: 5px;'}
+          %h5
+            {{product.name}}
+          %img{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image'}
+          %img{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}'}
+
+  %tr
+    %td.pgnt-controller
+      %div
+        <dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>

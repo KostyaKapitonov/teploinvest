@@ -1,0 +1,69 @@
+
+%form{'novalidate'=>''}
+  %fieldset
+    %legend
+      %b Настройки аккаунта
+    %table{style:'width: 100%;'}
+      %tr
+        %td{style:'width: 65%; padding-top: 10px;'}
+          %table.in_form{'x-ng-form'=>'form'}
+            %tr
+              =table_row 'Email', (tag :input, type: 'email', 'x-ng-model' => 'currentUser.email', 'x-ng-disabled'=>'true')
+            %tr
+              =table_row 'Имя', (tag :input, name: 'first_name', 'x-ng-model' => 'currentUser.first_name', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'form.first_name.$error.required && (form.first_name.$touched || showErrors)'}
+                    необходимо заполнить
+            %tr
+              =table_row 'Фамилия', (tag :input, name: 'last_name', 'x-ng-model' => 'currentUser.last_name', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'form.last_name.$error.required && (form.last_name.$touched || showErrors)'}
+                    необходимо заполнить
+            %tr
+              =table_row 'Отчество', (tag :input, name: 'father_name', 'x-ng-model' => 'currentUser.father_name', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'form.father_name.$error.required && (form.father_name.$touched || showErrors)'}
+                    необходимо заполнить
+            %tr
+              =table_row 'Моб. тел.', (tag :input, name: 'mobile', 'x-ng-model' => 'currentUser.mobile', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'form.mobile.$error.required && (form.mobile.$touched || showErrors)'}
+                    необходимо заполнить
+            %tr
+              =table_row 'Ваш полный адрес', (tag :input, name: 'address', 'x-ng-model' => 'currentUser.address', 'maxlength'=>'255', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'form.address.$error.required && (form.address.$touched || showErrors)'}
+                    необходимо заполнить
+            %tr
+              %td{'colspan'=>'3'}
+                .button_section
+                  %a.button{'x-ng-click'=>'applyData();'}
+                    Сохранить
+            %tr
+              %td{colspan:3}
+                %hr
+        %td
+          .descr_block
+            %table.in_form.reg_info
+              %tr
+                %td
+                  %p
+                    Теперь, после регистрации у вас есть отличная возможность прикрепить аккаунт вашей социальной сети
+                    (если он у вас есть) к аккаунту нашего сайта. Это позволит вам избавиться от нудной процедуры ввода
+                    email-a и пароля для входа в ваш аккаунт интернет-магазина Antalex. Это возможно если вы уже вошли
+                    в аккаунт вашей соц сети в другом окне браузера, которым вы сейчас пользуетесь. У нас есть огромный
+                    выбор соц сетей, которые вы можете прикрепить. Просто выберите вашу соц сеть из списка ниже:
+                  %div{style: 'margin-left: 55px;'}
+                    %div#uLogin2{'data-ulogin'=>"display=panel;fields=first_name,last_name;providers=vkontakte;hidden=other;redirect_uri=;callback=uLoginOauth"}
+                    %script
+                      uLogin.initWidget('uLogin2')
+    Обращаем ваше внимание на то, что указанный вами адрес
+    %b по умолчанию
+    будет использоваться для доставки ваших заказов. Но при желании, при оформлении заказа, вы можете указать
+    %b другой адрес,
+    по которому вы хотели бы получить заказ.

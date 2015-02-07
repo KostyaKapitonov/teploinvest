@@ -1,0 +1,46 @@
+%p{'x-ng-show'=>'currentUser && !currentUser.is_admin'}
+  Перейти к 
+  %a.button{'x-ng-href'=>'/carts/edit'}
+    текущему заказу
+%form{'novalidate'=>''}
+  %fieldset
+    %legend
+      %p
+        %b{'x-ng-hide'=>'reset_mode'}
+          Список заказов
+        %span{'x-ng-show'=>'currentUser.is_admin'}
+          Статус:
+          %select{style: 'width: auto;', 'x-ng-model'=>'current_status', 'x-ng-options'=>'st as st.name for st in order_statuses', 'x-ng-change'=>'applyFilter()'}
+      %p{'x-ng-show'=>'currentUser.is_admin'}
+        Период:
+        %select{style: 'width: auto;', 'x-ng-model'=>'$parent.period', 'x-ng-options'=>'p.val as p.name for p in periods', 'x-ng-change'=>'applyDateFilter()'}
+      %p{'x-ng-show'=>'currentUser.is_admin'}
+        %a.button{'x-ng-click'=>'searchByN()'}
+          Поиск по номеру заказа
+        %input{style: 'width: 80px;', 'x-ng-model'=>'order_number'}
+    %table{style:'width: 100%;', 'x-ng-form'=>'cartForm'}
+      %tr
+        %td{style:'width: 65%; vertical-align: middle;'}
+          %p{'x-ng-hide'=>'cart_list.length > 0'}
+            Корзина пуста.
+          %table.cart{'x-ng-show'=>'cart_list.length > 0'}
+            %tr
+              %td №
+              %td Статус заказа
+              %td Дата оформления
+              %td Сумма, руб.
+            %tr.positions{'dir-paginate'=>'cart in selected_carts |  orderBy:"confirmation_date":true | itemsPerPage: setting.orders_per_page'  }
+              %td
+                %a{'x-ng-href'=>'carts/view/{{cart.id}}'}
+                  %b
+                    {{cart.id}}
+              %td
+                {{cart.status_name}}
+              %td
+                {{cart.confirmation_date | date:'dd.MM.yyyy г. (HH:mm)'}}
+              %td
+                {{cart.total_price | currency:"":2}}
+            %tr
+              %td.pgnt-controller{colspan: 4}
+                %div
+                  <dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>

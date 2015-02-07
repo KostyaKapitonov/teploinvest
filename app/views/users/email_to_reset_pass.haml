@@ -1,0 +1,40 @@
+%form{'novalidate'=>'', 'x-ng-init'=>'init(true);'}
+  %fieldset
+    %legend
+      %b
+        Восстановление пароля
+    %table{style:'width: 100%;'}
+      %tr
+        %td{style:'width: 65%; vertical-align: middle;'}
+          %table.in_form{'x-ng-form'=>'userForm'}
+            %tr
+              =table_row 'Email', (tag :input, name: 'email', type: 'email', 'autofocus'=>'','x-ng-model' => 'email', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'userForm.email.$error.required && (userForm.email.$touched || showErrors)'}
+                    необходимо заполнить
+                  %span{'x-ng-show'=>'userForm.email.$error.email && (userForm.email.$touched || showErrors)'}
+                    введён несуществующий Email
+            %tr
+              %td
+              %td
+              %td
+                %iframe#code{width:'200', height:'60', style:'border: none;'}
+            %tr
+              =table_row 'Введите код', (tag :input, name: 'captcha', 'x-ng-model' => 'captcha', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'userForm.captcha.$error.required && (userForm.captcha.$touched || showErrors)'}
+                    необходимо заполнить
+            %tr
+              %td{'colspan'=>'3'}
+                .button_section
+                  %a.button{'x-ng-click'=>'send_email();'}
+                    Выслать письмо
+        %td
+          .descr_block
+            %table.in_form.reg_info
+              %tr
+                %td
+                  %p
+                    Вам будет выслано письмо с сылкой на восстановление пароля к аккаунту нашего интернет-магазина.

@@ -1,0 +1,13 @@
+.button_section
+  %a.button{'x-ng-click'=>'save_page()'}
+    Сохранить
+  %a.button{'x-ng-href'=>global_settings_path}
+    Отмена
+%hr
+%div
+  %textarea{'x-ng-model' => 'page', class: 'ck-editor'}
+.button_section
+  %a.button{'x-ng-click'=>'save_page()'}
+    Сохранить
+  %a.button{'x-ng-href'=>global_settings_path}
+    Отмена

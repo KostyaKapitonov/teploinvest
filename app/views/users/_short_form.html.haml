@@ -1,0 +1,68 @@
+%form{'novalidate'=>'', 'x-ng-init'=>'init(true);'}
+  %fieldset
+    %legend
+      %b{'x-ng-hide'=>'reset_mode'}
+        Регистрация
+      %b{'x-ng-show'=>'reset_mode'}
+        Смена пароля
+    %table{style:'width: 100%;', 'x-ng-form'=>'userForm'}
+      %tr
+        %td{style:'width: 65%; vertical-align: middle;'}
+
+          %table.in_form
+            %tr
+              =table_row 'Email', (tag :input, name: 'email', type: 'email', 'x-ng-model' => 'email', 'required'=>'', 'x-ng-disabled'=>'reset_mode')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'userForm.email.$error.required && (userForm.email.$touched || showErrors)'}
+                    необходимо заполнить
+                  %span{'x-ng-show'=>'userForm.email.$error.email && (userForm.email.$touched || showErrors)'}
+                    введён несуществующий Email
+            %tr
+              =table_row 'Пароль', (tag :input, name: 'password','x-ng-click'=>'dbg(1)', type: 'password','x-ng-model' => 'password', 'required'=>'', 'x-ng-minlength'=>'6')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'userForm.password.$error.required && (userForm.password.$touched || showErrors)'}
+                    необходимо заполнить
+                  %span{'x-ng-show'=>'userForm.password.$error.minlength && (userForm.password.$touched || showErrors)'}
+                    минимум 6 символов
+            %tr
+              =table_row 'Подвтерждение пароля', (tag :input, name: 'password_confirmation', type: 'password','x-ng-model' => 'password_confirmation', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'userForm.password_confirmation.$error.required && (userForm.password_confirmation.$touched || showErrors)'}
+                    необходимо заполнить
+                  %span{'x-ng-show'=>'unconfirmed && !userForm.password_confirmation.$error.required && (userForm.password_confirmation.$touched || showErrors)'}
+                    пароли не совпадают
+            %tr
+              %td
+              %td
+              %td
+                %img#code{}
+            %tr
+              =table_row 'Введите код', (tag :input, name: 'captcha', 'x-ng-model' => 'captcha', 'required'=>'')
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'userForm.captcha.$error.required && (userForm.captcha.$touched || showErrors)'}
+                    необходимо заполнить
+            %tr
+              %td{'colspan'=>'3'}
+                .button_section
+                  %a.button{'x-ng-click'=>'reg_user();','x-ng-hide'=>'reset_mode'}
+                    Зарегистрироваться
+                  %a.button{'x-ng-click'=>'reset_pass();','x-ng-show'=>'reset_mode'}
+                    Сохранить
+        %td
+          .descr_block
+            %table.in_form.reg_info
+              %tr
+                %td
+                  %p{'x-ng-hide'=>'reset_mode'}
+                    После регистрации (при желании) вы сможете прикрепить ваш аккаунт любой из перечисленных сверху социальных сетей к
+                    аккаунту на нашем сайте. После этого будет достаточно шёлкнуть по значку вашей социальной сети, и зайти в нашу систему
+                    без необходимости вводить email и пароль, в случае если вы уже авторизированы в своей социальной сети.
+                  %p{'x-ng-show'=>'reset_mode'}
+                    Если у вас есть аккаунт в одной из перечисленных сверху социальных сетей, советуем вам привязать его к вашему акквунту интернет-магазина Antalex.
+                    После этого будет достаточно шёлкнуть по значку вашей социальной сети, и зайти в нашу систему
+                    без необходимости вводить email и пароль, в случае если вы уже авторизированы в своей социальной сети.
+

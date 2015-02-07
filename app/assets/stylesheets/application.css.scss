@@ -1,0 +1,680 @@
+/*
+*= require jquery.ui.core.css.scss
+*= require jquery.ui.dialog.css.scss
+*= require jquery.ui.theme.css.scss
+*= require jquery-ui/humanity
+*= require libs/colorpicker
+*= require libs/jquery_custom
+*= require libs/ang-paginate
+*/
+
+$primary-color: #736d69;
+$buttonColor: coral;
+$buttonBorder: indianred;
+$bordersColor: #dfc9c0;
+$backgroundColorHovered: bisque;
+$bej: #f7f7cb;
+
+@mixin gradient($startColor, $endColor) {
+  background: -moz-linear-gradient(top, $startColor, $endColor);
+  background: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
+  background: -webkit-linear-gradient(top, $startColor, $endColor);
+  background: -o-linear-gradient(top, $startColor, $endColor);
+  background: -ms-linear-gradient(top, $startColor, $endColor);
+}
+
+@mixin b-radius($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+body {
+  background-color: #f7f5f6;
+  background-image: asset-data-url('antalex_bg.jpeg');
+  background-position: center top;
+  background-attachment: fixed;
+  -moz-background-size: 100%; /* Firefox 3.6+ */
+  -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+  -o-background-size: 100%; /* Opera 9.6+ */
+  background-size: 100%; /* Современные браузеры */
+  font-family: arial, verdana, tahoma, helvetica, sans-serif;
+  font-size: 11px;
+  color: $primary-color;
+  margin: 0px 0px 0px 0px;
+  font-weight: normal;
+  margin: 0px;
+}
+
+.global{
+  background-color: #cec6c0;
+  max-width: 770px;
+  margin: 30px auto;
+  text-align:left;
+  @include b-radius(20px);
+}
+
+img:not(.login_img) {
+  @include b-radius(15px);
+}
+
+td {
+  vertical-align: top;
+}
+
+a {
+  color: $primary-color;
+}
+
+.head_panel{
+  text-align: center;
+  margin:0px;
+  background-color: $bordersColor;
+  width: 100%;
+  /*padding:15px;*/
+}
+
+.head_panel a {
+  color: #736d69;
+  font-weight: bold;
+}
+
+.head_panel a:hover {
+  background-color: $backgroundColorHovered;
+
+  @include b-radius(10px);
+}
+
+.head_panel table {
+  width: 100%;
+  text-align: center;
+}
+
+.head_panel td {
+  width: 25%;
+}
+
+.left_side_bar{
+  color: aliceblue;
+  text-align: left;
+  float: left;
+  max-width: 180px;
+}
+
+.left_side_bar li {
+  padding: 8px;
+  border: 2px solid #2d0f1e;
+  font-weight: bold;
+  margin: 0 10 10 0;
+
+}
+
+ul {
+  max-width: 150px;
+}
+
+.left_side_bar li {
+  border: none;
+}
+
+.tdBox
+{
+  width: 100%;
+  height: 30px;
+}
+.tdBox a
+{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.td_sep {
+  width: 20px;
+}
+
+.row_label {
+  text-align: right;
+  padding-top: 7px;
+  width: 25%;
+}
+
+.in_form{
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+table.in_form td.input input,
+table.in_form td.input select,
+fieldset select, fieldset input,
+.ant_input {
+  width: 90%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: bisque;
+  padding: 5px;
+  border-radius: 8px;
+  outline: 0;
+  background-color: $bej;
+}
+
+table.in_form td.input input:focus,
+table.in_form td.input select:focus,
+fieldset select:focus, fieldset input:focus,
+.sortTypeBlock select:focus,
+.ant_input:focus {
+  background-color: $backgroundColorHovered;
+  border-color: $buttonColor;
+}
+
+table.in_form td.input input:disabled,
+table.in_form td.input select:disabled,
+fieldset select:disabled, fieldset input:disabled,
+.sortTypeBlock select:disabled,
+.ant_input:disabled {
+  border-color: darkgray;
+  background-color: lightgrey;
+}
+
+button.input_buttons {
+  margin: 2px;
+  width: 23px;
+}
+
+table.in_form tr {
+  height: 45px;
+}
+
+.form_description, .form_description textarea {
+  width: 100%;
+}
+
+.form_description textarea {
+  height: 150px;
+  width: 100%;
+  margin: 10px 0px;
+  resize: vertical;
+}
+
+.button_section {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.head_button {
+  cursor: pointer;
+  color: $buttonBorder;
+  font-weight: bold;
+  border: 1px solid $buttonColor;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+
+  margin: 10px 0px;
+
+  @include b-radius(8);
+  border-radius: 8px;
+  @include gradient(#cccccc, #ffbb99);
+}
+
+.head_button:hover {
+  @include gradient(#ffccaa, #dddddd);
+  color: $buttonBorder;
+}
+
+.head_button:active {
+  @include gradient(#ffddbb, #eeeeee);
+  color: $buttonBorder;
+}
+
+.head_button:disabled,
+a.head_button:disabled,
+.disabled_head_button{
+  @include b-radius(8);
+  font-weight: bold;
+  padding: 10px;
+  margin: 10px 0px;
+  text-align: center;
+  text-decoration: none;
+  background-color: lightgrey;
+  border: 1px solid darkgray;
+  color: gray;
+  cursor: default;
+}
+
+.disabled_head_button.green{
+  background-color: #dfd;
+  border: 1px solid #aca;
+  color: #5a5;
+}
+
+.button {
+  color: $buttonBorder;
+  @include b-radius(5);
+  border: 1px solid $buttonColor;
+  padding: 3px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  background: #ccffee;
+  @include gradient(#cccccc, #ffbb99);
+}
+
+.button:focus{
+  outline: 0;
+}
+
+.button:hover {
+  @include gradient(#ffccaa, #dddddd);
+}
+
+.button:active {
+  @include gradient(#ffddbb, #eeeeee);
+}
+
+.smal {
+  padding: 0px 2px;
+  margin: 2px;
+}
+
+
+.product_table {
+  width: 100%;
+}
+
+.product_table p {
+  text-indent: 0px;
+}
+
+.center {
+  max-width: 622px;
+}
+
+.center p {
+  text-indent: 20px;
+}
+
+.product_header {
+  width: 100%;
+  border-bottom: 1px solid deepskyblue;
+  margin-bottom: 10px;
+}
+
+.global a {
+
+}
+
+.assortment {
+  width: 5%;
+  padding: 15px;
+  border-right: 4px solid;
+  border-color: $bordersColor;
+}
+
+.assortment ul {
+  padding-left: 17px;
+}
+
+.firm_block{
+  max-width: 150px;
+}
+
+.main {
+  padding: 10px;
+}
+
+.assortment a{
+  color: #736d69;
+}
+
+.assortment a:hover {
+  color: #938d00;
+}
+
+.assortment h4{
+  margin-bottom: 0px;
+}
+
+.assortment ul{
+  margin-top: 0px;
+}
+
+.pr_list_block {
+  width: 112px;
+  height: 180px;
+  margin: 5 5 5 5;
+  padding: 0px;
+  float: left;
+}
+
+.pr_list_block h5 {
+  margin: 0px 0px 5px 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pr_list_block img {
+  background-color: grey;
+  display: block;
+  width: 100%;
+  background-image: asset-data-url('no_photo.jpg');
+}
+
+.pr_list_block a {
+  color: #736d69;
+}
+
+.pr_list_block a:hover {
+  color: #938d00;
+}
+
+.show img {
+  display: block;
+  width: auto !important;
+  height: auto !important;
+  max-width: 550px;
+  margin: auto;
+}
+
+.show .img_block {
+  width: 100%;
+  text-align: center;
+}
+
+.show p.price {
+  text-align: right;
+  font-weight: bold;
+}
+
+p.price span {
+  padding: 10px;
+  background-color: $backgroundColorHovered;
+  @include b-radius(10px)
+}
+
+.login, .login td {
+  padding: 5px;
+  font-size: 13px;
+  vertical-align: middle;
+  height: 42px;
+}
+
+.login {
+  width: 100%;
+}
+
+.login .user_info {
+  width: 99%;
+  text-align: right;
+}
+
+.cart_button {
+  padding-right: 22px;
+}
+
+table.cart {
+  width: 100%;
+  padding: 5px;
+  border: 2px solid $bordersColor;
+  @include b-radius(10px);
+}
+
+table.cart td{
+  vertical-align: middle;
+  padding: 5px 8px 5px 8px;
+  @include b-radius(8px);
+}
+
+table.cart tr:first-child{
+  background-color: #ccbbbb;
+}
+
+td.total_sum{
+  background-color: #ccbbbb;
+  border: 1px solid bisque;
+  color: #544;
+}
+
+#cart_image {
+  width: 16px;
+  margin: 0;
+  float: none;
+  position: absolute;
+  margin-left: 3px;
+}
+
+.descr_block {
+  background-color: $bej;
+  padding: 10px;
+  margin-top: 10px;
+  @include b-radius(15px)
+}
+
+.descr_block h3{
+  padding-left: 20px;
+}
+
+.descr_block p{
+  margin: 10px;
+}
+
+.head_spacer{
+  padding: 5 0;
+}
+
+.new_user_td {
+  width: 90%;
+  text-align: left;
+}
+
+.login a
+/*.main a*/ {
+  color: $primary-color;
+  padding: 7px;
+  @include b-radius(8px);
+  background-color: $bordersColor;
+}
+
+.login a:hover
+/*.main a:hover*/ {
+  background-color: $backgroundColorHovered;
+  cursor: pointer;
+}
+
+fieldset {
+  border: 3px solid $bordersColor;
+  @include  b-radius(10px);
+  margin-bottom: 10px;
+}
+
+fieldset legend {
+  border: 2px solid $bordersColor;
+  @include  b-radius(7px);
+  padding: 5px 8px;
+  background-color: #ccbbbb;
+}
+
+.dialog_msg {
+  color: $primary-color;
+  font-size: 14;
+  text-align: center;
+}
+
+table.reg_info p,
+table.reg_info li,
+table.reg_info ul {
+  font-size: 12;
+  margin: 0;
+  padding: 2px;
+}
+
+table.reg_info ul {
+  float: right;
+}
+
+p.cntr {
+  text-align: center;
+}
+//span.cntr {
+//  margin: 0, auto;
+//}
+
+p.cntr_small{
+  font-size: 12px;
+  text-align: center;
+}
+
+p.cntr_small a.button{
+  display: inline;
+}
+
+div.errblock {
+  position: absolute;
+}
+
+div.errblock span {
+  position: relative;
+  left: 20px;
+  bottom: 8px;
+  background-color: crimson;
+  color: white;
+  padding: 2px 7px;
+  font-size: 12;
+  border: 1px solid orange;
+  @include b-radius(10px);
+}
+
+div.errblock.editing span {
+  display: none;
+}
+
+.full_cart_bg div.tdBox a div{
+  -webkit-animation: cart_bg 1s; /* Chrome, Safari, Opera */
+  animation: cart_bg 1s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes cart_bg {
+  0% {color: $primary-color;}
+  100% {color: #c69200;}
+}
+
+/* Standard syntax */
+@keyframes cart_bg {
+  0% {color: $primary-color;}
+  100% {color: #c69200;}
+}
+
+tr.positions input {
+  width: 50px;
+}
+
+.in_form input[type="checkbox"].f_cb,
+input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+  float: left;
+}
+
+.in_form p.input_desc,
+p.input_desc {
+  padding: 6px 0px 0px 35px;
+  font-size: 12px;
+  background-color: #ddccbb;
+  margin-left: 35px;
+  padding: 5px 8px;
+  @include b-radius(10px);
+}
+
+.sortTypeBlock{
+  font-size: 12px;
+}
+
+.sortTypeBlock select{
+  font-size: 12px;
+  border: 1px solid bisque;
+  border-radius: 6px;
+  outline: 0;
+  background-color: $bej;
+}
+
+.jq_tooltip {
+  font-size: 12px;
+}
+
+.jq_tooltip b.name,
+b.name{
+  font-size: 14px;
+}
+
+.jq_tooltip b.green,
+b.green{
+  color: #007000;
+}
+
+.jq_tooltip b.red,
+b.red {
+  color: #f00000;
+}
+
+.only_admin_info {
+  @include b-radius(10px);
+  margin: auto;
+  background-color: #ddccbb;
+  padding: 10px;
+  width:  310px;
+}
+
+.only_admin_info span{
+  padding: 0px 10px;
+}
+
+td.action_col {
+  width: 5%;
+}
+
+td.mid {
+  width: 17%;
+}
+
+table.zones tr td {
+  vertical-align: middle;
+  text-align: center  ;
+}
+
+fieldset table tr td{
+  height: 30px;
+}
+
+a:focus {
+  outline: none;
+}
+
+select.compact{
+  width: auto;
+  margin-top: -6px;
+}
+
+tr.code td.input input {
+  width: 200px;
+}
+
+img#code, image#code {
+  @include b-radius(0);
+  width: 200px;
+  height: 60px;
+}
+
+legend span,legend p {
+  padding-left: 15px;
+  text-align: right;
+  margin: 3px auto;
+}

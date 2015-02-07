@@ -1,0 +1,90 @@
+%p
+  Перейти ко
+  %a.button{'x-ng-href'=>'/carts'}
+    всем заказам
+%form{'novalidate'=>''}
+  %fieldset
+    %legend
+      %b Заказ № {{cart.id}}
+    %table{style:'width: 100%;', 'x-ng-form'=>'cartForm'}
+      %tr
+        %td{style:'vertical-align: middle;'}
+          %table
+            %tr
+              %td{style:'padding-left: 10px;', 'x-ng-show'=>'client'}
+                Статус заказа:
+                %b{'x-ng-hide'=>'currentUser.is_admin'}
+                  {{cart.status_name}}
+                %b{'x-ng-show'=>'currentUser.is_admin'}
+                  %select.compact{'x-ng-model'=>'currentStatus','x-ng-options'=>'st as st.name for st in statuses','x-ng-change'=>'set_new_status()'}
+                  %span
+                    %a.button{'x-ng-click'=>'del_cart()'}
+                      Удалть этот заказ
+                %br
+                %br
+                Заказчик:
+                %b
+                  {{client.full_name}}
+                %br
+                моб тел:
+                %b
+                  {{client.mobile}}
+                %br
+                Доставка:
+                %b
+                  {{cart.self_delivery ? 'Самовывоз ' : 'На дом'}}
+                %span{'x-ng-show'=>'!currentUser.is_admin && cart.self_delivery'}
+                  %br
+                  Самостоятельно забрать заказа вы сможете по адресу:
+                  %br
+                  %b
+                    {{setting.self_delivery_address}}
+                %br
+                %span{'x-ng-hide'=>'cart.self_delivery'}
+                  Выбранная зона доставки:
+                  %b
+                    {{cart.zone.name}}
+                  %br
+                  Cтоимость доставки:
+                  %b
+                    {{cart.delivery_price | currency:'':2}} руб.
+                  %br
+                  Адрес доставки:
+                  %b
+                    {{cart.address}}
+              %td{style:'padding-left: 10px;', 'x-ng-hide'=>'client'}
+                Загрузка...
+            %tr
+              %table.cart{'x-ng-show'=>'cart.positions.length > 0'}
+                %tr
+                  %td Товар
+                  %td Кол-во
+                  %td Цена, руб.
+                  %td Сумма, руб.
+                %tr.positions{'x-ng-repeat'=>'pos in cart.positions'}
+                  %td
+                    %a{'x-ng-href'=>'/products/{{pos.prod.id}}#glob', 'x-ng-hide'=>'pos.prod_deleted'}
+                      {{pos.prod.name}}
+                    %span{'x-ng-show'=>'pos.prod_deleted', title:'<span style="color:#d00">товар удалён</span>'}
+                      {{pos.name}}
+                  %td
+                    {{pos.count}}
+                  %td
+                    {{pos.price | currency:"":2}}
+                  %td
+                    %b
+                      {{pos.sum | currency:"":2}}
+                %tr
+                  %td{colspan:3}
+                    Стоимость доставки:
+                  %td
+                    %b
+                      {{cart.delivery_price | currency:"":2}}
+                %tr
+                  %td{colspan:3}
+                    %b
+                      Всего к оплате (влючая доставку):
+                  %td.total_sum
+                    %b
+                      {{cart.total_price | currency:"":2}}
+

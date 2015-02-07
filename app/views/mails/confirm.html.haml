@@ -1,0 +1,14 @@
+- radius = '20px'
+- p_style = 'background-color: #cec6c0; padding: 25px;'
+- p_style+= 'border: 4px solid #efc9c0; color: #736d69;'
+- p_style+= "-webkit-border-radius: #{radius};"
+- p_style+= "-moz-border-radius: #{radius};"
+- p_style+= "border-radius: #{radius};"
+-
+- a_style = 'border: 1px solid coral; padding: 8px; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; text-decoration: none; background-color: antiquewhite; color: firebrick;'
+
+%p{style: p_style}
+  Для завершения регистрации перейдите пожалуйста по этой ссылке:
+  %b
+    %a{style: a_style,'href'=>"http://antalex.herokuapp.com#{ENV['LOCALHOST_PORT']}/users/confirm_email?token=#{@token}"}
+      завершить&nbsp;регистрацию

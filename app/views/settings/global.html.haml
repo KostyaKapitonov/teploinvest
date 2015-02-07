@@ -1,0 +1,114 @@
+%form{'novalidate'=>''}
+  %fieldset
+    %legend
+      %b Аккаунт
+    %table{style:'width: 100%;'}
+      %tr
+        %td{style:'width: 65%; padding-top: 10px;'}
+          %table.in_form{'x-ng-form'=>'form'}
+            %tr
+              %td{colspan: 3}
+                %p
+                  У вас есть права администратора.
+            %tr
+              =table_row 'Email', (tag :input, type: 'email', 'x-ng-model' => 'currentUser.email', 'x-ng-disabled'=>'true')
+        %td
+          .descr_block
+            %table.in_form.reg_info
+              %tr
+                %td
+                  %p
+                    Вы можете прикрепить социальную сеть к вашему аккаунту:
+                  %div{style: 'margin-left: 55px;'}
+                    %div#uLogin2{'data-ulogin'=>"display=panel;fields=first_name,last_name;providers=vkontakte;hidden=other;redirect_uri=;callback=uLoginOauth"}
+                    %script
+                      uLogin.initWidget('uLogin2')
+  %fieldset
+    %legend
+      %b Управление сайтом
+    %table{style:'width: 100%;'}
+      %tr
+        %td{colspan: 3, style: 'padding: 10px 0px'}
+          Редактировать содержимое:
+          %a.button{'x-ng-href'=>page_editor_settings_path(page: 'main_page_text')}
+            Главной страницы
+          %a.button{'x-ng-href'=>page_editor_settings_path(page: 'contacts_text')}
+            Контактов
+      %tr
+        =table_row 'Обновлять<br/>курс $'.html_safe, (tag :input, type: 'checkbox', 'x-ng-change' => 'toggle_ra()', 'x-ng-model' => 'setting.recalculatable')+'<p class="input_desc">Включить автоматическое обновление курса $ и пересчёт на его основе стоимости товаров в рублях (зависящий от курса $)</p>'.html_safe
+      %tr
+        =table_row 'Сортировка<br/>по умолчанию'.html_safe, (tag :select, 'x-ng-change' => 'toggle_dst()', 'x-ng-model' => 'new_default_sort_type', 'x-ng-options'=>'st.val as st.name for st in sortTypes')
+      %tr
+        =table_row 'Адрес<br/>самовывоза'.html_safe, (tag :input, 'x-ng-blur' => 'applyNewAddress()', 'x-ng-model' => 'setting.self_delivery_address')
+      %tr
+        =table_row 'Кол-во строк на<br/>странице заказов'.html_safe, (tag :input, 'x-ng-blur' => 'applyPaginate("orders_per_page")', 'x-ng-model' => 'setting.orders_per_page')
+      %tr
+        =table_row 'Кол-во строк на<br/>странице товаров'.html_safe, (tag :input, 'x-ng-blur' => 'applyPaginate("products_per_page")', 'x-ng-model' => 'setting.products_per_page')
+      %tr
+        %td{colspan: 3}
+          %hr
+      %tr
+        %td{colspan: 3}
+          Создание/изменение карты <b>зон доставки</b> доступно в
+          %a.button{href: 'https://tech.yandex.ru/maps/tools/constructor/', target: '_blank'}
+            конструкторе карт
+      %tr
+        = table_row 'Вставьте код карты', (tag :input, 'x-ng-model'=>'setting.map_code', 'x-ng-blur'=>'applyNewMap()')
+      %tr
+        %td{colspan: 3}
+          %p{style:'text-align: center;'}
+            %b
+              Зоны доставки
+            %a.button{'x-ng-click'=>'newZone()'}
+              добавить
+            %span{'x-ng-hide' => 'zones.length > 0'}
+              %br
+              %br
+              Отсутствуют.
+          %table.zones{style:'width: 100%;', 'x-ng-show'=>'zones.length > 0', 'x-ng-form'=>'zonesForm'}
+            %tr
+              %td
+                Название
+              %td
+                Цвет
+              %td
+                Стоимость
+              %td
+                %span{title: 'Сумма заказа, при которой доставка осуществляется бесплатно.<br/>Отсавьте пустым, если льгота не предусмотрена'}
+                  Льгота(?)
+            %tr{'x-ng-repeat'=>'zone in zones'}
+              %td
+                %input.ant_input{'x-ng-model'=>'zone.name', name: 'name_{{$index}}','required'=>''}
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'zonesForm.name_{{$index}}.$error.required && (zonesForm.name_{{$index}}.$touched || showErrors)'}
+                    необходимо заполнить
+              %td
+                %input.ant_input{'x-ng-model'=>'zone.color', name: 'color_{{$index}}', 'required'=>''}
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'zonesForm.color_{{$index}}.$error.required && (zonesForm.color_{{$index}}.$touched || showErrors)'}
+                    необходимо заполнить
+              %td.mid
+                %input.ant_input.zoneprice{'x-ng-model'=>'zone.price', name: 'price_{{$index}}', 'data-index'=>'{{$index}}', 'required'=>''}
+              %td
+                .errblock
+                  %span{'x-ng-show'=>'zonesForm.price_{{$index}}.$error.required && (zonesForm.price_{{$index}}.$touched || showErrors)'}
+                    необходимо заполнить
+              %td.mid
+                %input.ant_input.zoneprice{'x-ng-model'=>'zone.free_if_sum', name: 'price_{{$index}}', 'data-index'=>'{{$index}}'}
+              %td.action_col
+                %a.button{'x-ng-click'=>'deleteZone($index)', title: 'удалить зону доставки'}
+                  &nbsp;X&nbsp;
+            %tr
+              %td{colspan:8}
+                .button_section
+                  %a.button{'x-ng-click'=>'saveZones()'}
+                    Сохранить зоны доставки
+
+
+
+
+
+
+

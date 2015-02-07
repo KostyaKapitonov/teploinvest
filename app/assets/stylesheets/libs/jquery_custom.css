@@ -1,0 +1,27 @@
+
+.autoClose .ui-dialog-titlebar,
+.autoClose .ui-dialog-buttonpane {
+    display: none;
+}
+
+.autoClose div,
+.autoClose .ui-dialog-content{
+    background-color: #eeffbb;
+}
+
+.autoClose,
+.autoClose div,
+.autoClose .ui-dialog-content{
+    border: none;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.autoClose .ui-resizable-handle {
+    display: none;
+}
+
+.autoClose .dialogError{
+    background-color: #ffcc55;
+}

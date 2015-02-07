@@ -1,0 +1,35 @@
+
+.pgnt-controller div:first-child{
+    width: 100%;
+    text-align: center;
+}
+
+.pgnt-controller ul {
+    max-width: none;
+    padding: 0px 10px;
+}
+
+.pgnt-controller ul li{
+  display: inline;
+}
+
+.pgnt-controller a{
+    border: 1px solid #f7f7cb;
+    background-color: #dfc9c0;
+    padding: 5px 9px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.pgnt-controller li.active a{
+    background-color: #ccbbbb;
+    border: 1px solid gold;
+    font-weight: bold;
+    cursor: default;
+}
+
+.pgnt-controller li.disabled a{
+    background-color: lightgray;
+    cursor: default;
+}

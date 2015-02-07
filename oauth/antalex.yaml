@@ -1,0 +1,8 @@
+vkontakte:
+  :app_id: 4613522
+  :app_secret: klU8s7XTNrBbqMtFPZy8
+  #:app_permissions: "notify,offline"
+
+facebook:
+  :app_id: 362838067213913
+  :app_secret: dbf704d8281ff84164899a2498706e12

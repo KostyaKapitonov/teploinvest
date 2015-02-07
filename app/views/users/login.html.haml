@@ -1,0 +1,50 @@
+%form{'novalidate'=>''}
+  %fieldset
+    %legend
+      %b Вход
+    %table{style:'width: 100%;'}
+      %tr
+        %td{style:'width: 65%; vertical-align: middle;'}
+          %table.in_form
+            %tr
+              =table_row 'Email', (tag :input, type: 'email', 'autofocus'=>'','x-ng-model' => 'email', 'required'=>'')
+            %tr
+              =table_row 'Пароль', (tag :input, type: 'password','x-ng-model' => 'password', 'required'=>'', 'x-ng-keypress'=>'loginOnEnter($event)')
+            %tr
+              %td{'colspan'=>'3'}
+                .button_section
+                  %a.button{'x-ng-click'=>'login();'}
+                    Войти
+            %tr
+              %td{'colspan'=>'3'}
+                %p.cntr_small
+                  Забыли пароль? У вас есть возможность его
+                  %a.button{'x-ng-href' => email_to_reset_pass_users_path, 'x-ng-hide'=>'reset_mode'}
+                    восстановить
+        %td
+          .descr_block
+            %table.in_form.reg_info
+              %tr
+                %td
+                  %p.cntr
+                    Вы еще не зарегистрированы?
+                  %p.cntr
+                    %a.button{'x-ng-href'=>users_path}
+                      Зарегистрироваться
+                  %p.cntr
+                    Для чего нужна регистрация:
+                  %ul
+                    %li для оформления заказов
+                    %li для получения скидок
+                    %li зарегистрировавшись, вы подтверждаете серьёзность ваших намерений совершать покупки в нашем интернет-магазине.
+  -#%fieldset{'x-ng-show'=>'registration'}
+  -#  %legend
+  -#    %b Регистрация
+  -#  %table{style:'width: 100%;'}
+  -#    %tr
+
+    -#.button_section
+    -#  %a.button{'x-ng-click'=>'login();'}
+    -#    Войти
+    -#  %a.button{'x-ng-click'=>'login();'}
+    -#    Зарегистрироваться

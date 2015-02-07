@@ -1,0 +1,84 @@
+%html{'x-ng-app'=>'antalex'}
+  %head
+    %link{rel: 'shortcut icon', href: image_path('favicon.png')}
+    %title
+      Antalex
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application.js', 'data-turbolinks-track' => true
+    %script{src: 'http://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug&coordorder=longlat', type: 'text/javascript'}
+    = csrf_meta_tags
+  %body{'x-ng-controller'=>'MainController'}
+    #glob{style: 'position: absolute; top: 0px;'}
+    .global{'x-ng-show'=>'loadFinishedCompletly'}
+      %div{style: 'text-align: right; vertical-align: middle;'}
+        %table.login
+          %tr{'x-ng-show'=>'userRequestComplete'}
+            %td.new_user_td{'x-ng-hide'=>'currentUser'}
+              = link_to 'Вход / Регистрация', login_users_path
+            %td{'x-ng-show'=>'currentUser && !currentUser.is_admin'}
+              = link_to 'Настройки', account_users_path
+            %td{'x-ng-show'=>'currentUser && currentUser.is_admin'}
+              = link_to 'Настройки', global_settings_path
+            %td{'x-ng-show'=>'currentUser && currentUser.is_admin'}
+              Необработанных заказов:
+              %b
+                {{pendingCount}}
+            %td{'x-ng-hide'=>'currentUser'}
+              Войти через
+            %td{style: 'min-width: 84px; padding-right: 0;', 'x-ng-hide'=>'currentUser'}
+              %div#uLogin{'data-ulogin'=>"display=panel;fields=first_name,last_name;providers=vkontakte;hidden=other;redirect_uri=;callback=uLoginOauth"}
+            %td.user_info{'x-ng-show'=>'currentUser'}
+              {{currentUser.email}}
+            %td{'x-ng-show'=>'currentUser', style: 'padding-right: 14px;'}
+              %a{'x-ng-click'=>'logout()'}
+                Выйти
+      %table.head_panel
+        %tbody
+          %tr
+            %td
+              .tdBox
+                = link_to '<div class="head_spacer">Главная</div>'.html_safe, root_path
+            %td
+              .tdBox
+                = link_to '<div class="head_spacer">Все Товары</div>'.html_safe, products_path
+            %td
+              .tdBox
+                = link_to '<div class="head_spacer">Контакты</div>'.html_safe, '/contacts'
+            %td{'x-ng-class'=>'{full_cart_bg: cartNotEmpty}', 'x-ng-hide'=>'currentUser.is_admin'}
+              .tdBox
+                = link_to '<div class="head_spacer">Корзина</div>'.html_safe, '', 'x-ng-click'=>'goToViewCartPage()'
+            %td{'x-ng-class'=>'{full_cart_bg: anyNesOrders}', 'x-ng-show'=>'currentUser.is_admin'}
+              .tdBox
+                = link_to '<div class="head_spacer">Заказы</div>'.html_safe, '/carts'
+      %div
+        %table{style: 'width: 100%;'}
+          %tbody
+            %tr
+              %td.assortment{'x-ng-hide'=>'form_displayed'}
+                .sortTypeBlock
+                  Сортировка:
+                  %br
+                  %select{'x-ng-model'=>'setting.default_sort_type', 'x-ng-options'=>'st.val as st.name for st in sortTypes', 'x-ng-change'=>'handleRebuild()'}
+                .firm_block{'x-ng-repeat'=>'firm in assortmentList | orderBy:\'name\'', 'x-ng-show'=>'setting.default_sort_type == "firm"'}
+                  %h4
+                    %a{'x-ng-href'=>products_path+'?firm={{firm.id}}#glob'}
+                      {{firm.name}}
+                  %ul
+                    %li{'x-ng-repeat'=>'cat in firm.catigories | orderBy:\'name\''}
+                      %a{'x-ng-href'=>products_path+'?firm={{firm.id}}&category={{cat.id}}#glob'}
+                        {{cat.name}}
+                .firm_block{'x-ng-repeat'=>'cat in assortmentList | orderBy:\'name\'', 'x-ng-show'=>'setting.default_sort_type == "cat"'}
+                  %h4
+                    %a{'x-ng-href'=>products_path+'?category={{cat.id}}#glob'}
+                      {{cat.name}}
+                  %ul
+                    %li{'x-ng-repeat'=>'firm in cat.firms | orderBy:\'name\''}
+                      %a{'x-ng-href'=>products_path+'?category={{cat.id}}&firm={{firm.id}}#glob'}
+                        {{firm.name}}
+
+              %td
+                .main{'ng-view'=>''}
+                  = yield
+
+
+

@@ -1,0 +1,114 @@
+%p
+  Перейти ко
+  %a.button{'x-ng-href'=>'/carts'}
+    всем заказам
+%form{'novalidate'=>''}
+  %fieldset
+    %legend
+      %b{'x-ng-hide'=>'reset_mode'}
+        Текущий заказ
+    %table{style:'width: 100%;', 'x-ng-form'=>'cartForm'}
+      %tr
+        %td{style:'width: 65%; vertical-align: middle;'}
+          %p{'x-ng-hide'=>'actual_cart.positions.length > 0'}
+            Корзина пуста.
+
+          %table{'x-ng-show'=>'actual_cart.positions.length > 0'}
+            %tr
+              =table_row 'Варианты доставки', (tag :select, style:'width: auto', 'x-ng-model'=>'actual_cart.self_delivery', 'x-ng-options'=>'dt.val as dt.name for dt in delivery_types', 'x-ng-change'=>'calculateTotal()')
+            %tr{'x-ng-hide'=>'actual_cart.self_delivery'}
+              =table_row 'Зона доставки', (tag :select, style:'width: auto', 'x-ng-model'=>'zone', 'x-ng-options'=>'zone.name for zone in zones', 'x-ng-change'=>'calculateTotal()')+'<span style="padding-left: 10px;">{{zone.price | currency:"":2}} руб.</span> '.html_safe+'<button class="button" x-ng-click="show_delivery_zones()">Возможные зоны доставки</button>'.html_safe
+            %tr{'x-ng-show'=>'(zone.free_if_sum && zone.free_if_sum > 0) && !actual_cart.self_delivery'}
+              %td{'colspan'=>'3'}
+                Обратите пожалуйста внимание, что при заказе на сумму от
+                %b
+                  {{zone.free_if_sum | currency:"":2}} руб.
+                Доставка в данную зону будет осуществлена
+                %b бесплатно.
+            %tr{'x-ng-hide'=>'actual_cart.self_delivery'}
+              %td{'colspan'=>'3'}
+                Если вам необходима доставка не по Симферополю (или не по его пригороду), это потребует
+                индивидуального согласования с администрацией
+            %tr{'x-ng-hide'=>'actual_cart.self_delivery'}
+              =table_row 'Адрес доставки', (tag :input, 'x-ng-model'=>'actual_cart.address')
+            %tr{'x-ng-show'=>'actual_cart.self_delivery'}
+              %td{colspan:3}
+                %br
+                Самостоятельно забрать заказа вы сможете по адресу:
+                %br
+                %b
+                  {{setting.self_delivery_address}}
+            %tr
+              %td{colspan:3}
+                %hr
+            %tr
+              %table.cart{'x-ng-show'=>'actual_cart.positions.length > 0'}
+                %tr
+                  %td Товар
+                  %td Кол-во
+                  %td Цена, руб.
+                  %td{colspan:2} Сумма, руб.
+                %tr.positions{'x-ng-repeat'=>'pos in actual_cart.positions'}
+                  %td
+                    %a{'x-ng-href'=>'/products/{{pos.prod.id}}#glob'}
+                      {{pos.prod.name}}
+                  %td
+                    =tag :input, name: 'count_{{$index}}', 'x-ng-blur'=>'to_int($index)', 'x-ng-model'=>'pos.count', 'required'=>'', maxlength: '4'
+                  %td
+                    .errblock
+                      %span{'x-ng-show'=>'(cartForm.count_{{$index}}.$error.required || pos.count <= 0) && (cartForm.count_{{$index}}.$touched || showErrors)'}
+                        необходимо заполнить
+                  %td
+                    {{pos.prod.price | currency:"":2}}
+                  %td
+                    %b
+                      {{pos.sum | currency:"":2}}
+                  %td{style:'width:1%; padding-right:5px;'}
+                    %a.button{'x-ng-click'=>'delPos($index)',title: 'Удалить'}
+                      X
+                %tr
+                  %td{colspan:3}
+                    Стоимость доставки:
+                  %td
+                    %b
+                      {{actual_cart.self_delivery || delivery_free ? 0 : zone.price | currency:"":2}}
+                  %td
+                    %b{'x-ng-hide'=>'actual_cart.self_delivery',title:'<b style="color:green;">Бесплатно</b>, при заказе<br/>на сумму от <b>{{zone.free_if_sum | currency:"":2}}</b> руб.'}
+                      (?)
+                %tr
+                  %td{colspan:3}
+                    %b
+                      Всего к оплате:
+                  %td.total_sum{colspan:2}
+                    %b
+                      {{total_sum | currency:"":2}}
+                %tr{'colspan'=>'5'}
+                  %table{style: 'margin-left: 64px;','x-ng-show'=>'actual_cart.positions.length > 0'}
+                    %tr
+                      %td
+                      %td
+                      %td
+                        %img#code
+                    %tr.code
+                      =table_row 'Введите код', (tag :input, name: 'captcha', 'x-ng-model' => 'captcha', 'required'=>'')
+                      %td
+                        .errblock
+                          %span{'x-ng-show'=>'cartForm.captcha.$error.required && (cartForm.captcha.$touched || showErrors)'}
+                            необходимо заполнить
+                %tr{'x-ng-show'=>'actual_cart.positions.length > 0'}
+                  %td{'colspan'=>'5'}
+                    .button_section
+                      %a.head_button{'x-ng-click'=>'confirm_order();', style: 'padding: 10px;'}
+                        Подтверждаю
+
+    .descr_block{'x-ng-show'=>'actual_cart.positions.length > 0', style: 'margin-top: 20px;'}
+      %p
+        После подтверждения заказа администрация свяжется с вами по телефону, который вы указали при регистрации:
+        %b
+          {{currentUser.mobile || "Еще не указан"}}
+        %br
+        Если вы допустили ошибку при указании вашего мобильного телефона, вы можете её сейчас исправить,
+        а так же убедиться в правильности заполнения остальных данных:
+        %a.button.smal{'x-ng-href'=>'/users/account'}
+          настройки
+

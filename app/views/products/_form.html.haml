@@ -1,0 +1,57 @@
+%form{'novalidate'=>''}
+  .button_section{style: 'margin: 10px;'}
+    %a.button{'x-ng-click'=>'save();'}
+      Сохранить
+    %a.button{'x-ng-click'=>'cancel();'}
+      Отмена
+  %table{style:'width: 100%;'}
+    %tr{'x-ng-form'=>'productForm'}
+      %td{style:'width: 50%;'}
+        %table.in_form
+          %tr
+            =table_row 'Название', (tag :input, name: 'name', 'x-ng-model' => 'product.name', 'required'=>'')
+            %td
+              .errblock
+                %span{'x-ng-show'=>'productForm.name.$error.required && (productForm.name.$touched || showErrors)'}
+                  необходимо заполнить
+          %tr
+            =table_row 'НЕ зависит<br/>от курса $'.html_safe, (tag :input, class: 'f_cb', type: 'checkbox', 'x-ng-model' => 'product.fixed_rub_price')+'<p class="input_desc">Курс $ = {{usd_rate}} руб.</p>'.html_safe
+          %tr
+            =table_row 'Цена, $', (tag :input, name: 'usd_price', 'x-ng-model' => 'product.usd_price', 'x-ng-blur'=>'priceChanged("usd")', 'x-ng-disabled'=>'product.fixed_rub_price', 'required'=>'')
+            %td
+              .errblock
+                %span{'x-ng-show'=>'(productForm.usd_price.$error.required || blank) && !product.fixed_rub_price && (productForm.usd_price.$touched || showErrors)'}
+                  необходимо заполнить
+          %tr
+            =table_row 'Цена, руб', (tag :input, name: 'price', 'x-ng-model' => 'product.price', 'x-ng-blur'=>'priceChanged("rub")', 'x-ng-disabled'=>'!product.fixed_rub_price', 'required'=>'')
+            %td
+              .errblock
+                %span{'x-ng-show'=>'(productForm.price.$error.required || blank) && product.fixed_rub_price && (productForm.price.$touched || showErrors)'}
+                  необходимо заполнить
+          %tr
+            =table_row 'Имеется в<br/>наличии'.html_safe, (tag :input, class: 'f_cb', type: 'checkbox', 'x-ng-model' => 'product.exist')+'<p class="input_desc">Если убрать галочку - покупатели НЕ смогут заказать этот товар, хоть он и будет доступен для просмотра.</p>'.html_safe
+      %td{style:'width: 50%;'}
+        %table.in_form
+          %tr
+            =table_row 'Картинка', (tag :input, 'x-ng-model' => 'product.image')
+          %tr{'x-ng-show'=>'new_category_name == null'}
+            =table_row 'Категория', '<select x-ng-model="product.category_id" x-ng-options="c.id as c.name for c in categories | orderBy:\'name\'"></select>', [{title: '+', action: 'new_category()'},{title: 'X', action: 'delete_category()'}]
+          %tr{'x-ng-hide'=>'new_category_name == null'}
+            =table_row 'Название', (tag :input, 'x-ng-model' => 'new_category_name'), [{title: '√', action: 'add_category()'},{title: 'X', action: 'cancel_category()'}]
+
+          %tr{'x-ng-show'=>'new_firm_name == null'}
+            =table_row 'Фирма', '<select x-ng-model="product.firm_id" x-ng-options="f.id as f.name for f in firms | orderBy:\'name\'"></select>', [{title: '+', action: 'new_firm()'},{title: 'X', action: 'delete_firm()'}]
+          %tr{'x-ng-hide'=>'new_firm_name == null'}
+            =table_row 'Название', (tag :input, 'x-ng-model' => 'new_firm_name'), [{title: '√', action: 'add_firm()'},{title: 'X', action: 'cancel_firm()'}]
+          %tr
+            =table_row 'Скрыть'.html_safe, (tag :input, class: 'f_cb', type: 'checkbox', 'x-ng-model' => 'product.hidden')+'<p class="input_desc">Данный товар будет скрыт от покупателей, и виден лишь для администрации. В дальнейшем вы сможете изменить эту опцию, сделав его доступным для просмотра.</p>'.html_safe
+
+  .form_description
+    Описание товара:
+    %br
+    =tag :textarea, 'x-ng-model' => 'product.description', class: 'ck-editor'
+  .button_section
+    %a.button{'x-ng-click'=>'save();'}
+      Сохранить
+    %a.button{'x-ng-click'=>'cancel();'}
+      Отмена
