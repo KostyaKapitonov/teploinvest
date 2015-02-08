@@ -8,12 +8,14 @@
 *= require libs/ang-paginate
 */
 
-$primary-color: #736d69;
+$primary-color: #5e003f;
+$links-header-color : deepskyblue;
 $buttonColor: coral;
 $buttonBorder: indianred;
 $bordersColor: #dfc9c0;
 $backgroundColorHovered: bisque;
 $bej: #f7f7cb;
+$bg_default: #f0e6eb;
 
 @mixin gradient($startColor, $endColor) {
   background: -moz-linear-gradient(top, $startColor, $endColor);
@@ -30,8 +32,6 @@ $bej: #f7f7cb;
 }
 
 body {
-  background-color: #f7f5f6;
-  background-image: asset-data-url('antalex_bg.jpeg');
   background-position: center top;
   background-attachment: fixed;
   -moz-background-size: 100%; /* Firefox 3.6+ */
@@ -44,14 +44,20 @@ body {
   margin: 0px 0px 0px 0px;
   font-weight: normal;
   margin: 0px;
+
+  background: rgba(94,0,63,1);
+  background: -moz-linear-gradient(left, rgba(94,0,63,1) 0%, rgba(45,15,30,1) 15%, rgba(45,15,30,1) 85%, rgba(94,0,63,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(94,0,63,1)), color-stop(15%, rgba(45,15,30,1)), color-stop(85%, rgba(45,15,30,1)), color-stop(100%, rgba(94,0,63,1)));
+  background: -webkit-linear-gradient(left, rgba(94,0,63,1) 0%, rgba(45,15,30,1) 15%, rgba(45,15,30,1) 85%, rgba(94,0,63,1) 100%);
+  background: -o-linear-gradient(left, rgba(94,0,63,1) 0%, rgba(45,15,30,1) 15%, rgba(45,15,30,1) 85%, rgba(94,0,63,1) 100%);
+  background: -ms-linear-gradient(left, rgba(94,0,63,1) 0%, rgba(45,15,30,1) 15%, rgba(45,15,30,1) 85%, rgba(94,0,63,1) 100%);
+  background: linear-gradient(to right, rgba(94,0,63,1) 0%, rgba(45,15,30,1) 15%, rgba(45,15,30,1) 85%, rgba(94,0,63,1) 100%);
 }
 
 .global{
-  background-color: #cec6c0;
-  max-width: 770px;
-  margin: 30px auto;
+  max-width: 1000px;
+  margin: 0px auto;
   text-align:left;
-  @include b-radius(20px);
 }
 
 img:not(.login_img) {
@@ -69,20 +75,29 @@ a {
 .head_panel{
   text-align: center;
   margin:0px;
-  background-color: $bordersColor;
   width: 100%;
-  /*padding:15px;*/
 }
 
 .head_panel a {
-  color: #736d69;
+  color: deepskyblue;
   font-weight: bold;
 }
 
-.head_panel a:hover {
-  background-color: $backgroundColorHovered;
+//.head_panel a:hover {
+//  background-color: $backgroundColorHovered;
+//  @include b-radius(10px);
+//}
 
+.head_panel div.head_spacer span{
+  padding: 8px;
+}
+
+.head_panel a:hover div.head_spacer span{
   @include b-radius(10px);
+  background-color: #650015;
+  -webkit-box-shadow: 0px 0px 20px 10px #702;
+  -moz-box-shadow: 0px 0px 20px 10px #702;
+  box-shadow: 0px 0px 20px 10px #702;
 }
 
 .head_panel table {
@@ -307,10 +322,10 @@ a.head_button:disabled,
 }
 
 .assortment {
-  width: 5%;
+  width: 20%;
   padding: 15px;
-  border-right: 4px solid;
-  border-color: $bordersColor;
+  border-right: 2px solid;
+  border-color: deepskyblue;
 }
 
 .assortment ul {
@@ -461,7 +476,7 @@ td.total_sum{
 }
 
 .head_spacer{
-  padding: 5 0;
+  padding: 0 auto;
 }
 
 .new_user_td {
@@ -471,15 +486,19 @@ td.total_sum{
 
 .login a
 /*.main a*/ {
+  font-weight: bold;
   color: $primary-color;
   padding: 7px;
   @include b-radius(8px);
-  background-color: $bordersColor;
+  background-color: $bg_default;
+  border: 1px solid deepskyblue;
 }
 
 .login a:hover
 /*.main a:hover*/ {
-  background-color: $backgroundColorHovered;
+  font-weight: bold;
+  background-color: $primary-color;
+  color: deepskyblue;
   cursor: pointer;
 }
 
@@ -677,4 +696,41 @@ legend span,legend p {
   padding-left: 15px;
   text-align: right;
   margin: 3px auto;
+}
+
+div.content {
+  width: 100%;
+  max-width: 900px;
+  background-color: $bg_default;
+  margin: 0 auto;
+}
+
+div.head_wraper{
+  background-color: $bg_default;
+  margin: 0px;
+  padding: 0px;
+  -webkit-border-bottom-right-radius: 15px;
+  -webkit-border-bottom-left-radius: 15px;
+  -moz-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomleft: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border: 3px solid deepskyblue;
+  border-top: none;
+
+  background: rgba(240,230,235,1);
+  background: -moz-linear-gradient(top, rgba(240,230,235,1) 0%, rgba(45,15,30,1) 68%, rgba(45,15,30,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(240,230,235,1)), color-stop(68%, rgba(45,15,30,1)), color-stop(100%, rgba(45,15,30,1)));
+  background: -webkit-linear-gradient(top, rgba(240,230,235,1) 0%, rgba(45,15,30,1) 68%, rgba(45,15,30,1) 100%);
+  background: -o-linear-gradient(top, rgba(240,230,235,1) 0%, rgba(45,15,30,1) 68%, rgba(45,15,30,1) 100%);
+  background: -ms-linear-gradient(top, rgba(240,230,235,1) 0%, rgba(45,15,30,1) 68%, rgba(45,15,30,1) 100%);
+  background: linear-gradient(to bottom, rgba(240,230,235,1) 0%, rgba(45,15,30,1) 68%, rgba(45,15,30,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0e6eb', endColorstr='#2d0f1e', GradientType=0 );
+}
+
+table.content {
+  width: 100%;
+  border: 2px solid deepskyblue;
+  border-top: none;
+  border-bottom: none;
 }
