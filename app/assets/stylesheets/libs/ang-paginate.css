@@ -14,8 +14,8 @@
 }
 
 .pgnt-controller a{
-    border: 1px solid #f7f7cb;
-    background-color: #dfc9c0;
+    border: 1px solid #cde;
+    background-color: #def;
     padding: 5px 9px;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -23,8 +23,8 @@
 }
 
 .pgnt-controller li.active a{
-    background-color: #ccbbbb;
-    border: 1px solid gold;
+    background-color: #adf;
+    border: 1px solid deepskyblue;
     font-weight: bold;
     cursor: default;
 }

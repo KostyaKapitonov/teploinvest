@@ -2,20 +2,31 @@
 *= require jquery.ui.core.css.scss
 *= require jquery.ui.dialog.css.scss
 *= require jquery.ui.theme.css.scss
-*= require jquery-ui/humanity
+*= //require jquery-ui/1.11.2/eggplant.css.scss
 *= require libs/colorpicker
 *= require libs/jquery_custom
 *= require libs/ang-paginate
 */
 
-$primary-color: #5e003f;
+$primary-color: #005080;
+$primary-color-hovered: #0080ff;
 $links-header-color : deepskyblue;
-$buttonColor: coral;
-$buttonBorder: indianred;
-$bordersColor: #dfc9c0;
-$backgroundColorHovered: bisque;
-$bej: #f7f7cb;
+$buttonColor: #0060ee;
+$buttonBorder: deepskyblue;
+$bordersColor: deepskyblue;
+$backgroundColorHovered: #cde;
+$bg-legend-color: #adf;
+$inputs-bg: #def;
+$inputs-border: #cde;
 $bg_default: #f0e6eb;
+
+//buttons gradient:
+$button-gradient-from-def: #ccc;
+$button-gradient-from-hov: #ddd;
+$button-gradient-from-foc: #eee;
+$button-gradient-to-def: #9ad;
+$button-gradient-to-hov: #abe; //56789abcdef
+$button-gradient-to-foc: #bcf;
 
 @mixin gradient($startColor, $endColor) {
   background: -moz-linear-gradient(top, $startColor, $endColor);
@@ -166,11 +177,11 @@ fieldset select, fieldset input,
   width: 90%;
   border-style: solid;
   border-width: 2px;
-  border-color: bisque;
+  border-color: $inputs-border;
   padding: 5px;
   border-radius: 8px;
   outline: 0;
-  background-color: $bej;
+  background-color: $inputs-bg;
 }
 
 table.in_form td.input input:focus,
@@ -178,8 +189,8 @@ table.in_form td.input select:focus,
 fieldset select:focus, fieldset input:focus,
 .sortTypeBlock select:focus,
 .ant_input:focus {
-  background-color: $backgroundColorHovered;
-  border-color: $buttonColor;
+  //background-color: $backgroundColorHovered;
+  border-color: $buttonBorder;
 }
 
 table.in_form td.input input:disabled,
@@ -218,9 +229,9 @@ table.in_form tr {
 
 .head_button {
   cursor: pointer;
-  color: $buttonBorder;
+  color: $buttonColor;
   font-weight: bold;
-  border: 1px solid $buttonColor;
+  border: 1px solid $buttonBorder;
   padding: 10px;
   text-align: center;
   text-decoration: none;
@@ -229,17 +240,17 @@ table.in_form tr {
 
   @include b-radius(8);
   border-radius: 8px;
-  @include gradient(#cccccc, #ffbb99);
+  @include gradient($button-gradient-from-def, $button-gradient-to-def);
 }
 
 .head_button:hover {
-  @include gradient(#ffccaa, #dddddd);
-  color: $buttonBorder;
+  @include gradient($button-gradient-from-hov, $button-gradient-to-hov);
+//  color: $buttonBorder;
 }
 
 .head_button:active {
-  @include gradient(#ffddbb, #eeeeee);
-  color: $buttonBorder;
+  @include gradient($button-gradient-from-foc, $button-gradient-to-foc);
+//  color: $buttonBorder;
 }
 
 .head_button:disabled,
@@ -264,9 +275,9 @@ a.head_button:disabled,
 }
 
 .button {
-  color: $buttonBorder;
+  color: $buttonColor;
   @include b-radius(5);
-  border: 1px solid $buttonColor;
+  border: 1px solid $buttonBorder;
   padding: 3px;
   text-align: center;
   text-decoration: none;
@@ -274,7 +285,7 @@ a.head_button:disabled,
   cursor: pointer;
   border-radius: 5px;
   background: #ccffee;
-  @include gradient(#cccccc, #ffbb99);
+  @include gradient($button-gradient-from-def, $button-gradient-to-def);
 }
 
 .button:focus{
@@ -282,11 +293,11 @@ a.head_button:disabled,
 }
 
 .button:hover {
-  @include gradient(#ffccaa, #dddddd);
+  @include gradient($button-gradient-from-hov, $button-gradient-to-hov);
 }
 
 .button:active {
-  @include gradient(#ffddbb, #eeeeee);
+  @include gradient($button-gradient-from-foc, $button-gradient-to-foc);
 }
 
 .smal {
@@ -341,11 +352,11 @@ a.head_button:disabled,
 }
 
 .assortment a{
-  color: #736d69;
+  color: $primary-color;
 }
 
 .assortment a:hover {
-  color: #938d00;
+  color: $primary-color-hovered;
 }
 
 .assortment h4{
@@ -378,11 +389,11 @@ a.head_button:disabled,
 }
 
 .pr_list_block a {
-  color: #736d69;
+  color: $primary-color;
 }
 
 .pr_list_block a:hover {
-  color: #938d00;
+  color: $primary-color-hovered;
 }
 
 .show img {
@@ -443,12 +454,12 @@ table.cart td{
 }
 
 table.cart tr:first-child{
-  background-color: #ccbbbb;
+  background-color: $bg-legend-color;
 }
 
 td.total_sum{
-  background-color: #ccbbbb;
-  border: 1px solid bisque;
+  background-color: $bg-legend-color;
+  border: 1px solid $backgroundColorHovered;
   color: #544;
 }
 
@@ -461,7 +472,7 @@ td.total_sum{
 }
 
 .descr_block {
-  background-color: $bej;
+  background-color: $inputs-bg;
   padding: 10px;
   margin-top: 10px;
   @include b-radius(15px)
@@ -512,7 +523,7 @@ fieldset legend {
   border: 2px solid $bordersColor;
   @include  b-radius(7px);
   padding: 5px 8px;
-  background-color: #ccbbbb;
+  background-color: $bg-legend-color;
 }
 
 .dialog_msg {
@@ -619,10 +630,10 @@ p.input_desc {
 
 .sortTypeBlock select{
   font-size: 12px;
-  border: 1px solid bisque;
+  border: 1px solid $inputs-border;
   border-radius: 6px;
   outline: 0;
-  background-color: $bej;
+  background-color: $inputs-bg;
 }
 
 .jq_tooltip {
