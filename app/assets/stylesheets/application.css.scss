@@ -29,6 +29,7 @@ $button-gradient-to-hov: #abe; //56789abcdef
 $button-gradient-to-foc: #bcf;
 
 @mixin gradient($startColor, $endColor) {
+  background: none;
   background: -moz-linear-gradient(top, $startColor, $endColor);
   background: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
   background: -webkit-linear-gradient(top, $startColor, $endColor);
@@ -274,17 +275,17 @@ a.head_button:disabled,
   color: #5a5;
 }
 
-.button {
-  color: $buttonColor;
+.button, div.ui-dialog-buttonset button, .ui-button {
+  color: $buttonColor !important;
   @include b-radius(5);
-  border: 1px solid $buttonBorder;
+  border: 1px solid $buttonBorder !important;
   padding: 3px;
   text-align: center;
   text-decoration: none;
   margin: 5px;
   cursor: pointer;
   border-radius: 5px;
-  background: #ccffee;
+  background: #ccffee !important;
   @include gradient($button-gradient-from-def, $button-gradient-to-def);
 }
 
@@ -298,6 +299,11 @@ a.head_button:disabled,
 
 .button:active {
   @include gradient($button-gradient-from-foc, $button-gradient-to-foc);
+}
+
+.ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix{
+  background: none;
+  @include gradient(#bbb, #844);
 }
 
 .smal {
@@ -647,12 +653,12 @@ b.name{
 
 .jq_tooltip b.green,
 b.green{
-  color: #007000;
+  color: #0f0;
 }
 
 .jq_tooltip b.red,
 b.red {
-  color: #f00000;
+  color: #ff0000;
 }
 
 .only_admin_info {

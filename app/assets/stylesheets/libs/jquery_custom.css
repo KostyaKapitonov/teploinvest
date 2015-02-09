@@ -25,3 +25,21 @@
 .autoClose .dialogError{
     background-color: #ffcc55;
 }
+
+div[role="tooltip"] {
+    width: auto;
+    padding: 5px;
+    border: 1px solid deepskyblue;
+    display: inline-block !important;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+div[role="tooltip"],
+div[role="tooltip"] div {
+    background: none;
+    background-color: #533;
+    color: deepskyblue;
+}
+
