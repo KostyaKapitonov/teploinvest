@@ -417,17 +417,20 @@ $a.wait = function(msg, msBeforeException){
         $a.alert('<b>Пожалуйста, попробуйте еще раз.</b><br/>В случае повтора ошибки обновите страницу, а так же проверьте подключение к интернету.','Неизвестная ошибка');
     },msBeforeException);
 
-    msg = msg || 'Подождите пожалуйста...';
+    msg = msg || 'Загрузка...';
     $.blockUI({
         message: msg,
         css: {
-            border: 'none',
+            border: '2px solid #bdf',
             padding: '15px',
-            backgroundColor: '#000',
+            backgroundColor: '#846',
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
-            opacity: .5,
-            color: '#fff'
+            'border-radius': '10px',
+            opacity: .8,
+            'font-size': 20,
+            color: 'deepskyblue',
+            'font-weight': 'bold'
         }
     });
 

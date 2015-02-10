@@ -6,7 +6,7 @@
 
 .autoClose div,
 .autoClose .ui-dialog-content{
-    background-color: #eeffbb;
+    background-color: #bef;
 }
 
 .autoClose,
@@ -23,7 +23,7 @@
 }
 
 .autoClose .dialogError{
-    background-color: #ffcc55;
+    background-color: #fbd;
 }
 
 div[role="tooltip"] {

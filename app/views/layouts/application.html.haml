@@ -45,12 +45,30 @@
               %td
                 .tdBox
                   = link_to '<div class="head_spacer"><span>Контакты</span></div>'.html_safe, '/contacts'
+              %td
+                .tdBox
+                  = link_to '<div class="head_spacer"><span>О нас</span></div>'.html_safe, '/about'
+              %td
+                .tdBox
+                  = link_to '<div class="head_spacer"><span>Прайс-листы</span></div>'.html_safe, '/price_list'
+              %td
+                .tdBox
+                  = link_to '<div class="head_spacer"><span>Оплата и доставка</span></div>'.html_safe, '/payment_and_delivery'
+              %td
+                .tdBox
+                  = link_to '<div class="head_spacer"><span>Монтаж</span></div>'.html_safe, '/installation'
               %td{'x-ng-class'=>'{full_cart_bg: cartNotEmpty}', 'x-ng-hide'=>'currentUser.is_admin'}
                 .tdBox
                   = link_to '<div class="head_spacer"><span>Корзина</span></div>'.html_safe, '', 'x-ng-click'=>'goToViewCartPage()'
               %td{'x-ng-class'=>'{full_cart_bg: anyNesOrders}', 'x-ng-show'=>'currentUser.is_admin'}
                 .tdBox
                   = link_to '<div class="head_spacer"><span>Заказы</span></div>'.html_safe, '/carts'
+
+                  -#
+                  -#
+                  -#
+                  -#
+
       %div.content
         %table.content
           %tbody
@@ -80,6 +98,9 @@
               %td
                 .main{'ng-view'=>''}
                   = yield
+      .downside
+        =# footer...
+
 
 
 
