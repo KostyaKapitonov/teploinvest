@@ -768,9 +768,16 @@ table.content {
   border: 2px solid #a7a;
   overflow: hidden;
   @include b-radius(8px);
--webkit-box-shadow: 0px 0px 15px 2px lightslategrey;
+  -webkit-box-shadow: 0px 0px 15px 2px lightslategrey;
   -moz-box-shadow: 0px 0px 15px 2px lightslategrey;
   box-shadow: 0px 0px 15px 2px lightslategrey;
+}
+
+.pr_list_block:hover {
+  border-color: #a5f;
+  -webkit-box-shadow: 0px 0px 15px 2px #29f;
+  -moz-box-shadow: 0px 0px 15px 2px #29f;
+  box-shadow: 0px 0px 15px 2px #29f;
 }
 
 div.img_fix_block {
