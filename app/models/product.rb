@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   belongs_to :category
   belongs_to :firm
+  belongs_to :sub_cat
   has_many :positions
   cattr_accessor :skip_filter
 

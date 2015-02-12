@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+
 ruby '2.1.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -36,7 +37,7 @@ group :production do
 end
 
 gem 'oauth2'
-gem 'devise', :git => 'https://github.com/plataformatec/devise.git', :branch => 'lm-rails-4-2'
+gem 'devise'
 gem 'omniauth-vkontakte'
 gem 'omniauth-facebook'
 
