@@ -19,6 +19,22 @@ module Antalex
     config.autoload_paths += %W(#{config.root}/lib/assets/)
     config.time_zone = 'Moscow'
 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.default_url_options = {:from => ENV['TEPLOINVEST_EMAIL_ADDRESS']}
+    config.action_mailer.smtp_settings = {
+        from: ENV['TEPLOINVEST_EMAIL_ADDRESS'],
+        address: 'smtp.yandex.ru',
+        port: 587,
+        user_name: 'Kapitonov-kg',
+        password: ENV['TEPLOINVEST_EMAIL_PASSWORD'],
+        authentication: :plain,
+        enable_starttls_auto: true
+    }
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.raise_delivery_errors = true
+    # todo: USE like this:
+    # ActionMailer::Base.mail(from: ENV['TEPLOINVEST_EMAIL_ADDRESS'], :to => "kapitonovkg@sfdev.com", :subject => "как бы тест", :body => "Просто <b>тест</b> 3",  charset: 'UTF-8', content_type: "text/html").deliver_now
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

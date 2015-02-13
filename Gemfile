@@ -42,6 +42,7 @@ gem 'omniauth-vkontakte'
 gem 'omniauth-facebook'
 
 gem 'gmail_sender'
+#gem 'pony'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
