@@ -23,7 +23,7 @@ module ApplicationHelper
   end
 
   def ulogin_back_url
-    ENV['RAILS_ENV'] == 'development' ? 'antalex.herokuapp.com:3000' : 'antalex.herokuapp.com'
+    ENV['RAILS_ENV'] == 'development' ? 'teploinvest.herokuapp.com:3000' : 'teploinvest.herokuapp.com'
   end
 
   def confirm_url(token)

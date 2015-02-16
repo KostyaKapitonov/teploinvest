@@ -71,7 +71,7 @@ body {
   text-align:left;
 }
 
-img:not(.login_img) {
+img.rounded{
   @include b-radius(15px);
 }
 
@@ -321,11 +321,21 @@ a.head_button:disabled,
 }
 
 .center {
-  max-width: 622px;
+  max-width: 687px;
 }
 
 .center p {
-  text-indent: 20px;
+//  text-indent: 20px;
+}
+.center a {
+  color: #905;
+}
+
+hr {
+  border: 1;
+  height: 1px;
+  background-color: #ccf;
+  box-shadow: 0 0 10px 1px deepskyblue;
 }
 
 .product_header {
@@ -543,11 +553,11 @@ div.errblock span {
   position: relative;
   left: 20px;
   bottom: 8px;
-  background-color: crimson;
-  color: white;
+  background-color: #513;
+  color: #fac;
   padding: 2px 7px;
   font-size: 12;
-  border: 1px solid orange;
+  border: 1px solid #f0f;
   @include b-radius(10px);
 }
 

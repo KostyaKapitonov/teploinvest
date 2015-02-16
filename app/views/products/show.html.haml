@@ -12,8 +12,8 @@
       &nbsp;>&nbsp;
 
   .img_block
-    %img{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image'}
-    %img{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}'}
+    %img.rounded{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image'}
+    %img.rounded{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}'}
   .descr_block
     %div{style: 'text-align: center; padding-top:10px;', 'x-ng-hide'=>'admin || !product.exist'}
       %a.head_button{'x-ng-click'=>'addToCart()', 'x-ng-hide'=>'addedToCart'}

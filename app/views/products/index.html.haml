@@ -12,8 +12,8 @@
               {{product.name}}
             %div
               .img_fix_block
-                %img{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image'}
-                %img{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}'}
+                %img.rounded{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image'}
+                %img.rounded{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}'}
                 {{product.price | currency:"":2}} руб.
           %div
             %p.small_descr

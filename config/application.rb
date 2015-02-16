@@ -25,7 +25,7 @@ module Antalex
         from: ENV['TEPLOINVEST_EMAIL_ADDRESS'],
         address: 'smtp.yandex.ru',
         port: 587,
-        user_name: 'Kapitonov-kg',
+        user_name: 'teploinvest.shop',
         password: ENV['TEPLOINVEST_EMAIL_PASSWORD'],
         authentication: :plain,
         enable_starttls_auto: true
@@ -33,7 +33,7 @@ module Antalex
     config.action_mailer.perform_deliveries = true
     config.action_mailer.raise_delivery_errors = true
     # todo: USE like this:
-    # ActionMailer::Base.mail(from: ENV['TEPLOINVEST_EMAIL_ADDRESS'], :to => "kapitonovkg@sfdev.com", :subject => "как бы тест", :body => "Просто <b>тест</b> 3",  charset: 'UTF-8', content_type: "text/html").deliver_now
+    # ActionMailer::Base.mail(from: ENV['TEPLOINVEST_EMAIL_ADDRESS'], :to => "kapitonovkg@sfdev.com", :subject => "как бы тест", :body => "Просто <b>тест</b> 543",  charset: 'UTF-8', content_type: "text/html").deliver_now
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
