@@ -1,4 +1,4 @@
-ANTALEX.controller('ProductFormController', ['$scope', '$routeParams', 'Products', '$location', 'Global',
+MYAPP.controller('ProductFormController', ['$scope', '$routeParams', 'Products', '$location', 'Global',
 function($scope, $routeParams, Products, $location, Global) {
     $scope.isNew = false;
     $scope.usd_rate = $scope.$parent.setting.usd_rate;

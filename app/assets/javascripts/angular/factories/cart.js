@@ -1,4 +1,4 @@
-ANTALEX.factory('Cart', ['$resource', function($resource) {
+MYAPP.factory('Cart', ['$resource', function($resource) {
     return $resource('/carts/:action/:id', {format: 'json'},
         {
             'all':              {isArray: true},

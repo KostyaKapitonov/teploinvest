@@ -17,12 +17,16 @@ task :recalculate_exchange_rates => :environment do
       xml = Hash.from_xml(res.body)
       valutes = xml['ValCurs']['Valute']
       usd = nil
+      eur = nil
       valutes.each do |v|
         if v['CharCode'] && v['CharCode'].downcase == 'usd'
           usd = (v['Value'].sub! ',', '.').to_f
+        elsif v['CharCode'] && v['CharCode'].downcase == 'eur'
+          eur = (v['Value'].sub! ',', '.').to_f
         end
       end
       raise 'usd.blank' if usd.blank? || usd == 0.0
+      raise 'usd.blank' if eur.blank? || eur == 0.0 # todo: continue logic for euro
       if s.usd_rate != usd
         s.update(usd_rate: usd) unless s.blank?
         carts = Cart.where(confirmed: false).all
@@ -35,11 +39,12 @@ task :recalculate_exchange_rates => :environment do
     end
   rescue Exception => e
     backtrace = ''
-    e.backtrace.inspect.each do |l|
+    e.backtrace.each do |l|
+      p l
       backtrace += "#{l}<br/>"
     end
     ActionMailer::Base.mail(from: ENV['TEPLOINVEST_EMAIL_ADDRESS'], :to => 'kapitonovkg@sfdev.com',
-      :subject => "Antalex schedule raise-error: #{e.message}", :body => backtrace,
+      :subject => "Teploinvest schedule raise-error: #{e.message}", :body => backtrace,
       charset: 'UTF-8', content_type: "text/html").deliver_now
 
     # new_mail = GmailSender.new(ENV['ANTALEX_EMAIL_ADDRESS'], ENV['ANTALEX_EMAIL_PASSWORD'])

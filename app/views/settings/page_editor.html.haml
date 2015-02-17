@@ -4,7 +4,7 @@
   %a.button{'x-ng-href'=>global_settings_path}
     Отмена
 %hr
-%div
+%div{'x-ng-init'=>'hide_menu()'}
   %textarea{'x-ng-model' => 'page', class: 'ck-editor'}
 .button_section
   %a.button{'x-ng-click'=>'save_page()'}

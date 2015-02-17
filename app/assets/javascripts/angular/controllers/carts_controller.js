@@ -1,4 +1,4 @@
-ANTALEX.controller('CartsController', ['$scope', '$location', 'Cart', 'Global',
+MYAPP.controller('CartsController', ['$scope', '$location', 'Cart', 'Global',
 function($scope, $location, Cart, Global) {
 
     $scope.$parent.load_carts(function(){

@@ -1,4 +1,4 @@
-ANTALEX.factory('User', ['$resource', function($resource) {
+MYAPP.factory('User', ['$resource', function($resource) {
     return $resource('/users/:action/:id', null,
         {
             account: {method: 'POST', params: {format: 'json', action: 'account'}},

@@ -1,4 +1,4 @@
-ANTALEX.controller('ProductsListController', ['$scope', '$location','$routeParams', 'Products', '$sce',
+MYAPP.controller('ProductsListController', ['$scope', '$location','$routeParams', 'Products', '$sce',
 function($scope, $location, $routeParams, Products, $sce) {
 
     function refreshLoadStatus(counter){

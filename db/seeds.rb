@@ -5,7 +5,7 @@ Setting.create() if Setting.all.blank?
 Product.destroy_all
 
 def create_water_boils_sub_cat(cat_id)
-  %w(Косвенного\ нагрева Накопительные Газовые).each do |c|
+  %w(Косвенного\ нагрева Накопительные Газовые Электрические).each do |c|
     SubCat.create(name: c, category_id: cat_id)
   end
 end
@@ -26,9 +26,9 @@ Category.destroy_all
 SubCat.destroy_all
 %w(Водонагреватели Котлы Насосы Радиаторы Термостаты Печи Трубы).each do |c|
   cat = Category.create(name: c)
-  create_water_boils_sub_cat(c) if c == 'Водонагреватели'
-  create_cauldrons_sub_cat(c) if c == 'Котлы'
-  create_radiators_sub_cat(c) if c == 'Радиаторы'
+  create_water_boils_sub_cat(cat.id) if c == 'Водонагреватели'
+  create_cauldrons_sub_cat(cat.id) if c == 'Котлы'
+  create_radiators_sub_cat(cat.id) if c == 'Радиаторы'
 end
 
 Firm.destroy_all

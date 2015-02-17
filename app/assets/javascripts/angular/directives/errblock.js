@@ -1,4 +1,4 @@
-ANTALEX.directive('errblock', ['$compile', function($compile){
+MYAPP.directive('errblock', ['$compile', function($compile){
     return {
         restrict: 'C',
         link: function(scope, element, attrs) {

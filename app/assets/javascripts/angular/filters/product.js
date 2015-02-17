@@ -1,5 +1,5 @@
 
-ANTALEX.filter("onlySelected", function() {
+MYAPP.filter("onlySelected", function() {
     return function(input, firm, category) {
         if(!firm && !category) return input;
         var res =[];

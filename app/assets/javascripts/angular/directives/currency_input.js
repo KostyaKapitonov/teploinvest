@@ -1,4 +1,4 @@
-ANTALEX.directive('zoneprice', ['$compile', function($compile){
+MYAPP.directive('zoneprice', ['$compile', function($compile){
     return {
         restrict: 'C',
         link: function(scope, element, attrs) {

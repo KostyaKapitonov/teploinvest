@@ -23,6 +23,7 @@ window.$a = {}; //custom app helper
 
 $(document).ready(function(){
     tooltipInit();
+    //applyCss();
 });
 
 function tooltipInit(){
@@ -53,6 +54,30 @@ function rand(min,max)
 
 function uLoginOauth(token){
     angular.element('[x-ng-controller="MainController"]').scope().uLogin(token);
+}
+
+//------------------------------------------------ CSS -----------------------------------------------------
+
+function applyCss(){
+    var cat_link = angular.element('.cat_link');
+    cat_link.mouseover(function(){
+        console.log('mouseover');
+        var el = angular.element(this);
+        if(el.hasClass('play_unhover')) el.removeClass('play_unhover');
+        el.addClass('play_hover');
+        setTimeout(function(){
+            if(el.hasClass('play_hover')) el.removeClass('play_hover');
+        },1000);
+    });
+    cat_link.mouseout(function(){
+        console.log('mouseout');
+        var el = angular.element(this);
+        if(el.hasClass('play_hover')) el.removeClass('play_hover');
+        el.addClass('play_unhover');
+        setTimeout(function(){
+            if(el.hasClass('play_unhover')) el.removeClass('play_unhover');
+        },1000);
+    });
 }
 
 //------------------------------------------------ Prototypes ----------------------------------------------

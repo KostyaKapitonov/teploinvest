@@ -1,4 +1,4 @@
-ANTALEX.directive('ckEditor', [function () {
+MYAPP.directive('ckEditor', [function () {
     return {
         require: '?ngModel',
         restrict: 'C',

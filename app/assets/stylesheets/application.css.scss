@@ -101,6 +101,7 @@ a {
 
 .head_panel div.head_spacer span{
   padding: 8px;
+  transition: all .1s ease-in;
 }
 
 .head_panel a:hover div.head_spacer span{
@@ -320,15 +321,27 @@ a.head_button:disabled,
   text-indent: 0px;
 }
 
+.edit_button_links{
+  padding: 2px;
+  margin: 4px;
+  font-size: 15px;
+}
+
 .center {
   max-width: 687px;
 }
 
-.center p {
-//  text-indent: 20px;
-}
 .center a {
-  color: #905;
+  color: darkblue;
+  background: #cef;
+  padding: 3px;
+  border: none;
+  @include b-radius(7px);
+}
+
+.center a:hover {
+  background-color: #fef;
+  color: blue;
 }
 
 hr {
@@ -350,7 +363,7 @@ hr {
 
 .assortment {
   width: 20%;
-  padding: 15px;
+  padding: 5px;
   border-right: 2px solid;
   border-color: deepskyblue;
 }
@@ -489,13 +502,14 @@ td.total_sum{
   @include b-radius(8px);
   background-color: $bg_default;
   border: 1px solid deepskyblue;
+  transition: all .2s ease-in;
+  cursor: pointer;
 }
 
 .login a:hover {
-  cursor: pointer;
-  color:#00f;
+  color: #def;
   border: 1px solid #05f;
-  background-color: #bdf;
+  background-color: #579;
 }
 
 fieldset {
@@ -529,8 +543,13 @@ table.reg_info ul {
   float: right;
 }
 
-p.cntr {
+p.cntr , div.cntr{
   text-align: center;
+}
+
+div.cntr {
+  text-align: center;
+  margin: 0 auto;
 }
 //span.cntr {
 //  margin: 0, auto;
@@ -630,8 +649,7 @@ b.name{
   font-size: 14px;
 }
 
-.jq_tooltip b.green,
-b.green{
+.jq_tooltip b.green{
   color: #0f0;
 }
 
@@ -640,12 +658,16 @@ b.red {
   color: #ff0000;
 }
 
+.only_admin_info b.green {
+  color: green;
+}
+
 .only_admin_info {
   @include b-radius(10px);
   margin: auto;
-  background-color: #ddccbb;
   padding: 10px;
   width:  310px;
+  background-color: #cde;
 }
 
 .only_admin_info span{
@@ -781,13 +803,14 @@ table.content {
   -webkit-box-shadow: 0px 0px 15px 2px lightslategrey;
   -moz-box-shadow: 0px 0px 15px 2px lightslategrey;
   box-shadow: 0px 0px 15px 2px lightslategrey;
+  transition: all .1s ease-in;
 }
 
 .pr_list_block:hover {
   border-color: #a5f;
-  -webkit-box-shadow: 0px 0px 15px 2px #29f;
-  -moz-box-shadow: 0px 0px 15px 2px #29f;
-  box-shadow: 0px 0px 15px 2px #29f;
+  -webkit-box-shadow: 0px 0px 25px 2px #29f;
+  -moz-box-shadow: 0px 0px 25px 2px #29f;
+  box-shadow: 0px 0px 25px 2px #29f;
 }
 
 div.img_fix_block {
@@ -811,6 +834,7 @@ div.img_fix_block image {
 
 p.small_descr {
   margin-left: 165px;
+  font-size: 14;
 }
 
 div.text_hidener{
@@ -829,4 +853,28 @@ div.text_hidener{
   background: -ms-linear-gradient(top, rgba(240,230,235,0) 0%, rgba(240,230,235,1) 100%);
   background: linear-gradient(to bottom, rgba(240,230,235,0) 0%, rgba(240,230,235,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0e6eb', endColorstr='#f0e6eb', GradientType=0 );
+}
+
+.cats_block {
+//  border: 1px solid deepskyblue;
+}
+
+.cats_block a{
+  text-decoration: none;
+}
+
+.cats_block h4 {
+  text-align: center;
+  padding: 5px;
+  @include b-radius(10px);
+  color: #def;
+  border: 2px solid #579;
+  background-color: #579;
+  transition: all .2s ease-in;
+}
+
+.cats_block a:hover h4 {
+  color: blue;
+  border: 2px solid blue;
+  background-color: #fce;
 }

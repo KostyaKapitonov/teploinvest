@@ -1,4 +1,4 @@
-ANTALEX.controller('CartListController', ['$scope', '$location', 'Cart', '$filter',
+MYAPP.controller('CartListController', ['$scope', '$location', 'Cart', '$filter',
 function($scope, $location, Cart, $filter) {
 
     $scope.selected_carts = [];

@@ -1,4 +1,4 @@
-ANTALEX.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart',
+MYAPP.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart',
 function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter, Cart) {
 
     $scope.searchProcessing = false;

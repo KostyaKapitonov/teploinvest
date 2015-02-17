@@ -1,4 +1,4 @@
-%html{'x-ng-app'=>'antalex'}
+%html{'x-ng-app'=>'myapp'}
   %head
     %link{rel: 'shortcut icon', href: image_path('favicon.png')}
     %title
@@ -64,16 +64,33 @@
                 .tdBox
                   = link_to '<div class="head_spacer"><span>Заказы</span></div>'.html_safe, '/carts'
 
-                  -#
-                  -#
-                  -#
-                  -#
 
       %div.content
         %table.content
           %tbody
             %tr
               %td.assortment{'x-ng-hide'=>'form_displayed'}
+
+                .new_menu_style
+                  .cats_block{'x-ng-repeat'=>'cat in cats_list | orderBy:\'name\''}
+                    %a.cat_link{'x-ng-href'=>products_path+'?category={{cat.id}}#glob'}
+                      %h4
+                        {{cat.name}}
+                    {{cat.id}}
+                    .slider{'x-ng-show'=>'current_cat == cat.id'}
+                      .sub_cats_block{'x-ng-repeat'=>'sub_cat in cat.sub_cats | orderBy:\'name\''}
+                        %h5
+                          %a{'x-ng-href'=>products_path+'?category={{cat.id}}&sub_cat={{sub_cat.id}}#glob'}
+                            {{sub_cat.name}}
+                        %ul.alt_firms_block
+                          %li{'x-ng-repeat'=>'firm in sub_cat.firms | orderBy:\'name\''}
+                            %a{'x-ng-href'=>products_path+'?sub_cat={{sub_cat.id}}&firm={{firm.id}}&category={{cat.id}}#glob'}
+                              {{firm.name}}
+                      %ul.alt_firms_block
+                        %li{'x-ng-repeat'=>'firm in cat.firms | orderBy:\'name\''}
+                          %a{'x-ng-href'=>products_path+'?firm={{firm.id}}&category={{cat.id}}#glob'}
+                            {{firm.name}}
+
                 .sortTypeBlock
                   Сортировка:
                   %br

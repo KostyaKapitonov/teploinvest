@@ -1,5 +1,5 @@
 // Set available routes to prevent 404 or forcing redirect
-ANTALEX.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+MYAPP.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/products', {
             templateUrl: 'products.html',
@@ -22,6 +22,22 @@ ANTALEX.config(['$routeProvider', '$locationProvider', function($routeProvider, 
             controller: 'MainPageController'
         })
         .when('/contacts', {
+            templateUrl: '/main_content.html',
+            controller: 'MainPageController'
+        })
+        .when('/about', {
+            templateUrl: '/main_content.html',
+            controller: 'MainPageController'
+        })
+        .when('/price_list', {
+            templateUrl: '/main_content.html',
+            controller: 'MainPageController'
+        })
+        .when('/payment_and_delivery', {
+            templateUrl: '/main_content.html',
+            controller: 'MainPageController'
+        })
+        .when('/installation', {
             templateUrl: '/main_content.html',
             controller: 'MainPageController'
         })

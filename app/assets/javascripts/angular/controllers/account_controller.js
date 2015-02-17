@@ -1,4 +1,4 @@
-ANTALEX.controller('AccountController', ['$scope', '$location', 'User',
+MYAPP.controller('AccountController', ['$scope', '$location', 'User',
 function($scope, $location, User) {
 
     $scope.showErrors = false; //User.account()

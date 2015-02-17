@@ -1,4 +1,4 @@
-ANTALEX.controller('SettingController', ['$scope', '$location', 'Setting', 'Cart',
+MYAPP.controller('SettingController', ['$scope', '$location', 'Setting', 'Cart',
 function($scope, $location, Setting, Cart) {
 
     $scope.page_name = $location.search().page;
@@ -9,6 +9,10 @@ function($scope, $location, Setting, Cart) {
     $scope.$parent.loadZones(function(res){
         $scope.zones = res;
     });
+
+    $scope.hide_menu = function(){
+        $scope.$parent.form_displayed = true;
+    };
 
     $scope.genUnicId = function(){
         if(!$scope.idCounter)$scope.idCounter=0;

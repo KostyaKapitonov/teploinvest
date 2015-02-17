@@ -1,4 +1,4 @@
-ANTALEX.controller('CartViewController', ['$scope', '$location', 'Cart', '$routeParams',
+MYAPP.controller('CartViewController', ['$scope', '$location', 'Cart', '$routeParams',
 function($scope, $location, Cart, $routeParams) {
 
     $scope.client = null;

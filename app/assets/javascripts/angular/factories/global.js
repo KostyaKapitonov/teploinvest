@@ -1,4 +1,4 @@
-ANTALEX.factory('Global', ['$resource', function($resource) {
+MYAPP.factory('Global', ['$resource', function($resource) {
     return $resource('/:action', null,
         {
             main: {params: {format:'json', action: 'main_content'}},

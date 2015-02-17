@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def contacts
+  def loading
   end
 
   def index

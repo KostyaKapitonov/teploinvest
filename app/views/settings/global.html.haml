@@ -29,13 +29,27 @@
     %table{style:'width: 100%;'}
       %tr
         %td{colspan: 3, style: 'padding: 10px 0px'}
-          Редактировать содержимое:
-          %a.button{'x-ng-href'=>page_editor_settings_path(page: 'main_page_text')}
-            Главной страницы
-          %a.button{'x-ng-href'=>page_editor_settings_path(page: 'contacts_text')}
-            Контактов
+          %p.cntr
+            Редактировать содержимое:
+      %tr.edit_button_links
+        %td{colspan: 3, style: 'padding: 10px 0px'}
+          .cntr
+            %a.button{'x-ng-href'=>page_editor_settings_path(page: 'main_page_text')}
+              Главной страницы
+            %a.button{'x-ng-href'=>page_editor_settings_path(page: 'contacts_text')}
+              Контактов
+            %a.button{'x-ng-href'=>page_editor_settings_path(page: 'about_text')}
+              О нас
+            %a.button{'x-ng-href'=>page_editor_settings_path(page: 'price_list_text')}
+              Прайс-листы
+            %a.button{'x-ng-href'=>page_editor_settings_path(page: 'payment_and_delivery_text')}
+              Оплата и доставка
+            %a.button{'x-ng-href'=>page_editor_settings_path(page: 'installation_text')}
+              Монтаж
+          %br
+          %hr
       %tr
-        =table_row 'Обновлять<br/>курс $'.html_safe, (tag :input, type: 'checkbox', 'x-ng-change' => 'toggle_ra()', 'x-ng-model' => 'setting.recalculatable')+'<p class="input_desc">Включить автоматическое обновление курса $ и пересчёт на его основе стоимости товаров в рублях (зависящий от курса $)</p>'.html_safe
+        =table_row 'Обновлять<br/>курсы валют'.html_safe, (tag :input, type: 'checkbox', 'x-ng-change' => 'toggle_ra()', 'x-ng-model' => 'setting.recalculatable')+'<p class="input_desc">Включить автоматическое обновление курса $ и пересчёт на его основе стоимости товаров в рублях (зависящий от курса $)</p>'.html_safe
       %tr
         =table_row 'Сортировка<br/>по умолчанию'.html_safe, (tag :select, 'x-ng-change' => 'toggle_dst()', 'x-ng-model' => 'new_default_sort_type', 'x-ng-options'=>'st.val as st.name for st in sortTypes')
       %tr

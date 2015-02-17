@@ -1,5 +1,5 @@
 
-ANTALEX.filter("onlyConfirmed", function() {
+MYAPP.filter("onlyConfirmed", function() {
     return function(input) {
         var res =[];
         input.each(function(p){

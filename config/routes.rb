@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
   root :to => 'products#main'
-  get '/contacts' => 'products#contacts'
+  get '/contacts' => 'products#loading'
+  get '/about' => 'products#loading'
+  get '/price_list' => 'products#loading'
+  get '/payment_and_delivery' => 'products#loading'
+  get '/installation' => 'products#loading'
 
   resource :carts, only: [:index] do
     get :edit

@@ -1,4 +1,4 @@
-ANTALEX.factory('Products', ['$resource', function($resource) {
+MYAPP.factory('Products', ['$resource', function($resource) {
     return $resource('/products/:id/:action', {id: '@id'},
         {
            'update': {method: 'PUT'},

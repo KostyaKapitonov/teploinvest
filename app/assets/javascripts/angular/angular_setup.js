@@ -1,5 +1,5 @@
-var ANTALEX = angular.module('antalex', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise','angularUtils.directives.dirPagination']);
-ANTALEX.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll',
+var MYAPP = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise','angularUtils.directives.dirPagination']);
+MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll',
     function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll) {
 
         $scope.loadFinished = false;
@@ -13,6 +13,39 @@ ANTALEX.controller('MainController',['$scope', '$routeParams', '$location', 'Glo
         $scope.$parent.selectedSearch = {};
         $scope.users = [];
         $scope.first_load = true;
+
+        $scope.cats_list = [];
+
+        $scope.refresh_div_visability = function(){
+            console.log('refresh_div_visability');
+            console.log($location.search().category);
+            console.log($location.search().category);
+            $scope.current_cat = $location.search().category;
+        };
+
+
+//        angular.element('td.assortment a, td.assortment h4').on('click',function(){
+//            $scope.refresh_div_visability();
+//        });
+
+        // test data start
+        ['Котлы','Водонагреватели'].each(function(c,i){
+            var cat = {name: c, id:i+29};
+            var sub_cat = {};
+            cat.sub_cats = [];
+            ['Накопительные','Газовые','Электрические'].each(function(sc,ii){
+                sub_cat = {name: sc, id: ii+i};
+                sub_cat.firms = [];
+                var firm = {};
+                ['Ariston', 'Bosch', 'Gorenie', 'Thermex'].each(function(f,iii){
+                    firm = {name: f, id: iii+ii+i};
+                    sub_cat.firms.push(firm);
+                });
+                cat.sub_cats.push(sub_cat);
+            });
+            $scope.cats_list.push(cat);
+        });
+        // test data end
 
         function checkLS(){
             var pathname = localStorage.getItem('pathname');
@@ -69,6 +102,7 @@ ANTALEX.controller('MainController',['$scope', '$routeParams', '$location', 'Glo
             $scope.paramsPart = ($scope.selectedFirm ? '?firm='+$scope.selectedFirm : '')+
                 ($scope.selectedCategory ? '&category='+$scope.selectedCategory : '');
             $anchorScroll();
+            $scope.refresh_div_visability();
         });
 
         function bindPositionDataFromProduct(carts){
@@ -489,12 +523,12 @@ ANTALEX.controller('MainController',['$scope', '$routeParams', '$location', 'Glo
         if(!$scope.currentUser) $scope.getUser();
     }]);
 
-ANTALEX.config([
+MYAPP.config([
     "$httpProvider", function($httpProvider) {
         $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
     }
 ]);
-ANTALEX.config(['AuthProvider', function(AuthProvider) {
+MYAPP.config(['AuthProvider', function(AuthProvider) {
     AuthProvider.ignoreAuth(true);
 }]);
 
