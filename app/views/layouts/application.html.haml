@@ -73,44 +73,48 @@
 
                 .new_menu_style
                   .cats_block{'x-ng-repeat'=>'cat in cats_list | orderBy:\'name\''}
-                    %a.cat_link{'x-ng-href'=>products_path+'?category={{cat.id}}#glob'}
-                      %h4
-                        {{cat.name}}
-                    {{cat.id}}
-                    .slider{'x-ng-show'=>'current_cat == cat.id'}
+                    .button_box
+                      %a.cat_link{'x-ng-href'=>products_path+'?category={{cat.id}}#glob'}
+                        %h4
+                          {{cat.name}}
+                    .slider
+                      -#{'x-ng-class'=>'{hidden_menu: (current_cat != cat.id)}'}
                       .sub_cats_block{'x-ng-repeat'=>'sub_cat in cat.sub_cats | orderBy:\'name\''}
-                        %h5
-                          %a{'x-ng-href'=>products_path+'?category={{cat.id}}&sub_cat={{sub_cat.id}}#glob'}
+                        %a{'x-ng-href'=>products_path+'?category={{cat.id}}&sub_cat={{sub_cat.id}}#glob'}
+                          %h5
                             {{sub_cat.name}}
-                        %ul.alt_firms_block
-                          %li{'x-ng-repeat'=>'firm in sub_cat.firms | orderBy:\'name\''}
-                            %a{'x-ng-href'=>products_path+'?sub_cat={{sub_cat.id}}&firm={{firm.id}}&category={{cat.id}}#glob'}
-                              {{firm.name}}
+                        .sub_slider
+                          -#{'x-ng-show'=>'current_cat == cat.id && current_sub_cat == sub_cat.id'}
+                          %ul.alt_firms_block
+                            %li{'x-ng-repeat'=>'firm in sub_cat.firms | orderBy:\'name\''}
+                              %a{'x-ng-href'=>products_path+'?sub_cat={{sub_cat.id}}&firm={{firm.id}}&category={{cat.id}}#glob'}
+                                {{firm.name}}
                       %ul.alt_firms_block
                         %li{'x-ng-repeat'=>'firm in cat.firms | orderBy:\'name\''}
                           %a{'x-ng-href'=>products_path+'?firm={{firm.id}}&category={{cat.id}}#glob'}
                             {{firm.name}}
 
-                .sortTypeBlock
-                  Сортировка:
-                  %br
-                  %select{'x-ng-model'=>'setting.default_sort_type', 'x-ng-options'=>'st.val as st.name for st in sortTypes', 'x-ng-change'=>'handleRebuild()'}
-                .firm_block{'x-ng-repeat'=>'firm in assortmentList | orderBy:\'name\'', 'x-ng-show'=>'setting.default_sort_type == "firm"'}
-                  %h4
-                    %a{'x-ng-href'=>products_path+'?firm={{firm.id}}#glob'}
-                      {{firm.name}}
-                  %ul
-                    %li{'x-ng-repeat'=>'cat in firm.catigories | orderBy:\'name\''}
-                      %a{'x-ng-href'=>products_path+'?firm={{firm.id}}&category={{cat.id}}#glob'}
-                        {{cat.name}}
-                .firm_block{'x-ng-repeat'=>'cat in assortmentList | orderBy:\'name\'', 'x-ng-show'=>'setting.default_sort_type == "cat"'}
-                  %h4
-                    %a{'x-ng-href'=>products_path+'?category={{cat.id}}#glob'}
-                      {{cat.name}}
-                  %ul
-                    %li{'x-ng-repeat'=>'firm in cat.firms | orderBy:\'name\''}
-                      %a{'x-ng-href'=>products_path+'?category={{cat.id}}&firm={{firm.id}}#glob'}
+                .hd{style:'display: none;'}
+                  .sortTypeBlock
+                    Сортировка:
+                    %br
+                    %select{'x-ng-model'=>'setting.default_sort_type', 'x-ng-options'=>'st.val as st.name for st in sortTypes', 'x-ng-change'=>'handleRebuild()'}
+                  .firm_block{'x-ng-repeat'=>'firm in assortmentList | orderBy:\'name\'', 'x-ng-show'=>'setting.default_sort_type == "firm"'}
+                    %h4
+                      %a{'x-ng-href'=>products_path+'?firm={{firm.id}}#glob'}
                         {{firm.name}}
+                    %ul
+                      %li{'x-ng-repeat'=>'cat in firm.catigories | orderBy:\'name\''}
+                        %a{'x-ng-href'=>products_path+'?firm={{firm.id}}&category={{cat.id}}#glob'}
+                          {{cat.name}}
+                  .firm_block{'x-ng-repeat'=>'cat in assortmentList | orderBy:\'name\'', 'x-ng-show'=>'setting.default_sort_type == "cat"'}
+                    %h4
+                      %a{'x-ng-href'=>products_path+'?category={{cat.id}}#glob'}
+                        {{cat.name}}
+                    %ul
+                      %li{'x-ng-repeat'=>'firm in cat.firms | orderBy:\'name\''}
+                        %a{'x-ng-href'=>products_path+'?category={{cat.id}}&firm={{firm.id}}#glob'}
+                          {{firm.name}}
 
               %td
                 .main{'ng-view'=>''}

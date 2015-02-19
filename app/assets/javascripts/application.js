@@ -9,6 +9,7 @@
 //= require angular-route.min
 //= require angular-resource.min
 //= require angular-sanitize.min
+//= require angular-animate.min
 //= require angular/angular_setup
 //= require ckeditor-jquery
 //= require blockui

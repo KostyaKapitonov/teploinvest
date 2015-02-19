@@ -1,4 +1,4 @@
-var MYAPP = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise','angularUtils.directives.dirPagination']);
+var MYAPP = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise','angularUtils.directives.dirPagination', 'ngAnimate']);
 MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll',
     function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll) {
 
@@ -13,13 +13,13 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
         $scope.$parent.selectedSearch = {};
         $scope.users = [];
         $scope.first_load = true;
+        $scope.current_cat = null;
+        $scope.current_sub_cat = null;
+        $scope.current_firm = null;
 
         $scope.cats_list = [];
 
         $scope.refresh_div_visability = function(){
-            console.log('refresh_div_visability');
-            console.log($location.search().category);
-            console.log($location.search().category);
             $scope.current_cat = $location.search().category;
         };
 
