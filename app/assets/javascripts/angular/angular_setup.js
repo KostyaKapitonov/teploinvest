@@ -19,8 +19,27 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
 
         $scope.cats_list = [];
 
-        $scope.refresh_div_visability = function(){
+        $scope.refresh_div_visibility = function(){
             $scope.current_cat = $location.search().category;
+            $scope.current_sub_cat = $location.search().sub_cat;
+            $scope.current_firm = $location.search().firm;
+
+            var assortment = angular.element('.assortment');
+//            assortment.find('.cats_block:not(.firm_'+ $scope.current_firm +'):visible').slideToggle();
+//            assortment.find('.cats_block:not(.sub_cat_'+ $scope.current_sub_cat +'):visible').slideToggle();
+//            assortment.find('.cats_block:not(.cat_'+ $scope.current_firm +'):visible').slideToggle();
+
+            var other_cats =  assortment.find('.cats_block:not(.cat_'+ $scope.current_cat +') .slider:visible');
+            var other_sub_cats = other_cats.find('.sub_cats_block:not(.sub_cat_'+ $scope.current_sub_cat +') .sub_slider:visible');
+            var other_firms = assortment.find('li.active');
+            // TODO: continue logic to slide and show active effects
+
+//
+//            if($scope.current_cat) assortment.find('.cats_block.cat_'+ $scope.current_cat +':not(:visible)').slideToggle();
+//            if($scope.current_sub_cat) assortment.find('.cats_block .sub_cat_'+ $scope.current_sub_cat +':not(:visible)').slideToggle();
+//            if($scope.current_firm) assortment.find('.cats_block .firm_'+ $scope.current_firm +':not(:visible)').slideToggle();
+
+            // .slideToggle();
         };
 
 
@@ -102,7 +121,7 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             $scope.paramsPart = ($scope.selectedFirm ? '?firm='+$scope.selectedFirm : '')+
                 ($scope.selectedCategory ? '&category='+$scope.selectedCategory : '');
             $anchorScroll();
-            $scope.refresh_div_visability();
+            $scope.refresh_div_visibility();
         });
 
         function bindPositionDataFromProduct(carts){
