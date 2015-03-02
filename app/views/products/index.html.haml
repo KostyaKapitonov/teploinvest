@@ -14,10 +14,10 @@
               .img_fix_block
                 %img.rounded{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image'}
                 %img.rounded{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}'}
-                {{product.price | currency:"":2}} руб.
+                {{product.rub_price | currency:"":2}} руб.
           %div
-            %p.small_descr
-              {{product.description}}
+            .small_descr
+              %div{'x-ng-bind-html'=>'htmlSafe(product.description)'}
         %div.text_hidener
 
   %tr

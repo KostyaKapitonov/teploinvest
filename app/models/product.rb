@@ -15,28 +15,29 @@ class Product < ActiveRecord::Base
     product.update(params)
   end
 
-  def self.recalculate_by_usd_rate(usd, carts)
-    products = Product.where(fixed_rub_price: false).all
-    Product.skip_filter = true
-    products.each do |p|
-      p.update(price: ('%.2f' % (p.usd_price*usd)).to_f)
-      carts.each do |cart|
-        cart.positions.each do |pos|
-          if p.id == pos.id
-            pos.price = p.price
-            pos.save
-          end
-        end
-      end
-    end
-    Product.skip_filter = false
+  def self.recalculate_by_usd_eur_rate(usd, eur, carts)
+    # products = Product.all
+    # Product.skip_filter = true
+    # products.each do |p|
+    #   p.update(price: ('%.2f' % (p.usd_price*usd)).to_f) if p.valute == 'USD'
+    #   p.update(price: ('%.2f' % (p.usd_price*usd)).to_f) if p.valute == 'EUR'
+    #   carts.each do |cart|
+    #     cart.positions.each do |pos|
+    #       if p.id == pos.id
+    #         pos.price = p.price
+    #         pos.save
+    #       end
+    #     end
+    #   end
+    # end
+    # Product.skip_filter = false
   end
 
   private
 
   def calculate_rub_price
     setting = Setting.first
-    if setting.recalculatable && !self.fixed_rub_price && !self.usd_price.blank?
+    if setting.recalculatable && self.valute != 'RUB'
       self.price = ('%.2f' % (self.usd_price.to_f*setting.usd_rate.to_f)).to_f
     end
   end

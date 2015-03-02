@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217074530) do
+ActiveRecord::Schema.define(version: 20150302092450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20150217074530) do
     t.datetime "confirmation_date"
     t.boolean  "self_delivery",     default: false
     t.string   "address"
+    t.float    "eur_rate"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -59,17 +60,17 @@ ActiveRecord::Schema.define(version: 20150217074530) do
     t.integer  "type"
     t.float    "price"
     t.text     "description"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "category_id"
     t.integer  "firm_id"
     t.string   "image"
     t.float    "usd_price"
-    t.boolean  "fixed_rub_price", default: false
-    t.boolean  "available",       default: true
-    t.boolean  "exist",           default: true
-    t.boolean  "hidden",          default: false
+    t.boolean  "available",   default: true
+    t.boolean  "exist",       default: true
+    t.boolean  "hidden",      default: false
     t.integer  "sub_cat_id"
+    t.string   "valute",      default: "RUB"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 20150217074530) do
     t.text     "price_list_text"
     t.text     "payment_and_delivery_text"
     t.text     "installation_text"
+    t.float    "eur_rate"
   end
 
   create_table "statuses", force: :cascade do |t|

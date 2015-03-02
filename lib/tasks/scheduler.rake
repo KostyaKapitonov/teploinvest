@@ -26,15 +26,15 @@ task :recalculate_exchange_rates => :environment do
         end
       end
       raise 'usd.blank' if usd.blank? || usd == 0.0
-      raise 'usd.blank' if eur.blank? || eur == 0.0 # todo: continue logic for euro
-      if s.usd_rate != usd
-        s.update(usd_rate: usd) unless s.blank?
+      raise 'usd.blank' if eur.blank? || eur == 0.0
+      if s.usd_rate != usd || s.eur_rate != eur
+        s.update(usd_rate: usd, eur_rate: eur) unless s.blank?
         carts = Cart.where(confirmed: false).all
-        carts.update_all(usd_rate: usd)
-        Product.recalculate_by_usd_rate(usd, carts)
-        p 'Success! (new USD rate applied)'
+        carts.update_all(usd_rate: usd, eur_rate: eur)
+        # Product.recalculate_by_usd_eur_rate(usd, eur, carts)
+        p 'Success! (new USD and EUR rates applied)'
       else
-        p 'Success! (USD rate is already actual)'
+        p 'Success! (USD and EUR rates are already actual)'
       end
     end
   rescue Exception => e

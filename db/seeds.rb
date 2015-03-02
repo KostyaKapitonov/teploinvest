@@ -107,15 +107,16 @@ product_count.times do
   cat = cats.sample
   firm = firms.sample
   sub_cat = nil
+  actual_sub_cats = []
   sub_cats.each do|sc|
     if sc.category_id == cat.id
-      sub_cat = sc
+      actual_sub_cats << sc
     end
   end
   Product.create(
       name: "#{cat.name} #{(sub_cat.blank? ? '' : sub_cat.name)} #{firm.name} - #{name2.sample}",
       category: cat,
-      sub_cat: sub_cat,
+      sub_cat: actual_sub_cats.sample,
       firm: firm,
       description: descriptions.sample,
       usd_price: rnd(11,88),

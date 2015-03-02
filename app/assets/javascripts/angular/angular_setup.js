@@ -48,6 +48,7 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
 //        });
 
         // test data start
+        /*
         ['Котлы','Водонагреватели'].each(function(c,i){
             var cat = {name: c, id:i+29};
             var sub_cat = {};
@@ -64,6 +65,7 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             });
             $scope.cats_list.push(cat);
         });
+        */
         // test data end
 
         function checkLS(){
@@ -353,10 +355,11 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 if(addToCalbacksQ('load_products',callback)){
                     someLoadStarted('load_products');
                     Products.getAll(function(data){
-                        $scope.products = data.products;
+                        $scope.products = format_price_to_rubles(data.products);
                         $scope.categories = data.categories;
                         $scope.firms = data.firms;
-                        $scope.bindAssortment(true);
+                        $scope.sub_cats = data.sub_cats;
+                        $scope.bindAssortment();
                         respondToAllCalbacks('load_products',$scope.products);
                         someLoadFinished('load_products');
                         if($scope.currentUser && $scope.currentUser.is_admin) $scope.load_carts();
@@ -365,11 +368,20 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             }
         };
 
+        function format_price_to_rubles(products){
+            products.each(function(p){
+                if(p.valute == 'RUB') p.rub_price = p.price;
+                if(p.valute == 'USD') p.rub_price = p.price * $scope.setting.usd_rate;
+                if(p.valute == 'EUR') p.rub_price = p.price * $scope.setting.eur_rate;
+            });
+            return products;
+        }
+
         $scope.handleRebuild = function(){
             $scope.bindAssortment();
         };
 
-        $scope.bindAssortment = function(first_build){
+        $scope.bindAssortment = function(){
             $scope.admin = $a.any($scope.currentUser) && $scope.currentUser.is_admin;
             if($scope.admin) $scope.product_list = $scope.products;
             else {
@@ -379,6 +391,39 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 });
             }
 
+            $scope.product_list.each(function(p){
+                var cat = $scope.cats_list.whereId(p.category_id);
+                var new_cat = false;
+                var new_sub_cat = false;
+                var new_firm = false;
+                if(!cat || !cat.id){
+                    cat = $scope.categories.whereId(p.category_id);
+                    cat.sub_cats = [];
+                    cat.firms = [];
+                    new_cat = true;
+                }
+                var sub_cat = cat.sub_cats.whereId(p.sub_cat_id);
+                if((!sub_cat || !sub_cat.id) && p.sub_cat_id){
+                    sub_cat = $scope.sub_cats.whereId(p.sub_cat_id);
+                    sub_cat.firms = [];
+                    new_sub_cat = true;
+                }
+                var firm = p.sub_cat_id ? sub_cat.firms.whereId(p.firm_id) : cat.firms.whereId(p.firm_id);
+                if(!firm || !firm.id){
+                    firm = $scope.firms.whereId(p.firm_id);
+                    firm.products = [p];
+                    new_firm = true;
+                } else firm.products.push(p);
+                if(new_firm){
+                    if(p.sub_cat_id) sub_cat.firms.push(firm);
+                    else cat.firms.push(firm);
+                }
+                if(new_sub_cat) cat.sub_cats.push(sub_cat);
+                if(new_cat) $scope.cats_list.push(cat);
+            });
+            console.log($scope.cats_list);
+
+            /*
             $scope.assortment = {};
             $scope.assortmentList = [];
             if($scope.setting.default_sort_type == 'firm'){
@@ -458,7 +503,7 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                         }
                     );
                 });
-            }
+            }*/
         };
 
         $scope.getSettings = function(){

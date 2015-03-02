@@ -194,7 +194,7 @@ fieldset select, fieldset input,
 table.in_form td.input input:focus,
 table.in_form td.input select:focus,
 fieldset select:focus, fieldset input:focus,
-.sortTypeBlock select:focus,
+.sortTypeBlock select:focus, select.small:focus,
 .ant_input:focus {
   //background-color: $backgroundColorHovered;
   border-color: $buttonBorder;
@@ -203,7 +203,7 @@ fieldset select:focus, fieldset input:focus,
 table.in_form td.input input:disabled,
 table.in_form td.input select:disabled,
 fieldset select:disabled, fieldset input:disabled,
-.sortTypeBlock select:disabled,
+.sortTypeBlock select:disabled,, select.small:disabled,
 .ant_input:disabled {
   border-color: darkgray;
   background-color: lightgrey;
@@ -630,11 +630,11 @@ p.input_desc {
   @include b-radius(10px);
 }
 
-.sortTypeBlock{
+.sortTypeBlock, {
   font-size: 12px;
 }
 
-.sortTypeBlock select{
+.sortTypeBlock select, select.small{
   font-size: 12px;
   border: 1px solid $inputs-border;
   border-radius: 6px;
@@ -841,7 +841,7 @@ div.img_fix_block image {
   margin-bottom: 6px;
 }
 
-p.small_descr {
+.small_descr {
   margin-left: 165px;
   font-size: 14;
 }
@@ -956,4 +956,9 @@ img.header_sb {
   width: 100%;
 //  border-bottom-left-radius: 30px;
 //  border-bottom-right-radius: 30px;
+}
+
+table.in_form td.input select.half_width,
+table.in_form td.input input.half_width{
+  width: 70%;
 }
