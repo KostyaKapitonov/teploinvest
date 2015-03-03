@@ -19,54 +19,35 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
 
         $scope.cats_list = [];
 
-        $scope.refresh_div_visibility = function(){
+        $scope.refresh_div_visibility = function() {
             $scope.current_cat = $location.search().category;
             $scope.current_sub_cat = $location.search().sub_cat;
             $scope.current_firm = $location.search().firm;
 
             var assortment = angular.element('.assortment');
-//            assortment.find('.cats_block:not(.firm_'+ $scope.current_firm +'):visible').slideToggle();
-//            assortment.find('.cats_block:not(.sub_cat_'+ $scope.current_sub_cat +'):visible').slideToggle();
-//            assortment.find('.cats_block:not(.cat_'+ $scope.current_firm +'):visible').slideToggle();
+            var other_firms = assortment.find('li.active_firm');
+            other_firms.removeClass('active_firm');
 
-            var other_cats =  assortment.find('.cats_block:not(.cat_'+ $scope.current_cat +') .slider:visible');
-            var other_sub_cats = other_cats.find('.sub_cats_block:not(.sub_cat_'+ $scope.current_sub_cat +') .sub_slider:visible');
-            var other_firms = assortment.find('li.active');
-            // TODO: continue logic to slide and show active effects
+            if ($scope.current_cat) {
+                var current_cat = assortment.find('.cats_block.cat_' + $scope.current_cat + ' .slider');
+                if (current_cat.is(':hidden')) current_cat.slideToggle();
+                var current_sub_cat = null;
+                if ($scope.current_sub_cat) {
+                    current_sub_cat = current_cat.find('.sub_cats_block.sub_cat_' + $scope.current_sub_cat + ' .sub_slider');
+                    if (current_sub_cat.is(':hidden')) current_sub_cat.slideToggle();
 
-//
-//            if($scope.current_cat) assortment.find('.cats_block.cat_'+ $scope.current_cat +':not(:visible)').slideToggle();
-//            if($scope.current_sub_cat) assortment.find('.cats_block .sub_cat_'+ $scope.current_sub_cat +':not(:visible)').slideToggle();
-//            if($scope.current_firm) assortment.find('.cats_block .firm_'+ $scope.current_firm +':not(:visible)').slideToggle();
+                }
+                if ($scope.current_firm) {
+                    var current_firm = (current_sub_cat ? current_sub_cat : current_cat).find('li.firm_' + $scope.current_firm);
+                    if (!current_firm.hasClass('active_firm')) current_firm.addClass('active_firm');
+                }
+            }
 
-            // .slideToggle();
+            var other_cats = assortment.find('.cats_block:not(.cat_' + $scope.current_cat + ') .slider:visible');
+            var other_sub_cats = assortment.find('.sub_cats_block:not(.sub_cat_' + $scope.current_sub_cat + ') .sub_slider:visible');
+            other_sub_cats.slideToggle();
+            other_cats.slideToggle();
         };
-
-
-//        angular.element('td.assortment a, td.assortment h4').on('click',function(){
-//            $scope.refresh_div_visability();
-//        });
-
-        // test data start
-        /*
-        ['Котлы','Водонагреватели'].each(function(c,i){
-            var cat = {name: c, id:i+29};
-            var sub_cat = {};
-            cat.sub_cats = [];
-            ['Накопительные','Газовые','Электрические'].each(function(sc,ii){
-                sub_cat = {name: sc, id: ii+i};
-                sub_cat.firms = [];
-                var firm = {};
-                ['Ariston', 'Bosch', 'Gorenie', 'Thermex'].each(function(f,iii){
-                    firm = {name: f, id: iii+ii+i};
-                    sub_cat.firms.push(firm);
-                });
-                cat.sub_cats.push(sub_cat);
-            });
-            $scope.cats_list.push(cat);
-        });
-        */
-        // test data end
 
         function checkLS(){
             var pathname = localStorage.getItem('pathname');
@@ -119,10 +100,12 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
         $scope.$on('$routeChangeSuccess', function () {
             $scope.form_displayed =(/(^\/products\/new$|^\/products\/\d+\/edit$)/.test($location.path()));
             $scope.selectedFirm = $location.search().firm;
+            $scope.selectedSubCat = $location.search().sub_cat;
             $scope.selectedCategory = $location.search().category;
             $scope.paramsPart = ($scope.selectedFirm ? '?firm='+$scope.selectedFirm : '')+
+                ($scope.selectedSubCat ? '&sub_cat='+$scope.selectedSubCat : '')+
                 ($scope.selectedCategory ? '&category='+$scope.selectedCategory : '');
-            $anchorScroll();
+//            $anchorScroll(); // to scroll up ->>>
             $scope.refresh_div_visibility();
         });
 

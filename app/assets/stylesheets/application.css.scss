@@ -894,7 +894,7 @@ div.text_hidener{
 
 .assortment .slider{
   margin: 0 10 10 10;
-  border: 2px solid darkturquoise;
+  border: 2px solid #fef;
   border-top-width: 0px;
   padding: 1 0 0 0;
   background-color: antiquewhite;
@@ -961,4 +961,13 @@ img.header_sb {
 table.in_form td.input select.half_width,
 table.in_form td.input input.half_width{
   width: 70%;
+}
+
+.active_firm a{
+  background-color: #059;
+  padding: 4px;
+  margin-left: -4px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #aff !important;
 }
