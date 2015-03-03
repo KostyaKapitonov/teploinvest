@@ -73,7 +73,7 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
                     $a.info("Товар удалён");
                     $location.path('/products');
                 }
-            })
+            });
         });
     };
 

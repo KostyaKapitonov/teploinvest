@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302092450) do
+ActiveRecord::Schema.define(version: 20150303115852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20150302092450) do
     t.integer  "category_id"
     t.integer  "firm_id"
     t.string   "image"
-    t.float    "usd_price"
     t.boolean  "available",   default: true
     t.boolean  "exist",       default: true
     t.boolean  "hidden",      default: false

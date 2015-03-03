@@ -20,33 +20,41 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
         $scope.cats_list = [];
 
         $scope.refresh_div_visibility = function() {
-            $scope.current_cat = $location.search().category;
-            $scope.current_sub_cat = $location.search().sub_cat;
-            $scope.current_firm = $location.search().firm;
+            setTimeout(function(){
+                $scope.current_cat = $location.search().category;
+                $scope.current_sub_cat = $location.search().sub_cat;
+                $scope.current_firm = $location.search().firm;
 
-            var assortment = angular.element('.assortment');
-            var other_firms = assortment.find('li.active_firm');
-            other_firms.removeClass('active_firm');
+                var assortment = angular.element('.assortment');
+                var other_firms = assortment.find('li.active_firm');
+                other_firms.removeClass('active_firm');
+                assortment.find('h5.active, h4.active').removeClass('active');
 
-            if ($scope.current_cat) {
-                var current_cat = assortment.find('.cats_block.cat_' + $scope.current_cat + ' .slider');
-                if (current_cat.is(':hidden')) current_cat.slideToggle();
-                var current_sub_cat = null;
-                if ($scope.current_sub_cat) {
-                    current_sub_cat = current_cat.find('.sub_cats_block.sub_cat_' + $scope.current_sub_cat + ' .sub_slider');
-                    if (current_sub_cat.is(':hidden')) current_sub_cat.slideToggle();
-
+                if ($scope.current_cat) {
+                    var current_cat_wrapper = assortment.find('.cats_block.cat_' + $scope.current_cat);
+                    var current_cat_button = current_cat_wrapper.find('h4');
+                    current_cat_button.addClass('active');
+                    var current_cat = current_cat_wrapper.find('.slider');
+                    if (current_cat.is(':hidden')) current_cat.slideToggle();
+                    var current_sub_cat = null;
+                    if ($scope.current_sub_cat) {
+                        var current_sub_cat_wrapper = current_cat.find('.sub_cats_block.sub_cat_' + $scope.current_sub_cat);
+                        var current_sub_cat_button = current_sub_cat_wrapper.find('h5');
+                        current_sub_cat_button.addClass('active');
+                        current_sub_cat = current_sub_cat_wrapper.find('.sub_slider');
+                        if (current_sub_cat.is(':hidden')) current_sub_cat.slideToggle();
+                    }
+                    if ($scope.current_firm) {
+                        var current_firm = (current_sub_cat ? current_sub_cat : current_cat).find('li.firm_' + $scope.current_firm);
+                        if (!current_firm.hasClass('active_firm')) current_firm.addClass('active_firm');
+                    }
                 }
-                if ($scope.current_firm) {
-                    var current_firm = (current_sub_cat ? current_sub_cat : current_cat).find('li.firm_' + $scope.current_firm);
-                    if (!current_firm.hasClass('active_firm')) current_firm.addClass('active_firm');
-                }
-            }
 
-            var other_cats = assortment.find('.cats_block:not(.cat_' + $scope.current_cat + ') .slider:visible');
-            var other_sub_cats = assortment.find('.sub_cats_block:not(.sub_cat_' + $scope.current_sub_cat + ') .sub_slider:visible');
-            other_sub_cats.slideToggle();
-            other_cats.slideToggle();
+                var other_cats = assortment.find('.cats_block:not(.cat_' + $scope.current_cat + ') .slider:visible');
+                var other_sub_cats = assortment.find('.sub_cats_block:not(.sub_cat_' + $scope.current_sub_cat + ') .sub_slider:visible');
+                other_sub_cats.slideToggle();
+                other_cats.slideToggle();
+            },150);
         };
 
         function checkLS(){
@@ -89,7 +97,11 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                         if(!isAllFinished() && i < 30) refresh(i);
                         else {
                             if(i == 30) cl(['ERROR: $scope.loadInfo ',$scope.loadInfo]);
-                            setTimeout(function(){ $scope.$apply(function(){ $scope.loadFinishedCompletly = true; $a.done(); }); },1000);
+                            setTimeout(function(){ $scope.$apply(function(){
+                                $scope.loadFinishedCompletly = true;
+                                $a.done();
+                                setTimeout(function(){$scope.refresh_div_visibility();},100);
+                            }); },1000);
                             $location.path(pathname).search(search).hash(hash);
                         }
                     },100);
@@ -102,9 +114,9 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             $scope.selectedFirm = $location.search().firm;
             $scope.selectedSubCat = $location.search().sub_cat;
             $scope.selectedCategory = $location.search().category;
-            $scope.paramsPart = ($scope.selectedFirm ? '?firm='+$scope.selectedFirm : '')+
+            $scope.paramsPart = ($scope.selectedCategory ? '?category='+$scope.selectedCategory : '')+
                 ($scope.selectedSubCat ? '&sub_cat='+$scope.selectedSubCat : '')+
-                ($scope.selectedCategory ? '&category='+$scope.selectedCategory : '');
+                ($scope.selectedFirm ? '&firm='+$scope.selectedFirm : '');
 //            $anchorScroll(); // to scroll up ->>>
             $scope.refresh_div_visibility();
         });
@@ -207,7 +219,6 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                         $scope.load_products(function () {
                             $scope.carts = bindPositionDataFromProduct(res);
                             $scope.lookForActual();
-                            console.log(['period', $scope.period]);
                             respondToAllCalbacks('load_carts', $scope.carts);
                             someLoadFinished('load_carts');
                             if($scope.currentUser && $scope.currentUser.is_admin) $scope.getCountOfPandingCarts();
@@ -360,11 +371,9 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             return products;
         }
 
-        $scope.handleRebuild = function(){
-            $scope.bindAssortment();
-        };
-
         $scope.bindAssortment = function(){
+            $scope.product_list = null;
+            $scope.cats_list = [];
             $scope.admin = $a.any($scope.currentUser) && $scope.currentUser.is_admin;
             if($scope.admin) $scope.product_list = $scope.products;
             else {
@@ -381,112 +390,32 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 var new_firm = false;
                 if(!cat || !cat.id){
                     cat = $scope.categories.whereId(p.category_id);
-                    cat.sub_cats = [];
-                    cat.firms = [];
+                    cat = {id: cat.id, name: cat.name, sub_cats: [], firms: []};
                     new_cat = true;
                 }
                 var sub_cat = cat.sub_cats.whereId(p.sub_cat_id);
                 if((!sub_cat || !sub_cat.id) && p.sub_cat_id){
                     sub_cat = $scope.sub_cats.whereId(p.sub_cat_id);
-                    sub_cat.firms = [];
+                    sub_cat = {id: sub_cat.id, name: sub_cat.name, firms: []};
                     new_sub_cat = true;
                 }
-                var firm = p.sub_cat_id ? sub_cat.firms.whereId(p.firm_id) : cat.firms.whereId(p.firm_id);
+                var firm = sub_cat ? sub_cat.firms.whereId(p.firm_id) : cat.firms.whereId(p.firm_id);
                 if(!firm || !firm.id){
                     firm = $scope.firms.whereId(p.firm_id);
-                    firm.products = [p];
+                    firm = {id: firm.id, name: firm.name, count: 0/*, products: [p]*/};
                     new_firm = true;
-                } else firm.products.push(p);
+                } else {
+                    firm.count++;
+//                    firm.products.push(p);
+                }
                 if(new_firm){
-                    if(p.sub_cat_id) sub_cat.firms.push(firm);
+                    if(sub_cat) sub_cat.firms.push(firm);
                     else cat.firms.push(firm);
                 }
                 if(new_sub_cat) cat.sub_cats.push(sub_cat);
                 if(new_cat) $scope.cats_list.push(cat);
             });
-            console.log($scope.cats_list);
 
-            /*
-            $scope.assortment = {};
-            $scope.assortmentList = [];
-            if($scope.setting.default_sort_type == 'firm'){
-                $scope.product_list.each(function(p){
-                    $scope.categories.each(function(c){
-                        if(p.category_id == c.id){
-                            p.category_name = c.name;
-                            $scope.firms.each(function(f){
-                                if(p.firm_id == f.id){
-                                    p.firm_name = f.name;
-                                    if(!$scope.assortment[f.name]){
-                                        $scope.assortment[f.name] = {id: f.id};
-                                    }
-                                    if(!$scope.assortment[f.name][c.name]){
-                                        $scope.assortment[f.name][c.name] = {id: c.id};
-                                    }
-                                }
-                            })
-                        }
-                    });
-                });
-            } else {
-                $scope.product_list.each(function(p){
-                    $scope.firms.each(function(f){
-                        if(p.firm_id == f.id){
-                            p.firm_name = f.name;
-                            $scope.categories.each(function(c){
-                                if(p.category_id == c.id){
-                                    p.category_name = c.name;
-                                    if(!$scope.assortment[c.name]){
-                                        $scope.assortment[c.name] = {id: c.id};
-                                    }
-                                    if(!$scope.assortment[c.name][f.name]){
-                                        $scope.assortment[c.name][f.name] = {id: f.id};
-                                    }
-                                }
-                            })
-                        }
-                    });
-                });
-            }
-            if($scope.setting.default_sort_type == 'firm') {
-                Object.keys($scope.assortment).each(function (key) {
-                    var cats = [];
-                    Object.keys($scope.assortment[key]).each(function (subKey) {
-                        if (subKey != 'id') {
-                            cats.push({
-                                name: subKey,
-                                id: $scope.assortment[key][subKey].id
-                            });
-                        }
-                    });
-                    $scope.assortmentList.push(
-                        {
-                            name: key,
-                            id: $scope.assortment[key].id,
-                            catigories: cats
-                        }
-                    );
-                });
-            } else {
-                Object.keys($scope.assortment).each(function (key) {
-                    var firms = [];
-                    Object.keys($scope.assortment[key]).each(function (subKey) {
-                        if (subKey != 'id') {
-                            firms.push({
-                                name: subKey,
-                                id: $scope.assortment[key][subKey].id
-                            });
-                        }
-                    });
-                    $scope.assortmentList.push(
-                        {
-                            name: key,
-                            id: $scope.assortment[key].id,
-                            firms: firms
-                        }
-                    );
-                });
-            }*/
         };
 
         $scope.getSettings = function(){

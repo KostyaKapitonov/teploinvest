@@ -28,6 +28,7 @@ function($scope, $routeParams, Products, $location, Global) {
         $scope.$parent.sub_cats.each(function(sc){$scope.sub_cats.push(sc)});
         if($scope.isNew){
             $scope.product = {exist: true};
+            $scope.product.valute = 'RUB';
             if( $scope.categories.length) $scope.product.category_id = $routeParams.category ?
                 $scope.categories.whereId($routeParams.category).id : $scope.categories[0].id;
             if( $scope.firms.length) $scope.product.firm_id = $routeParams.firm ?
@@ -38,29 +39,20 @@ function($scope, $routeParams, Products, $location, Global) {
 
     }
 
-    $scope.priceChanged = function(valute){
-        if(valute == 'usd'){
-            $scope.product.usd_price = $a.toFloat($scope.product.usd_price);
-            $scope.product.price = $a.toFloat(($scope.product.usd_price-0)*($scope.usd_rate-0));
-        }else{
-            $scope.product.price = $a.toFloat($scope.product.price);
-            $scope.product.usd_price = $a.toFloat(($scope.product.price-0)/($scope.usd_rate-0));
-        }
-        $scope.blank = $a.toFloat($scope.product.usd_price) == 0;
+    $scope.priceChanged = function(){
+        $scope.product.price = $a.toFloat($scope.product.price);
+        $scope.blank = $a.toFloat($scope.product.price) == 0;
     };
 
     function isFormInvalid(){
         $scope.showErrors = true;
         if($scope.productForm.$invalid) return true;
-        return $scope.blank = $a.toFloat($scope.product.usd_price) == 0;
+        return $scope.blank = $a.toFloat($scope.product.price) == 0;
     }
 
     $scope.save = function(){
         if(isFormInvalid()) { $a.err('Пожалуйста проверьте правильность заполнения всех полей'); return;}
         var on_success = function(){
-            $location.path('/products/'+$scope.product.id);
-            $location.search($scope.$parent.selectedSearch);
-            $location.hash('glob');
             if($scope.product.valute == 'RUB') $scope.product.rub_price = $scope.product.price;
             if($scope.product.valute == 'USD') $scope.product.rub_price = $scope.product.price * $scope.$parent.setting.usd_rate;
             if($scope.product.valute == 'EUR') $scope.product.rub_price = $scope.product.price * $scope.$parent.setting.eur_rate;
@@ -71,6 +63,7 @@ function($scope, $routeParams, Products, $location, Global) {
                     on_success();
                     $scope.$parent.bindAssortment();
                     $a.info('Изменения сохранены');
+                    $location.path('/products/'+$scope.product.id);
                 }
             });
         } else {
@@ -81,15 +74,20 @@ function($scope, $routeParams, Products, $location, Global) {
                     $scope.$parent.products.push($scope.product);
                     $scope.$parent.bindAssortment();
                     $a.info('Добавлен новый товар');
+                    $location.path('/products/'+$scope.product.id).search({category: $scope.product.category_id,
+                        sub_cat: $scope.product.sub_cat_id, firm: $scope.product.firm_id});
+                    $location.hash('glob');
                 }
             });
         }
     };
 
     $scope.cancel = function(){
-        $location.path('/products/'+$scope.product.id);
-        $location.search($scope.$parent.selectedSearch);
-        $location.hash('glob');
+        if($scope.isNew) $location.path('/products');
+        else {
+            $location.path('/products/'+$scope.product.id);
+            $location.search($scope.$parent.selectedSearch);
+        }
         $scope.product = null;
     };
 
@@ -121,7 +119,10 @@ function($scope, $routeParams, Products, $location, Global) {
     };
 
     $scope.add_category = function(){
-        if(!$scope.new_category_name || $scope.new_category_name == '') return;
+        if(!$scope.new_category_name || $scope.new_category_name == '') {
+            $a.err('Заполните название категории');
+            return;
+        }
         Global.create_category_or_firm_option({category: {name: $scope.new_category_name}},function(data){
             if(data.success){
                 $scope.$parent.categories = data.categories;
@@ -134,7 +135,7 @@ function($scope, $routeParams, Products, $location, Global) {
     };
 
     $scope.cancel_category = function(){
-        $scope.new_sub_cat_name = null;
+        $scope.new_category_name = null;
     };
 
     // sub categories
@@ -165,7 +166,10 @@ function($scope, $routeParams, Products, $location, Global) {
     };
 
     $scope.add_sub_cat = function(){
-        if(!$scope.new_sub_cat_name || $scope.new_sub_cat_name == '') return;
+        if(!$scope.new_sub_cat_name || $scope.new_sub_cat_name == '') {
+            $a.err('Заполните название подкатегории');
+            return;
+        }
         Global.create_category_or_firm_option({sub_cat: {name: $scope.new_sub_cat_name}},function(data){
             if(data.success){
                 $scope.$parent.sub_cats = data.sub_cats;
@@ -209,7 +213,10 @@ function($scope, $routeParams, Products, $location, Global) {
     };
 
     $scope.add_firm = function(){
-        if(!$scope.new_firm_name || $scope.new_firm_name == '') return;
+        if(!$scope.new_firm_name || $scope.new_firm_name == '') {
+            $a.err('Заполните название фирмы');
+            return;
+        }
         Global.create_category_or_firm_option({firm: {name: $scope.new_firm_name}},function(data){
             if(data.success){
                 $scope.$parent.firms = data.firms;

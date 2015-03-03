@@ -5,7 +5,7 @@ class Product < ActiveRecord::Base
   has_many :positions
   cattr_accessor :skip_filter
 
-  before_save :calculate_rub_price, unless: :skip_filter
+  # before_save :calculate_rub_price, unless: :skip_filter
   after_update :remove_unconfirmed_positions
   before_destroy :remove_positions_on_destroy
 

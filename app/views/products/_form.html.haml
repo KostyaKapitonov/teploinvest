@@ -15,10 +15,10 @@
                 %span{'x-ng-show'=>'productForm.name.$error.required && (productForm.name.$touched || showErrors)'}
                   необходимо заполнить
           %tr
-            =table_row 'Цена, <select class="small" x-ng-model="product.valute" x-ng-options="v for v in valutes"></select>'.html_safe, (tag :input, name: 'price', 'x-ng-model' => 'product.price',  'required'=>'')
+            =table_row 'Цена, <select class="small" x-ng-model="product.valute" x-ng-options="v for v in valutes"></select>'.html_safe, (tag :input, name: 'price', 'x-ng-model' => 'product.price',  'x-ng-blur'=>'priceChanged()','required'=>'')
             %td
               .errblock
-                %span{'x-ng-show'=>'(productForm.price.$error.required || blank) && product.fixed_rub_price && (productForm.price.$touched || showErrors)'}
+                %span{'x-ng-show'=>'(blank || productForm.price.$error.required) && (productForm.price.$touched || showErrors)'}
                   необходимо заполнить
           %tr
             =table_row 'Имеется в<br/>наличии'.html_safe, (tag :input, class: 'f_cb', type: 'checkbox', 'x-ng-model' => 'product.exist')+'<p class="input_desc">Если убрать галочку - покупатели НЕ смогут заказать этот товар, хоть он и будет доступен для просмотра.</p>'.html_safe

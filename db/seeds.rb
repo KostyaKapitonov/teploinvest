@@ -103,11 +103,13 @@ images = [
     'http://deteplo.com.ua/media/images/big/cirkulyacionnyy-nasos-WILLO-RS-2540-130_2.jpg'
 ]
 
+valutes = ['RUB','USD','EUR']
 product_count.times do
   cat = cats.sample
   firm = firms.sample
   sub_cat = nil
   actual_sub_cats = []
+  current_valute = valutes.sample
   sub_cats.each do|sc|
     if sc.category_id == cat.id
       actual_sub_cats << sc
@@ -118,8 +120,9 @@ product_count.times do
       category: cat,
       sub_cat: actual_sub_cats.sample,
       firm: firm,
+      valute: current_valute,
       description: descriptions.sample,
-      usd_price: rnd(11,88),
+      price: (current_valute == 'RUB' ? rnd(2000,15880) : rnd(110,880)),
       image: images.sample
   )
 end

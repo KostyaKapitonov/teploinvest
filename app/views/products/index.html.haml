@@ -7,7 +7,7 @@
     %td
       .pr_list_block{'dir-paginate'=>'product in product_list | onlySelected:$parent.selectedFirm:$parent.selectedCategory:$parent.selectedSubCat | itemsPerPage: setting.products_per_page'}
         %div{style: 'height: 215px;'}
-          %a{'x-ng-href'=>'/products/{{product.id}}{{$parent.paramsPart}}#glob', style:'margin-right: 5px;'}
+          %a{'x-ng-href'=>'/products/{{product.id}}{{$parent.paramsPart}}', style:'margin-right: 5px;'}
             %h5
               {{product.name}}
             %div

@@ -29,14 +29,14 @@ $(document).ready(function(){
 
 function tooltipInit(){
     $(function () {
-        $(document).tooltip({
-            content: function () {
-                return '<div class="jq_tooltip">'+$(this).prop('title')+'</div>';
-            },
-            position: { my: "center top-65", at: "center top" },
-            show: { effect: "fade", duration: 0 },
-            hide: { effect: "fade", duration: 0 }
-        });
+//        $(document).tooltip({
+//            content: function () {
+//                return '<div class="jq_tooltip">'+$(this).prop('title')+'</div>';
+//            },
+//            position: { my: "center top-65", at: "center top" },
+//            show: { effect: "fade", duration: 0 },
+//            hide: { effect: "fade", duration: 0 }
+//        });
     });
 }
 

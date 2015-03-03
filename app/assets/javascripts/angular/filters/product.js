@@ -9,7 +9,7 @@ MYAPP.filter("onlySelected", function() {
             } else  if (category && sub_cat){
                 if (p.category_id == category && p.sub_cat_id == sub_cat) res.push(p);
             } else  if (category && firm){
-                if (p.category_id == category && p.firm_id == firm) res.push(p);
+                if (p.category_id == category && p.firm_id == firm && p.sub_cat_id == null) res.push(p);
             } else if (sub_cat && firm) {
                 if (p.sub_cat_id == sub_cat && p.firm_id == firm) res.push(p);
             } else if (category){
