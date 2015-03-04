@@ -13,58 +13,59 @@
       .head_wraper
         %div.head_img_keeper
           %img.header_sb{src: image_path('header_side_bar.jpg')}
-        %div{style: 'text-align: right; vertical-align: middle;'}
-          %table.login
-            %tr{'x-ng-show'=>'userRequestComplete'}
-              %td.new_user_td{'x-ng-hide'=>'currentUser'}
-                = link_to 'Вход / Регистрация', login_users_path
-              %td{'x-ng-show'=>'currentUser && !currentUser.is_admin'}
-                = link_to 'Настройки', account_users_path
-              %td{'x-ng-show'=>'currentUser && currentUser.is_admin'}
-                = link_to 'Настройки', global_settings_path
-              %td{'x-ng-show'=>'currentUser && currentUser.is_admin'}
-                Необработанных заказов:
-                %b
-                  {{pendingCount}}
-              %td{'x-ng-hide'=>'currentUser'}
-                Войти через
-              %td{style: 'min-width: 84px; padding-right: 0;', 'x-ng-hide'=>'currentUser'}
-                %div#uLogin{'data-ulogin'=>"display=panel;fields=first_name,last_name;providers=vkontakte;hidden=other;redirect_uri=;callback=uLoginOauth"}
-              %td.user_info{'x-ng-show'=>'currentUser'}
-                {{currentUser.email}}
-              %td{'x-ng-show'=>'currentUser', style: 'padding-right: 14px;'}
-                %a{'x-ng-click'=>'logout()'}
-                  Выйти
-        %table.head_panel
-          %tbody
-            %tr
-              %td
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Главная</span></div>'.html_safe, root_path
-              %td
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Все Товары</span></div>'.html_safe, products_path
-              %td
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Контакты</span></div>'.html_safe, '/contacts'
-              %td
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>О нас</span></div>'.html_safe, '/about'
-              %td
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Прайс-листы</span></div>'.html_safe, '/price_list'
-              %td
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Оплата и доставка</span></div>'.html_safe, '/payment_and_delivery'
-              %td
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Монтаж</span></div>'.html_safe, '/installation'
-              %td{'x-ng-class'=>'{full_cart_bg: cartNotEmpty}', 'x-ng-hide'=>'currentUser.is_admin'}
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Корзина</span></div>'.html_safe, '', 'x-ng-click'=>'goToViewCartPage()'
-              %td{'x-ng-class'=>'{full_cart_bg: anyNesOrders}', 'x-ng-show'=>'currentUser.is_admin'}
-                .tdBox
-                  = link_to '<div class="head_spacer"><span>Заказы</span></div>'.html_safe, '/carts'
+        .head_sub_wrapper
+          %div{style: 'text-align: right; vertical-align: middle;'}
+            %table.login
+              %tr{'x-ng-show'=>'userRequestComplete'}
+                %td.new_user_td{'x-ng-hide'=>'currentUser'}
+                  = link_to 'Вход / Регистрация', login_users_path
+                %td{'x-ng-show'=>'currentUser && !currentUser.is_admin'}
+                  = link_to 'Настройки', account_users_path
+                %td{'x-ng-show'=>'currentUser && currentUser.is_admin'}
+                  = link_to 'Настройки', global_settings_path
+                %td{'x-ng-show'=>'currentUser && currentUser.is_admin'}
+                  Необработанных заказов:
+                  %b
+                    {{pendingCount}}
+                %td{'x-ng-hide'=>'currentUser'}
+                  Войти через
+                %td{style: 'min-width: 84px; padding-right: 0;', 'x-ng-hide'=>'currentUser'}
+                  %div#uLogin{'data-ulogin'=>"display=panel;fields=first_name,last_name;providers=vkontakte;hidden=other;redirect_uri=;callback=uLoginOauth"}
+                %td.user_info{'x-ng-show'=>'currentUser'}
+                  {{currentUser.email}}
+                %td{'x-ng-show'=>'currentUser', style: 'padding-right: 14px;'}
+                  %a{'x-ng-click'=>'logout()'}
+                    Выйти
+          %table.head_panel
+            %tbody
+              %tr
+                %td
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Главная</span></div>'.html_safe, root_path
+                %td
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Все Товары</span></div>'.html_safe, products_path
+                %td
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Контакты</span></div>'.html_safe, '/contacts'
+                %td
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>О нас</span></div>'.html_safe, '/about'
+                %td
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Прайс-листы</span></div>'.html_safe, '/price_list'
+                %td
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Оплата и доставка</span></div>'.html_safe, '/payment_and_delivery'
+                %td
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Монтаж</span></div>'.html_safe, '/installation'
+                %td{'x-ng-class'=>'{full_cart_bg: cartNotEmpty}', 'x-ng-hide'=>'currentUser.is_admin'}
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Корзина</span></div>'.html_safe, '', 'x-ng-click'=>'goToViewCartPage()'
+                %td{'x-ng-class'=>'{full_cart_bg: anyNesOrders}', 'x-ng-show'=>'currentUser.is_admin'}
+                  .tdBox
+                    = link_to '<div class="head_spacer"><span>Заказы</span></div>'.html_safe, '/carts'
 
 
       %div.content

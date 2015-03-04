@@ -14,4 +14,8 @@ function($scope, $location, $routeParams, Products, $sce) {
     }
     refreshLoadStatus();
 
+    $scope.open_view_popup = function(){
+
+    };
+
 }]);

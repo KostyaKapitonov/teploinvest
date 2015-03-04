@@ -15,6 +15,7 @@
 //= require blockui
 //= require ang-devise/angular-devise/lib/devise
 //= require ang-paginate/dirPagination.js
+//= require ang-dialog/ngDialog.min
 // = require_tree .
 
 // -------------------------------------------------- System -------------------------------------------------
