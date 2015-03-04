@@ -1,14 +1,14 @@
 .show
   %p{style: 'text-align: center;'}
-    %a.button{'x-ng-click'=>'next(-1)', 'x-ng-show'=>'cntrls', style: 'float: left;'}
+    -#%a.button{'x-ng-click'=>'next(-1)', 'x-ng-show'=>'cntrls', style: 'float: left;'}
       &nbsp;<&nbsp;
-    %a.button{'x-ng-click'=>'back()'}
+    -#%a.button{'x-ng-click'=>'back()'}
       К списку
     %a.button{'x-ng-href'=>'/products/{{product.id}}/edit', style:'margin-right: 5px;', 'x-ng-show'=>'currentUser.is_admin'}
       Править
     %a.button{'x-ng-click'=>'delete_product(product.id)', 'x-ng-show'=>'currentUser.is_admin'}
       Удалить
-    %a.button{'x-ng-click'=>'next(1)', 'x-ng-show'=>'cntrls', style: 'float: right;'}
+    -#%a.button{'x-ng-click'=>'next(1)', 'x-ng-show'=>'cntrls', style: 'float: right;'}
       &nbsp;>&nbsp;
 
   .img_block

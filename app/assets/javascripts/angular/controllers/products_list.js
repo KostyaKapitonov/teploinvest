@@ -1,5 +1,5 @@
-MYAPP.controller('ProductsListController', ['$scope', '$location','$routeParams', 'Products', '$sce',
-function($scope, $location, $routeParams, Products, $sce) {
+MYAPP.controller('ProductsListController', ['$scope', '$location','$routeParams', 'Products', '$sce', 'ngDialog',
+function($scope, $location, $routeParams, Products, $sce, ngDialog) {
 
     function refreshLoadStatus(counter){
         counter = counter || 0;
@@ -14,8 +14,10 @@ function($scope, $location, $routeParams, Products, $sce) {
     }
     refreshLoadStatus();
 
-    $scope.open_view_popup = function(){
-
+    $scope.open_view_popup = function(prod_id){
+        $scope.prod_id = prod_id;
+        ngDialog.open({template: '/products/1.html', controller: 'ProductViewController',
+            appendTo: '.content .main', scope: $scope});
     };
 
 }]);

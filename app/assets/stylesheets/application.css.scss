@@ -6,6 +6,7 @@
 *= require libs/jquery_custom
 *= require libs/ang-paginate
 *= require ngDialog.min
+*= require ngDialog-theme-default
 */
 
 $primary-color: #005080;
@@ -404,7 +405,7 @@ hr {
   display: block;
   width: auto !important;
   height: auto !important;
-  max-width: 550px;
+  max-width: 150px;
   margin: auto;
 }
 
@@ -800,6 +801,7 @@ table.content {
 
 .pr_list_block a {
   color: $primary-color;
+  cursor: pointer;
 }
 
 .pr_list_block a:hover {

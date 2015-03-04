@@ -7,10 +7,11 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
 
     function loadViewData(){
         if($scope.product != null) return;
-        if($routeParams.id && $scope.$parent && $scope.$parent.products && $scope.$parent.products.length) {
+        var prod_id = $scope.prod_id || $routeParams.id;
+        if(prod_id && $scope.$parent && $scope.$parent.products && $scope.$parent.products.length) {
             $scope.actual_cart = $scope.$parent.actual_cart;
             $scope.$parent.products.each(function(p){
-                if(p.id == $routeParams.id) {
+                if(p.id == prod_id) {
                     $scope.product = p;
                     prepareFilteredList();
                     checkCartToAddablity();
@@ -18,7 +19,6 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
             });
             $scope.currentUser = $scope.$parent.currentUser;
             $scope.admin = $a.any($scope.currentUser) && $scope.currentUser.is_admin;
-            $anchorScroll();
         }
         else {
             setTimeout(function(){
