@@ -63,7 +63,7 @@ function($scope, $routeParams, Products, $location, Global) {
                     on_success();
                     $scope.$parent.bindAssortment();
                     $a.info('Изменения сохранены');
-                    $location.path('/products/'+$scope.product.id);
+                    $location.path('/products').search({prod_id: $scope.product.id});
                 }
             });
         } else {
@@ -74,8 +74,8 @@ function($scope, $routeParams, Products, $location, Global) {
                     $scope.$parent.products.push($scope.product);
                     $scope.$parent.bindAssortment();
                     $a.info('Добавлен новый товар');
-                    $location.path('/products/'+$scope.product.id).search({category: $scope.product.category_id,
-                        sub_cat: $scope.product.sub_cat_id, firm: $scope.product.firm_id});
+                    $location.path('/products').search({category: $scope.product.category_id,
+                        sub_cat: $scope.product.sub_cat_id, firm: $scope.product.firm_id, prod_id: $scope.product.id});
                     $location.hash('glob');
                 }
             });
@@ -85,8 +85,8 @@ function($scope, $routeParams, Products, $location, Global) {
     $scope.cancel = function(){
         if($scope.isNew) $location.path('/products');
         else {
-            $location.path('/products/'+$scope.product.id);
-            $location.search($scope.$parent.selectedSearch);
+            $location.path('/products');
+            $location.search('prod_id', $scope.product.id);
         }
         $scope.product = null;
     };

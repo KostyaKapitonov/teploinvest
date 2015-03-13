@@ -143,6 +143,9 @@ GEM
       omniauth-oauth2 (~> 1.1)
     orm_adapter (0.5.0)
     pg (0.17.1)
+    prerender_rails (1.1.2)
+      activesupport
+      rack
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -238,6 +241,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-vkontakte
   pg (= 0.17.1)
+  prerender_rails
   rails (= 4.2.0)
   rails-html-sanitizer (~> 1.0)
   rails_12factor

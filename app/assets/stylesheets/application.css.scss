@@ -74,6 +74,14 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#cccccc', GradientType=1 );
 }
 
+body .ngdialog{
+  font-size: 14px;
+}
+
+.ui-front {
+  z-index: 10001;
+}
+
 .global{
   max-width: 1000px;
   margin: 0px auto;
@@ -311,9 +319,9 @@ a.head_button:disabled,
 }
 
 .ui-dialog-titlebar.ui-widget-header.ui-corner-all.ui-helper-clearfix{
-  color: deepskyblue;
+  color: #5df;
   background: none;
-  @include gradient(#7e205f, #4d2f3e);
+  @include gradient(#246, #123);
 }
 
 .smal {

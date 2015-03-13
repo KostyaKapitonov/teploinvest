@@ -34,6 +34,7 @@ gem 'jquery-rails'
 
 group :production do
   gem 'rails_12factor'
+  gem 'prerender_rails' # FOR indexing by searchers like google, yandex and other...
 end
 
 gem 'oauth2'

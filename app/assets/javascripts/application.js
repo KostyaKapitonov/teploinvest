@@ -58,6 +58,15 @@ function uLoginOauth(token){
     angular.element('[x-ng-controller="MainController"]').scope().uLogin(token);
 }
 
+function hash_to_string_params(hash){
+    var keys = Object.keys(hash);
+    var string_params = '?';
+    keys.each(function(k, i){
+        if( $a.any(hash[k]) ) string_params+= k+'='+hash[k]+(keys.length > 1+i ? '&' : '');
+    });
+    return string_params;
+}
+
 //------------------------------------------------ CSS -----------------------------------------------------
 
 function applyCss(){

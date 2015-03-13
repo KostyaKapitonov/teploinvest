@@ -1,29 +1,20 @@
 MYAPP.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart',
 function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter, Cart) {
 
-    $scope.searchProcessing = false;
-    $scope.curentPos = 0;
-    $scope.$parent.selectedSearch = $location.search();
-
     function loadViewData(){
-        if($scope.product != null) return;
-        var prod_id = $scope.prod_id || $routeParams.id;
-        if(prod_id && $scope.$parent && $scope.$parent.products && $scope.$parent.products.length) {
+        if($scope.selected_product) {
+            console.log([$scope.actual_cart, $scope.$parent.actual_cart]);
             $scope.actual_cart = $scope.$parent.actual_cart;
-            $scope.$parent.products.each(function(p){
-                if(p.id == prod_id) {
-                    $scope.product = p;
-                    prepareFilteredList();
-                    checkCartToAddablity();
-                }
-            });
+            $scope.product = $scope.selected_product;
+            prepareFilteredList();
+            checkCartToAddablity();
+
             $scope.currentUser = $scope.$parent.currentUser;
             $scope.admin = $a.any($scope.currentUser) && $scope.currentUser.is_admin;
+            console.log([$scope.currentUser, $scope.$parent.currentUser]);
         }
         else {
-            setTimeout(function(){
-                loadViewData();
-            },50);
+            cl('no selected product!');
         }
     }
 
@@ -72,6 +63,7 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
                     $scope.$parent.bindAssortment();
                     $a.info("Товар удалён");
                     $location.path('/products');
+                    $location.search('prod_id', null);
                 }
             });
         });

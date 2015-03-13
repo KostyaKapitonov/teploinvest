@@ -1,5 +1,7 @@
-MYAPP.controller('ProductsListController', ['$scope', '$location','$routeParams', 'Products', '$sce', 'ngDialog',
-function($scope, $location, $routeParams, Products, $sce, ngDialog) {
+MYAPP.controller('ProductsListController', ['$scope', '$location','$routeParams', 'Products', '$sce',
+function($scope, $location, $routeParams, Products, $sce) {
+
+    $scope.current_page = $scope.$parent.current_page || 1;
 
     function refreshLoadStatus(counter){
         counter = counter || 0;
@@ -14,10 +16,15 @@ function($scope, $location, $routeParams, Products, $sce, ngDialog) {
     }
     refreshLoadStatus();
 
-    $scope.open_view_popup = function(prod_id){
-        $scope.prod_id = prod_id;
-        ngDialog.open({template: '/products/1.html', controller: 'ProductViewController',
-            appendTo: '.content .main', scope: $scope});
+    $scope.remember_page = function(page_n){
+        $scope.$parent.current_page = page_n;
+        console.log(['remember_page, page_n == ',page_n]);
+    };
+
+    $scope.gen_prod_params = function(prod){
+        var search = $location.search();
+        var hash_params = {category: search.category, sub_cat: search.sub_cat, firm: search.firm, prod_id: prod.id};
+        return hash_to_string_params(hash_params);
     };
 
 }]);

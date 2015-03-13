@@ -1,6 +1,6 @@
 var MYAPP = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise','angularUtils.directives.dirPagination', 'ngAnimate', 'ngDialog']);
-MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll',
-    function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll) {
+MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll', 'ngDialog',
+    function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll, ngDialog) {
 
         $scope.loadFinished = false;
         $scope.loadFinishedCompletly = false;
@@ -111,12 +111,20 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
 
         $scope.$on('$routeChangeSuccess', function () {
             $scope.form_displayed =(/(^\/products\/new$|^\/products\/\d+\/edit$)/.test($location.path()));
-            $scope.selectedFirm = $location.search().firm;
-            $scope.selectedSubCat = $location.search().sub_cat;
-            $scope.selectedCategory = $location.search().category;
+            var search = $location.search();
+            $scope.selectedFirm = search.firm;
+            $scope.selectedSubCat = search.sub_cat;
+            $scope.selectedCategory = search.category;
             $scope.paramsPart = ($scope.selectedCategory ? '?category='+$scope.selectedCategory : '')+
                 ($scope.selectedSubCat ? '&sub_cat='+$scope.selectedSubCat : '')+
                 ($scope.selectedFirm ? '&firm='+$scope.selectedFirm : '');
+            if(search.prod_id) {
+                $scope.open_view_popup(search.prod_id);
+            } else {
+                if($scope.ng_dialog) $scope.ng_dialog.close();
+                $scope.ng_dialog = null;
+            }
+
 //            $anchorScroll(); // to scroll up ->>>
             $scope.refresh_div_visibility();
         });
@@ -494,14 +502,32 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             return $sce.trustAsHtml(html_code);
         };
 
+        $scope.open_view_popup = function(prod_id){
+            $scope.products.each(function(p){
+                if(p.id == prod_id) {
+                    $scope.selected_product = p;
+                }
+            });
+            $scope.ng_dialog = ngDialog.open({template: '/products/1.html', controller: 'ProductViewController', scope: $scope});
+        };
+
+        $scope.$on('ngDialog.closed', function () {
+            $scope.$apply(function(){
+                $scope.selected_product = null;
+                $scope.product = null;
+                $location.search('prod_id', null);
+            });
+        });
+
         checkLS();
 
         if(!$scope.currentUser) $scope.getUser();
     }]);
 
 MYAPP.config([
-    "$httpProvider", function($httpProvider) {
+    "$httpProvider", '$locationProvider',function($httpProvider, $locationProvider) {
         $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+        $locationProvider.html5Mode(true);
     }
 ]);
 MYAPP.config(['AuthProvider', function(AuthProvider) {
