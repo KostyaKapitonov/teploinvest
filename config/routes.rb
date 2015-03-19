@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/price_list' => 'products#loading'
   get '/payment_and_delivery' => 'products#loading'
   get '/installation' => 'products#loading'
+  get '/html_popup_editor' => 'products#html_popup_editor'
 
   resource :carts, only: [:index] do
     get :edit

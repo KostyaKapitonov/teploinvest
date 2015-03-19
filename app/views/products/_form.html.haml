@@ -45,9 +45,21 @@
             =table_row 'Фирма', (tag :input, 'x-ng-model' => 'new_firm_name', class: 'half_width'), [{title: '√', action: 'add_firm()'},{title: 'X', action: 'cancel_firm()'}]
 
   .form_description
-    Описание товара:
-    %br
-    =tag :textarea, 'x-ng-model' => 'product.description', class: 'ck-editor'
+    %span{style: 'padding: 10px;'}
+    %span.ang_tab_header{'x-ng-repeat'=>'tab in tabs', 'x-ng-class'=>'tab.status', 'x-ng-click'=>'choose_tab($index)'}
+      {{tab.label}}
+      %img.edit_desc{src: image_path('edit.png'), 'x-ng-show'=>'tab.status == "active"', 'x-ng-click'=>'edit_desc(tab.name)'}
+    .ang_tab{'x-ng-repeat'=>'tab in tabs', 'x-ng-show'=>'tab.status == "active"'}
+      %span{'x-ng-show'=>'tab.content == "" || !tab.content'}
+        Описание отсутствует.
+      %div{'x-ng-bind-html'=>'htmlSafe(tab.content)'}
+    -#Краткое описание:
+    -#%br
+    -#=tag :textarea, 'x-ng-model' => 'product.short_desc', style: 'height: 50px;'
+    -#%br
+    -#Описание товара:
+    -#%br
+    -#=tag :textarea, 'x-ng-model' => 'product.description', class: 'ck-editor'
   .button_section
     %a.button{'x-ng-click'=>'save();'}
       Сохранить

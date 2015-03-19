@@ -1,0 +1,13 @@
+.button_section
+  %a.button{'x-ng-click'=>'closeThisDialog(html_to_edit);'}
+    Сохранить
+  %a.button{'x-ng-click'=>'closeThisDialog(null);'}
+    Отмена
+%br
+.form_description
+  =tag :textarea, 'x-ng-model' => 'html_to_edit', class: 'ck-editor'
+.button_section
+  %a.button{'x-ng-click'=>'closeThisDialog(html_to_edit);'}
+    Сохранить
+  %a.button{'x-ng-click'=>'closeThisDialog(null)'}
+    Отмена

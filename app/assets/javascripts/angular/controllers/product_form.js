@@ -1,10 +1,18 @@
-MYAPP.controller('ProductFormController', ['$scope', '$routeParams', 'Products', '$location', 'Global',
-function($scope, $routeParams, Products, $location, Global) {
+MYAPP.controller('ProductFormController', ['$scope', '$routeParams', 'Products', '$location', 'Global', 'ngDialog',
+function($scope, $routeParams, Products, $location, Global, ngDialog) {
     $scope.isNew = false;
     $scope.usd_rate = $scope.$parent.setting.usd_rate;
     $scope.refreshAssortimentList = false;
     $scope.valutes = ['RUB', 'USD', 'EUR'];
-//    $scope.valutes = [{name: 'rub', title: 'руб.'}, {name: 'usd', title: 'USD'}, {name: 'eur', title: 'EUR'}];
+    $scope.tabs = [];
+
+
+    function get_field_label(field){
+        if(field == 'short_desc') return 'Краткое описание';
+        if(field == 'description') return 'Описание';
+        if(field == 'technical_desc') return 'Технические характеристики';
+        return '???';
+    }
 
     function loadFormData(){
         if($scope.product != null) return;
@@ -36,12 +44,40 @@ function($scope, $routeParams, Products, $location, Global) {
             if( $scope.sub_cats.length) $scope.product.sub_cat_id = $routeParams.sub_cat ?
                 $scope.sub_cats.whereId($routeParams.sub_cat).id : $scope.sub_cats[0].id;
         }
-
+        w('short_desc description technical_desc').each(function(field){
+            $scope.tabs.push({status: '', name: field, label: get_field_label(field),
+                content: $scope.product[field]})
+        });
+        $scope.tabs[1].status = 'active';
     }
+
+    $scope.choose_tab = function(idx){
+        $scope.tabs.each(function(tab){
+            tab.status = '';
+        });
+        $scope.tabs[idx].status = 'active';
+    };
 
     $scope.priceChanged = function(){
         $scope.product.price = $a.toFloat($scope.product.price);
         $scope.blank = $a.toFloat($scope.product.price) == 0;
+    };
+
+    $scope.edit_desc = function(desc_name){
+        $scope.html_to_edit = $scope.product[desc_name];
+        var dialog = ngDialog.open({template: '/html_popup_editor',  scope: $scope});
+        dialog.closePromise.then(function (data) {
+                    $scope.product[desc_name] = data.value;
+                    $scope.tabs.where('name',desc_name).content = $scope.product[desc_name];
+
+//            setTimeout(function(){
+//                $scope.$apply(function(){
+//                    $scope.product[desc_name] = data.value;
+//                    $scope.tabs.where('name','desc_name').content = $scope.product[desc_name];
+//                });
+//            },50);
+        });
+        console.log('html_popup_editor - opened');
     };
 
     function isFormInvalid(){

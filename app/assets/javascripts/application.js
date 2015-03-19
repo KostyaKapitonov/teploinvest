@@ -67,6 +67,10 @@ function hash_to_string_params(hash){
     return string_params;
 }
 
+function w(str){
+    return typeof str == 'string' ? str.split(' ') : [];
+}
+
 //------------------------------------------------ CSS -----------------------------------------------------
 
 function applyCss(){
@@ -459,7 +463,7 @@ $a.wait = function(msg, msBeforeException){
         css: {
             border: '2px solid #bdf',
             padding: '15px',
-            backgroundColor: '#846',
+            backgroundColor: '#456',
             '-webkit-border-radius': '10px',
             '-moz-border-radius': '10px',
             'border-radius': '10px',

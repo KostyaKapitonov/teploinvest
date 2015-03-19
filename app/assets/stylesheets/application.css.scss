@@ -193,6 +193,13 @@ table.in_form td.input select,
 fieldset select, fieldset input,
 .ant_input {
   width: 90%;
+}
+
+.form_description textarea,
+table.in_form td.input input,
+table.in_form td.input select,
+fieldset select, fieldset input,
+.ant_input {
   border-style: solid;
   border-width: 2px;
   border-color: $inputs-border;
@@ -206,7 +213,8 @@ table.in_form td.input input:focus,
 table.in_form td.input select:focus,
 fieldset select:focus, fieldset input:focus,
 .sortTypeBlock select:focus, select.small:focus,
-.ant_input:focus {
+.ant_input:focus,
+.form_description textarea:focus {
   //background-color: $backgroundColorHovered;
   border-color: $buttonBorder;
 }
@@ -215,7 +223,8 @@ table.in_form td.input input:disabled,
 table.in_form td.input select:disabled,
 fieldset select:disabled, fieldset input:disabled,
 .sortTypeBlock select:disabled,, select.small:disabled,
-.ant_input:disabled {
+.ant_input:disabled,
+.form_description textarea:disabled  {
   border-color: darkgray;
   background-color: lightgrey;
 }
@@ -1001,4 +1010,41 @@ h5.active {
   color: #24f !important;
   border: 2px solid #24f !important;
   @include shadow(0px, -1px, 15px, 1px, #777);
+}
+
+span.ang_tab_header {
+  border: 2px solid #cde;
+  border-bottom-color: deepskyblue;
+  padding: 5px;
+  background-color: #def;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  cursor: pointer;
+}
+
+span.ang_tab_header.active {
+  border-color: deepskyblue;
+  border-bottom-color: #def;
+  padding-top: 8px;
+  cursor: default;
+}
+
+div.ang_tab{
+  background-color: #def;
+  padding: 15px;
+  margin-top: 4px;
+  border: 2px solid deepskyblue;
+  border-radius: 10px;
+}
+
+img.edit_desc{
+  border: 1px solid rgb(0, 191, 255);
+  width: 20px;
+  margin-bottom: -5px;
+  border-radius: 5px;
+  background-color: #cde;
+}
+
+img.edit_desc:hover{
+  background-color: #eef;
 }
