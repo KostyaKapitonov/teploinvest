@@ -5,7 +5,8 @@ function($scope, $routeParams, Products, $location, Global, ngDialog) {
     $scope.refreshAssortimentList = false;
     $scope.valutes = ['RUB', 'USD', 'EUR'];
     $scope.tabs = [];
-
+    $scope.img_to_destroy = [];
+    ngDialog.closeAll();
 
     function get_field_label(field){
         if(field == 'short_desc') return 'Краткое описание';
@@ -21,8 +22,7 @@ function($scope, $routeParams, Products, $location, Global, ngDialog) {
                 loadFormData();
             },50);
             return;
-        }
-        if($routeParams.id) {
+        } else if($routeParams.id) {
             $scope.$parent.products.each(function(p, i){
                 if(p.id == $routeParams.id) {
                     $scope.product = p;
@@ -44,12 +44,29 @@ function($scope, $routeParams, Products, $location, Global, ngDialog) {
             if( $scope.sub_cats.length) $scope.product.sub_cat_id = $routeParams.sub_cat ?
                 $scope.sub_cats.whereId($routeParams.sub_cat).id : $scope.sub_cats[0].id;
         }
+
+        if($a.blank($scope.product.images)) {
+            Products.get_images({id: $scope.product.id},function(res){
+                $scope.product.images = res;
+            });
+        }
+
         w('short_desc description technical_desc').each(function(field){
             $scope.tabs.push({status: '', name: field, label: get_field_label(field),
                 content: $scope.product[field]})
         });
         $scope.tabs[1].status = 'active';
     }
+
+    $scope.new_img = function(){
+        $scope.product.images.push({product_id: $scope.product.id});
+    };
+
+    $scope.del_img = function(idx){
+        var img = $scope.product.images[idx];
+        if (img.id) $scope.img_to_destroy.push(img.id);
+        $scope.product.images.splice(idx,1);
+    };
 
     $scope.choose_tab = function(idx){
         $scope.tabs.each(function(tab){
@@ -67,15 +84,8 @@ function($scope, $routeParams, Products, $location, Global, ngDialog) {
         $scope.html_to_edit = $scope.product[desc_name];
         var dialog = ngDialog.open({template: '/html_popup_editor',  scope: $scope});
         dialog.closePromise.then(function (data) {
-                    $scope.product[desc_name] = data.value;
-                    $scope.tabs.where('name',desc_name).content = $scope.product[desc_name];
-
-//            setTimeout(function(){
-//                $scope.$apply(function(){
-//                    $scope.product[desc_name] = data.value;
-//                    $scope.tabs.where('name','desc_name').content = $scope.product[desc_name];
-//                });
-//            },50);
+            $scope.product[desc_name] = data.value;
+            $scope.tabs.where('name',desc_name).content = $scope.product[desc_name];
         });
         console.log('html_popup_editor - opened');
     };
@@ -93,7 +103,11 @@ function($scope, $routeParams, Products, $location, Global, ngDialog) {
             if($scope.product.valute == 'USD') $scope.product.rub_price = $scope.product.price * $scope.$parent.setting.usd_rate;
             if($scope.product.valute == 'EUR') $scope.product.rub_price = $scope.product.price * $scope.$parent.setting.eur_rate;
         };
+        $scope.product.images_attributes = $scope.product.images;
         if($scope.product.id){
+            //$scope.img_to_destroy
+            console.log($scope.img_to_destroy);
+            Products.del_image({id: $scope.product.id, img_ids: $scope.img_to_destroy});
             Products.update({product: $scope.product, id: $scope.product.id, action:'update'}, function(data){
                 if(data.success){
                     on_success();

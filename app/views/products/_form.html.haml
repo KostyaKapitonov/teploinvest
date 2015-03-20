@@ -21,14 +21,21 @@
                 %span{'x-ng-show'=>'(blank || productForm.price.$error.required) && (productForm.price.$touched || showErrors)'}
                   необходимо заполнить
           %tr
+            =table_row 'Картинка', (tag :input, 'x-ng-model' => 'product.image', class: 'img_input'), [{title: '+', action: 'new_img()'}]
+          %tr{'x-ng-repeat'=>'img in product.images'}
+            %td.row_label - || -
+            %td.td_sep
+            %td.input
+              %input.img_input{'x-ng-model'=>'img.src'}
+              %button.button.input_buttons{'x-ng-click'=>'del_img($index)'}
+                X
+          %tr
             =table_row 'Имеется в<br/>наличии'.html_safe, (tag :input, class: 'f_cb', type: 'checkbox', 'x-ng-model' => 'product.exist')+'<p class="input_desc">Если убрать галочку - покупатели НЕ смогут заказать этот товар, хоть он и будет доступен для просмотра.</p>'.html_safe
           %tr
             =table_row 'Скрыть'.html_safe, (tag :input, class: 'f_cb', type: 'checkbox', 'x-ng-model' => 'product.hidden')+'<p class="input_desc">Данный товар будет скрыт от покупателей, и виден лишь для администрации. В дальнейшем вы сможете изменить эту опцию, сделав его доступным для просмотра.</p>'.html_safe
 
       %td{style:'width: 50%;'}
         %table.in_form
-          %tr
-            =table_row 'Картинка', (tag :input, 'x-ng-model' => 'product.image')
           %tr{'x-ng-show'=>'new_category_name == null'}
             =table_row 'Категория', '<select class="half_width" x-ng-model="product.category_id" x-ng-options="c.id as c.name for c in categories | orderBy:\'name\'"></select>', [{title: '+', action: 'new_category()'},{title: 'X', action: 'delete_category()'}]
           %tr{'x-ng-hide'=>'new_category_name == null'}
@@ -43,6 +50,12 @@
             =table_row 'Фирма', '<select class="half_width" x-ng-model="product.firm_id" x-ng-options="f.id as f.name for f in firms | orderBy:\'name\'"></select>', [{title: '+', action: 'new_firm()'},{title: 'X', action: 'delete_firm()'}]
           %tr{'x-ng-hide'=>'new_firm_name == null'}
             =table_row 'Фирма', (tag :input, 'x-ng-model' => 'new_firm_name', class: 'half_width'), [{title: '√', action: 'add_firm()'},{title: 'X', action: 'cancel_firm()'}]
+          %tr
+            =table_row 'Производитель', (tag :input, 'x-ng-model' => 'product.manufacturer')
+          %tr
+            =table_row 'Страна производителя', (tag :input, 'x-ng-model' => 'product.country')
+          %tr
+            =table_row 'Вес', (tag :input, 'x-ng-model' => 'product.weight')
 
   .form_description
     %span{style: 'padding: 10px;'}
@@ -53,13 +66,6 @@
       %span{'x-ng-show'=>'tab.content == "" || !tab.content'}
         Описание отсутствует.
       %div{'x-ng-bind-html'=>'htmlSafe(tab.content)'}
-    -#Краткое описание:
-    -#%br
-    -#=tag :textarea, 'x-ng-model' => 'product.short_desc', style: 'height: 50px;'
-    -#%br
-    -#Описание товара:
-    -#%br
-    -#=tag :textarea, 'x-ng-model' => 'product.description', class: 'ck-editor'
   .button_section
     %a.button{'x-ng-click'=>'save();'}
       Сохранить

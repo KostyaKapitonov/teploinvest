@@ -18,7 +18,9 @@
                 {{product.rub_price | currency:"":2}} руб.
           %div
             .small_descr
-              %div{'x-ng-bind-html'=>'htmlSafe(product.description)'}
+              %div{'x-ng-bind-html'=>'htmlSafe(product.short_desc)'}
+              %div{'x-ng-show'=>'product.short_desc == "" || product.short_desc == null'}
+                Описание временно отсутствует.
         %div.text_hidener
 
   %tr

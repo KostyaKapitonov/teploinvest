@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/payment_and_delivery' => 'products#loading'
   get '/installation' => 'products#loading'
   get '/html_popup_editor' => 'products#html_popup_editor'
+  get '/view_img_popup' => 'products#view_img_popup'
 
   resource :carts, only: [:index] do
     get :edit
@@ -43,12 +44,17 @@ Rails.application.routes.draw do
     match 'account', via: [:get, :post]
   end
 
-  resources :products
+  resources :products do
+    get :get_images
+    # get ':id/get_images' => 'products#get_images'
+    post :del_image
+  end
   get '/main_content' => 'products#main_content'
   get '/get_category_and_firm_options' => 'products#get_category_and_firm_options'
   post '/create_category_or_firm_option' => 'products#create_category_or_firm_option'
   delete '/delete_category_or_firm_option' => 'products#delete_category_or_firm_option'
   get '/captcha' => 'settings#get_new_captcha'
+
 
   resource :settings, :only => [] do
     post :update

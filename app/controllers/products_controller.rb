@@ -78,8 +78,9 @@ class ProductsController < ApplicationController
 
   def create
     params.require(:product).require(:name)
-    product = Product.new(params.require(:product).permit(:name, :category_id, :firm_id, :valute, :sub_cat_id,
-      :price, :description, :image, :exist, :hidden, :short_desc, :technical_desc, :manufacturer, :country, :weight))
+    product = Product.new(params.require(:product).permit(:name, :category_id, :firm_id, :valute,
+      :sub_cat_id, :price, :description, :image, :exist, :hidden, :short_desc, :technical_desc,
+      :manufacturer, :country, :weight, images_attributes: [:id, :src, :product_id, :_destroy]))
     render json: {success: product.valid? && product.save, product: product}
   end
 
@@ -95,8 +96,9 @@ class ProductsController < ApplicationController
   def update
     params.require(:product).require(:name)
     render json: {success: Product.update_if_exist(params[:id],
-      params.require(:product).permit(:name, :category_id, :firm_id, :valute, :sub_cat_id, :price, :description,
-        :image, :exist, :hidden, :short_desc, :technical_desc, :manufacturer, :country, :weight))}
+      params.require(:product).permit(:name, :category_id, :firm_id, :valute, :sub_cat_id,
+        :price, :description, :image, :exist, :hidden, :short_desc, :technical_desc, :manufacturer,
+        :country, :weight, images_attributes: [:id, :src, :product_id, :_destroy]))}
   end
 
   def destroy
@@ -104,7 +106,18 @@ class ProductsController < ApplicationController
   end
 
   def html_popup_editor
-    
+  end
+
+  def view_img_popup
+  end
+
+  def get_images
+    render json: Image.where(product_id: params[:product_id]).all
+  end
+
+  def del_image
+    Image.where(id: params[:img_ids]).destroy_all
+    render json: {success: true}
   end
 
 end

@@ -10,11 +10,31 @@
       Удалить
     -#%a.button{'x-ng-click'=>'next(1)', 'x-ng-show'=>'cntrls', style: 'float: right;'}
       &nbsp;>&nbsp;
+  %table
+    %tbody
+      %tr
+        %td.images
+          .img_block
+            %table
+              %tbody
+                %tr.main_image
+                  %td
+                    %img.rounded{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image', style: 'cursor: default;'}
+                    %img.rounded{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}', 'x-ng-click'=>'view_img(product.images.length)'}
+                %tr.secondary_imgs
+                  %td
+                    .wrap{'x-ng-show'=>'product.images.length > 0'}
+                      %ul
+                        %li{'x-ng-repeat'=>'img in product.images'}
+                          %img{'x-ng-src'=>'{{img.src}}', 'x-ng-click'=>'view_img($index)'}
 
-  .img_block
-    %img.rounded{'x-ng-src'=>image_path('no_photo.jpg'), 'x-ng-hide'=>'product.image'}
-    %img.rounded{'x-ng-show'=>'product.image', 'x-ng-src'=>'{{product.image}}'}
+        %td.main_info
+          %h3
+            {{product.name}}
+
   .descr_block
+
+  -#.descr_block
     %div{style: 'text-align: center; padding-top:10px;', 'x-ng-hide'=>'admin || !product.exist'}
       %a.head_button{'x-ng-click'=>'addToCart()', 'x-ng-hide'=>'addedToCart'}
         Добавить в корзину
@@ -40,6 +60,8 @@
     %h3
       {{product.name}}
     %div{'x-ng-bind-html'=>'htmlSafe(product.description)'}
+    %div{'x-ng-show'=>'product.description == "" || product.description == null'}
+      Описание временно отсутствует.
     %p.price
       %span
         Цена: {{product.rub_price | currency:"":2}} руб.

@@ -1,17 +1,19 @@
-MYAPP.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart',
-function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter, Cart) {
+MYAPP.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart', 'ngDialog',
+function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter, Cart, ngDialog) {
 
     function loadViewData(){
         if($scope.selected_product) {
-            console.log([$scope.actual_cart, $scope.$parent.actual_cart]);
             $scope.actual_cart = $scope.$parent.actual_cart;
             $scope.product = $scope.selected_product;
+            if($a.blank($scope.product.images)) {
+                Products.get_images({id: $scope.product.id},function(res){
+                    $scope.product.images = res;
+                });
+            }
             prepareFilteredList();
             checkCartToAddablity();
-
             $scope.currentUser = $scope.$parent.currentUser;
             $scope.admin = $a.any($scope.currentUser) && $scope.currentUser.is_admin;
-            console.log([$scope.currentUser, $scope.$parent.currentUser]);
         }
         else {
             cl('no selected product!');
@@ -36,6 +38,17 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
             if(p.id == $scope.product.id) $scope.curentPos = i;
         });
     }
+
+    $scope.view_img = function(idx){
+        $scope.popup_images = {current_src: null, all: [], current_idx: null};
+        $scope.product.images.each(function(i){
+            $scope.popup_images.all.push(i);
+        });
+        $scope.popup_images.all.push({src: $scope.product.image});
+        $scope.popup_images.current_src = $scope.popup_images.all[idx].src;
+        $scope.popup_images.current_idx = idx;
+        ngDialog.open({template: '/view_img_popup', controller: 'ImgPopupController', scope: $scope, className: 'ngdialog-theme-default img_popup'});
+    };
 
     $scope.next = function(i){
         $scope.curentPos+= i;

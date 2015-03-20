@@ -3,6 +3,8 @@ class Product < ActiveRecord::Base
   belongs_to :firm
   belongs_to :sub_cat
   has_many :positions
+  has_many :images
+  accepts_nested_attributes_for :images, :allow_destroy => true
   cattr_accessor :skip_filter
 
   # before_save :calculate_rub_price, unless: :skip_filter

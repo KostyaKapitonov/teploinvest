@@ -94,9 +94,9 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 i = ++i || 0;
                 setTimeout(
                     function(){
-                        if(!isAllFinished() && i < 30) refresh(i);
+                        if(!isAllFinished() && i < 120) refresh(i);
                         else {
-                            if(i == 30) cl(['ERROR: $scope.loadInfo ',$scope.loadInfo]);
+                            if(i == 120) cl(['ERROR: $scope.loadInfo ',$scope.loadInfo]);
                             setTimeout(function(){ $scope.$apply(function(){
                                 $scope.loadFinishedCompletly = true;
                                 $a.done();
@@ -119,13 +119,9 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 ($scope.selectedSubCat ? '&sub_cat='+$scope.selectedSubCat : '')+
                 ($scope.selectedFirm ? '&firm='+$scope.selectedFirm : '');
             if(search.prod_id) {
-                $scope.open_view_popup(search.prod_id);
-            } else {
-                if($scope.ng_dialog) $scope.ng_dialog.close();
-                $scope.ng_dialog = null;
+                $scope.open_view_product_popup(search.prod_id);
             }
 
-//            $anchorScroll(); // to scroll up ->>>
             $scope.refresh_div_visibility();
         });
 
@@ -146,7 +142,6 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             $scope.products.each(function(p){
                 if(data.position.product_id == p.id) {
                     data.position.prod = p;
-                    console.log('prod found');
                 }
             });
             if(!$scope.carts){
@@ -160,7 +155,6 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 var exist = false;
                 $scope.carts.each(function(c){
                     if(data.cart.id == c.id) {
-                        console.log('exist!');
                         exist = true;
                         if(c.positions && c.positions.length > 0) c.positions.push(data.position);
                         else c.positions = [data.position];
@@ -502,16 +496,19 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             return $sce.trustAsHtml(html_code);
         };
 
-        $scope.open_view_popup = function(prod_id){
+        $scope.open_view_product_popup = function(prod_id){
             $scope.products.each(function(p){
                 if(p.id == prod_id) {
                     $scope.selected_product = p;
                 }
             });
-            $scope.ng_dialog = ngDialog.open({template: '/products/1.html', controller: 'ProductViewController', scope: $scope});
+            $scope.ng_dialog = ngDialog.open({template: '/products/1.html', 
+                controller: 'ProductViewController', scope: $scope, 
+                className: 'ngdialog-theme-default product_popup'});
         };
 
-        $scope.$on('ngDialog.closed', function () {
+        $scope.$on('ngDialog.closed', function (data, el) {
+            if(el.hasClass('product_popup'))
             $scope.$apply(function(){
                 $scope.selected_product = null;
                 $scope.product = null;

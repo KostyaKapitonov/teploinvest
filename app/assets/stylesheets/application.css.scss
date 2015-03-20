@@ -7,6 +7,7 @@
 *= require libs/ang-paginate
 *= require ngDialog.min
 *= require ngDialog-theme-default
+*= require libs/ng_dialog_custom.css
 */
 
 $primary-color: #005080;
@@ -48,6 +49,15 @@ $button-gradient-to-foc: #bcf;
   -webkit-box-shadow: $lr $tb $cont $st_cont $color;
   -moz-box-shadow: $lr $tb $cont $st_cont $color;
   box-shadow: $lr $tb $cont $st_cont $color;
+}
+
+@mixin unselectable(){
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body {
@@ -419,15 +429,21 @@ hr {
 }
 
 .show img {
+  cursor: pointer;
   display: block;
   width: auto !important;
   height: auto !important;
-  max-width: 150px;
+  max-width: 45px;
   margin: auto;
 }
 
+.show tr.main_image img{
+  max-width: 250px;
+
+}
+
 .show .img_block {
-  width: 100%;
+  width: 300px;
   text-align: center;
 }
 
@@ -1014,8 +1030,8 @@ h5.active {
 
 span.ang_tab_header {
   border: 2px solid #cde;
-  border-bottom-color: deepskyblue;
-  padding: 5px;
+  border-bottom: none;
+  padding: 7px;
   background-color: #def;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -1026,13 +1042,15 @@ span.ang_tab_header.active {
   border-color: deepskyblue;
   border-bottom-color: #def;
   padding-top: 8px;
+  padding-bottom: 9px;
   cursor: default;
+  color: darkblue;
 }
 
 div.ang_tab{
   background-color: #def;
   padding: 15px;
-  margin-top: 4px;
+  margin-top: 6px;
   border: 2px solid deepskyblue;
   border-radius: 10px;
 }
@@ -1043,8 +1061,54 @@ img.edit_desc{
   margin-bottom: -5px;
   border-radius: 5px;
   background-color: #cde;
+  cursor: pointer;
 }
 
 img.edit_desc:hover{
   background-color: #eef;
+}
+
+table.in_form td.input input.img_input {
+  width: 80%;
+}
+
+.wrap {
+  width: 250px;
+  height: 100px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid deepskyblue;
+}
+
+.wrap ul {
+  min-width: 100%;
+  white-space: nowrap;
+  padding: 0px;
+  margin-top: 5px;
+}
+
+.wrap li {
+  display: inline-block;
+  vertical-align: top;
+  width: 50px;
+  height: 80px;
+  margin-right: 3px;
+}
+
+img.large_img {
+  max-width: 595px;
+}
+
+.arrows .arrow{
+  @include unselectable();
+  cursor: pointer;
+  width: 100%;
+  font-size: 30px;
+  //  text-align: center;
+  padding: 0 50px;
+  transition: all .2s ease;
+}
+
+.arrows .arrow:hover{
+  background-color: #bcd;
 }
