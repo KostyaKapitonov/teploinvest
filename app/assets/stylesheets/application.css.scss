@@ -438,8 +438,12 @@ hr {
 }
 
 .show tr.main_image img{
-  max-width: 250px;
+  max-width: 200px;
+  max-height: 250px;
+}
 
+.show tr.main_image {
+  text-align: center;
 }
 
 .show .img_block {
@@ -1055,6 +1059,10 @@ div.ang_tab{
   border-radius: 10px;
 }
 
+.show div.ang_tab{
+  margin-top: 4px;
+}
+
 img.edit_desc{
   border: 1px solid rgb(0, 191, 255);
   width: 20px;
@@ -1073,11 +1081,12 @@ table.in_form td.input input.img_input {
 }
 
 .wrap {
-  width: 250px;
+  width: 200px;
   height: 100px;
   overflow-x: auto;
   overflow-y: hidden;
   border: 1px solid deepskyblue;
+  margin: auto;
 }
 
 .wrap ul {
@@ -1111,4 +1120,20 @@ img.large_img {
 
 .arrows .arrow:hover{
   background-color: #bcd;
+}
+
+.show td.input {
+  vertical-align: bottom;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: darkred;
+}
+
+.images {
+  vertical-align: middle;
 }

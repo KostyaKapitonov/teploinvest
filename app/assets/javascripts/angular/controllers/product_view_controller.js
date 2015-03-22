@@ -1,6 +1,15 @@
 MYAPP.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart', 'ngDialog',
 function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter, Cart, ngDialog) {
 
+    $scope.tabs = [];
+
+    function get_field_label(field){
+        if(field == 'short_desc') return 'Краткое описание';
+        if(field == 'description') return 'Описание';
+        if(field == 'technical_desc') return 'Технические характеристики';
+        return '???';
+    }
+
     function loadViewData(){
         if($scope.selected_product) {
             $scope.actual_cart = $scope.$parent.actual_cart;
@@ -12,6 +21,11 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
             }
             prepareFilteredList();
             checkCartToAddablity();
+            w('short_desc description technical_desc').each(function(field){
+                $scope.tabs.push({status: '', name: field, label: get_field_label(field),
+                    content: $scope.product[field]})
+            });
+            $scope.tabs[1].status = 'active';
             $scope.currentUser = $scope.$parent.currentUser;
             $scope.admin = $a.any($scope.currentUser) && $scope.currentUser.is_admin;
         }
@@ -19,6 +33,13 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
             cl('no selected product!');
         }
     }
+
+    $scope.choose_tab = function(idx){
+        $scope.tabs.each(function(tab){
+            tab.status = '';
+        });
+        $scope.tabs[idx].status = 'active';
+    };
 
     function checkCartToAddablity(){
         if($scope.actual_cart && $scope.actual_cart.positions && $scope.actual_cart.positions.length>0){
@@ -100,10 +121,12 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
                 'Если вы уже зарегистрированы - войдите пожалуйста в свой аккаунт.</p><div>').dialog({ modal: true, position: 'top',
                 buttons: [ { text: "Вход", click: function() {
                     $location.path('/users/login');
+                    $location.search({});
                     $scope.$apply();
                     $( this ).dialog( "close" ); } },
                 { text: "Регистрация", click: function() {
                     $location.path('/users/create');
+                    $location.search({});
                     $scope.$apply();
                     $( this ).dialog( "close" ); } }
                 ], title: 'Добавление в корзину невозможно'});

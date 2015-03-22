@@ -1,10 +1,11 @@
-MYAPP.controller('UsersController', ['$scope', '$location','$routeParams', 'User', 'Auth', 'Global',
-function($scope, $location, $routeParams, User, Auth, Global) {
+MYAPP.controller('UsersController', ['$scope', '$location','$routeParams', 'User', 'Auth', 'Global', 'ngDialog',
+function($scope, $location, $routeParams, User, Auth, Global, ngDialog) {
 
     $scope.user = null;
     $scope.credentials = null;
     $scope.unconfirmed = true;
     $scope.captcha = null;
+    ngDialog.closeAll();
 
     $scope.init = function(secured_page){
         $scope.secured_page = secured_page === true;
