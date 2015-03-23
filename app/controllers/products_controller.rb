@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_filter :only_admin, except: [:main, :main_content, :index, :show, :contacts, :get_images, :view_img_popup]
+  before_filter :only_admin, except: [:main, :main_content, :index, :show, :contacts, :get_images, :view_img_popup, :loading]
 
   def main
     render 'main', layout: 'application'
