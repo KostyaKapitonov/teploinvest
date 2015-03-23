@@ -2,8 +2,10 @@
   %head
     <meta name="fragment" content="!">
     %link{rel: 'shortcut icon', href: image_path('favicon.png')}
-    %title
+    %title{'x-ng-bind'=>'title'}
       ТеплоИнвест
+    %meta{name: 'Keywords', content: '{{meta_keywords}}'}
+    %meta{name: 'Description', content: '{{meta_description}}'}
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application.js', 'data-turbolinks-track' => true
     %script{src: 'http://api-maps.yandex.ru/2.1/?lang=ru_RU&mode=debug&coordorder=longlat', type: 'text/javascript'}

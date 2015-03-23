@@ -79,7 +79,7 @@ class ProductsController < ApplicationController
     params.require(:product).require(:name)
     product = Product.new(params.require(:product).permit(:name, :category_id, :firm_id, :valute,
       :sub_cat_id, :price, :description, :image, :exist, :hidden, :short_desc, :technical_desc,
-      :manufacturer, :country, :weight, images_attributes: [:id, :src, :product_id, :_destroy]))
+      :manufacturer, :country, :weight, :meta_keywords, :meta_description, images_attributes: [:id, :src, :product_id, :_destroy]))
     render json: {success: product.valid? && product.save, product: product}
   end
 
@@ -97,7 +97,7 @@ class ProductsController < ApplicationController
     render json: {success: Product.update_if_exist(params[:id],
       params.require(:product).permit(:name, :category_id, :firm_id, :valute, :sub_cat_id,
         :price, :description, :image, :exist, :hidden, :short_desc, :technical_desc, :manufacturer,
-        :country, :weight, images_attributes: [:id, :src, :product_id, :_destroy]))}
+        :country, :weight, :meta_keywords, :meta_description, images_attributes: [:id, :src, :product_id, :_destroy]))}
   end
 
   def destroy

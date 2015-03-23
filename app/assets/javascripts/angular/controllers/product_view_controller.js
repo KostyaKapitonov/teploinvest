@@ -1,5 +1,5 @@
-MYAPP.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart', 'ngDialog',
-function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter, Cart, ngDialog) {
+MYAPP.controller('ProductViewController', ['$scope', '$location','$routeParams', 'Products', '$sce', '$anchorScroll', '$filter', 'Cart', 'ngDialog', '$rootScope',
+function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter, Cart, ngDialog, $rootScope) {
 
     $scope.tabs = [];
 
@@ -21,11 +21,18 @@ function($scope, $location, $routeParams, Products, $sce, $anchorScroll, $filter
             }
             prepareFilteredList();
             checkCartToAddablity();
-            w('short_desc description technical_desc').each(function(field){
+            w('description technical_desc').each(function(field){
                 $scope.tabs.push({status: '', name: field, label: get_field_label(field),
                     content: $scope.product[field]})
             });
-            $scope.tabs[1].status = 'active';
+            $scope.tabs[0].status = 'active';
+            if(!$scope.product.firm_name){
+                var firm = $scope.$parent.firms.whereId($scope.product.firm_id);
+                $scope.product.firm_name = firm ? firm.name : 'Не указана';
+            }
+            $rootScope.title = $scope.product.name;
+            $rootScope.meta_keywords = $scope.product.meta_keywords;
+            $rootScope.meta_description = $scope.product.meta_description;
             $scope.currentUser = $scope.$parent.currentUser;
             $scope.admin = $a.any($scope.currentUser) && $scope.currentUser.is_admin;
         }

@@ -51,11 +51,13 @@
           %tr{'x-ng-hide'=>'new_firm_name == null'}
             =table_row 'Фирма', (tag :input, 'x-ng-model' => 'new_firm_name', class: 'half_width'), [{title: '√', action: 'add_firm()'},{title: 'X', action: 'cancel_firm()'}]
           %tr
-            =table_row 'Производитель', (tag :input, 'x-ng-model' => 'product.manufacturer')
-          %tr
             =table_row 'Страна производителя', (tag :input, 'x-ng-model' => 'product.country')
           %tr
             =table_row 'Вес', (tag :input, 'x-ng-model' => 'product.weight')
+          %tr
+            =table_row 'Meta-Keywords', (tag :textarea, 'x-ng-model' => 'product.meta_keywords')
+          %tr
+            =table_row 'Meta-Description', (tag :textarea, 'x-ng-model' => 'product.meta_description')
 
   .form_description
     %span{style: 'padding: 10px;'}

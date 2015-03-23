@@ -10,7 +10,7 @@
       Удалить
     -#%a.button{'x-ng-click'=>'next(1)', 'x-ng-show'=>'cntrls', style: 'float: right;'}
       &nbsp;>&nbsp;
-  %table{style: 'margin-bottom: 20px;'}
+  %table{style: 'margin-bottom: 20px; width: 100%;'}
     %tbody
       %tr
         %td.images
@@ -29,38 +29,44 @@
                           %img{'x-ng-src'=>'{{img.src}}', 'x-ng-click'=>'view_img($index)'}
 
         %td.main_info{style: 'padding-top: 30px;'}
-          %h3{style: 'text-align: center;'}
-            {{product.name}}
-          %table
-            %tbody
-              %tr
-                =table_row 'Производитель', '{{product.manufacturer ? product.manufacturer : "Не указан"}}'
-              %tr
-                =table_row 'Страна производителя', '{{product.country ? product.country : "Не указана"}}'
-              %tr
-                =table_row 'Есть в наличии', '<span x-ng-class="product.exist ? \'green\' : \'red\'">{{product.exist ? "Да" : "Нет"}}</span>'.html_safe
-              %tr
-                =table_row 'Вес', '{{product.weight ? product.weight : "Не указан"}}'
-              %tr
-                =table_row 'Цена', '{{product.rub_price | currency:"":2}} руб.'
-              %tr
-                %td{colspan: 3, style: 'padding: 10px; text align: center;'}
-                  %div{style: 'text-align: center; padding-top:10px;', 'x-ng-hide'=>'admin || !product.exist'}
-                    %a.head_button{'x-ng-click'=>'addToCart()', 'x-ng-hide'=>'addedToCart'}
-                      Добавить в корзину
-                    %a.disabled_head_button.green{'x-ng-disabled'=>'true', 'x-ng-show'=>'addedToCart'}
-                      Уже в корзине
-                  %div{style: 'text-align: center; padding-top:10px;','x-ng-hide'=>'product.exist || admin'}
-                    %span{title:'{{product.exist ? \'\' : \'<b class="name red">Нет в наличии</b>\'}}'}
-                      %a.disabled_head_button{'x-ng-click'=>'', 'x-ng-disabled'=>'true'}
+          %fieldset.display_info
+            %legend
+              %h3{style: 'margin: 0px;'}
+                {{product.name}}
+            %table
+              %tbody
+                %tr
+                  =table_row 'Фирма', '{{product.firm_name ? product.firm_name : "Не указан"}}'
+                %tr
+                  =table_row 'Страна производителя', '{{product.country ? product.country : "Не указана"}}'
+                %tr
+                  =table_row 'Есть в наличии', '<span x-ng-class="product.exist ? \'green\' : \'red\'">{{product.exist ? "Да" : "Нет"}}</span>'.html_safe
+                %tr
+                  =table_row 'Вес', '{{product.weight ? product.weight : "Не указан"}}'
+                %tr
+                  =table_row 'Цена', '{{product.rub_price | currency:"":2}} руб.'
+                %tr{'x-ng-show'=>'product.short_desc'}
+                  %td{colspan: 3}
+                    .short_desc_wraper
+                      %div{'x-ng-bind-html'=>'htmlSafe(product.short_desc)'}
+                %tr
+                  %td{colspan: 3, style: 'padding: 10px; text align: center; '}
+                    %div{style: 'text-align: center; padding-top:10px;', 'x-ng-hide'=>'admin || !product.exist'}
+                      %a.head_button{'x-ng-click'=>'addToCart()', 'x-ng-hide'=>'addedToCart'}
                         Добавить в корзину
-                  .only_admin_info{style: 'text-align: center; padding-top:10px;','x-ng-show'=>'admin'}
-                    %span
-                      Скрыт:
-                      %b.red{'x-ng-show'=>'product.hidden'}
-                        Да
-                      %b.green{'x-ng-hide'=>'product.hidden'}
-                        Нет
+                      %a.disabled_head_button.green{'x-ng-disabled'=>'true', 'x-ng-show'=>'addedToCart'}
+                        Уже в корзине
+                    %div{style: 'text-align: center; padding-top:10px;','x-ng-hide'=>'product.exist || admin'}
+                      %span{title:'{{product.exist ? \'\' : \'<b class="name red">Нет в наличии</b>\'}}'}
+                        %a.disabled_head_button{'x-ng-click'=>'', 'x-ng-disabled'=>'true'}
+                          Добавить в корзину
+                    .only_admin_info{style: 'text-align: center; padding-top:10px;','x-ng-show'=>'admin'}
+                      %span
+                        Скрыт:
+                        %b.red{'x-ng-show'=>'product.hidden'}
+                          Да
+                        %b.green{'x-ng-hide'=>'product.hidden'}
+                          Нет
 
   .form_description
     %span{style: 'padding: 10px;'}

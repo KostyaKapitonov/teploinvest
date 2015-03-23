@@ -127,16 +127,16 @@ a {
 //}
 
 .head_panel div.head_spacer span{
+  @include b-radius(10px);
   padding: 8px;
   transition: all .1s ease-in;
 }
 
 .head_panel a:hover div.head_spacer span{
-  @include b-radius(10px);
-  background-color: #650015;
-  -webkit-box-shadow: 0px 0px 20px 10px #702;
-  -moz-box-shadow: 0px 0px 20px 10px #702;
-  box-shadow: 0px 0px 20px 10px #702;
+  background-color: #222;
+  -webkit-box-shadow: 0px 0px 15px 5px #778;
+  -moz-box-shadow: 0px 0px 15px 5px #778;
+  box-shadow: 0px 0px 15px 5px #778;
 }
 
 .head_panel table {
@@ -201,6 +201,7 @@ ul {
 table.in_form td.input input,
 table.in_form td.input select,
 fieldset select, fieldset input,
+td.input textarea,
 .ant_input {
   width: 90%;
 }
@@ -209,6 +210,7 @@ fieldset select, fieldset input,
 table.in_form td.input input,
 table.in_form td.input select,
 fieldset select, fieldset input,
+td.input textarea,
 .ant_input {
   border-style: solid;
   border-width: 2px;
@@ -224,7 +226,8 @@ table.in_form td.input select:focus,
 fieldset select:focus, fieldset input:focus,
 .sortTypeBlock select:focus, select.small:focus,
 .ant_input:focus,
-.form_description textarea:focus {
+.form_description textarea:focus,
+td.input textarea:focus {
   //background-color: $backgroundColorHovered;
   border-color: $buttonBorder;
 }
@@ -234,7 +237,8 @@ table.in_form td.input select:disabled,
 fieldset select:disabled, fieldset input:disabled,
 .sortTypeBlock select:disabled,, select.small:disabled,
 .ant_input:disabled,
-.form_description textarea:disabled  {
+.form_description textarea:disabled,
+td.input textarea:disabled{
   border-color: darkgray;
   background-color: lightgrey;
 }
@@ -252,11 +256,14 @@ table.in_form tr {
   width: 100%;
 }
 
+textarea{
+  resize: vertical;
+}
+
 .form_description textarea {
   height: 150px;
   width: 100%;
   margin: 10px 0px;
-  resize: vertical;
 }
 
 .button_section {
@@ -447,7 +454,7 @@ hr {
 }
 
 .show .img_block {
-  width: 300px;
+  width: 220px;
   text-align: center;
 }
 
@@ -1122,7 +1129,7 @@ img.large_img {
   background-color: #bcd;
 }
 
-.show td.input {
+.show td.input, .show td.row_label {
   vertical-align: bottom;
 }
 
@@ -1136,4 +1143,22 @@ img.large_img {
 
 .images {
   vertical-align: middle;
+}
+
+fieldset.display_info {
+  background-color: aliceblue;
+  text-align: center;
+}
+
+fieldset.display_info table {
+  width: 100%;
+}
+
+.short_desc_wraper{
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #aac;
+  @include b-radius(20px);
+  background-color: #dee;
+  border-width: 0 2;
 }

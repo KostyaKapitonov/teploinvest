@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320101903) do
+ActiveRecord::Schema.define(version: 20150323112249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,21 +67,22 @@ ActiveRecord::Schema.define(version: 20150320101903) do
     t.integer  "type"
     t.float    "price"
     t.text     "description"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "category_id"
     t.integer  "firm_id"
     t.string   "image"
-    t.boolean  "available",      default: true
-    t.boolean  "exist",          default: true
-    t.boolean  "hidden",         default: false
+    t.boolean  "available",        default: true
+    t.boolean  "exist",            default: true
+    t.boolean  "hidden",           default: false
     t.integer  "sub_cat_id"
-    t.string   "valute",         default: "RUB"
+    t.string   "valute",           default: "RUB"
     t.text     "short_desc"
     t.text     "technical_desc"
-    t.string   "manufacturer"
     t.string   "country"
     t.string   "weight"
+    t.text     "meta_keywords"
+    t.text     "meta_description"
   end
 
   create_table "settings", force: :cascade do |t|
@@ -101,6 +102,8 @@ ActiveRecord::Schema.define(version: 20150320101903) do
     t.text     "payment_and_delivery_text"
     t.text     "installation_text"
     t.float    "eur_rate"
+    t.text     "meta_keywords"
+    t.text     "meta_description"
   end
 
   create_table "statuses", force: :cascade do |t|

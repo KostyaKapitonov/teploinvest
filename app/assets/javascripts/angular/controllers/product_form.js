@@ -84,7 +84,7 @@ function($scope, $routeParams, Products, $location, Global, ngDialog) {
         $scope.html_to_edit = $scope.product[desc_name];
         var dialog = ngDialog.open({template: '/html_popup_editor',  scope: $scope});
         dialog.closePromise.then(function (data) {
-            $scope.product[desc_name] = data.value;
+            if(data.value != '$document' && data.value != '$closeButton') $scope.product[desc_name] = data.value;
             $scope.tabs.where('name',desc_name).content = $scope.product[desc_name];
         });
         console.log('html_popup_editor - opened');

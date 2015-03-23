@@ -1,6 +1,6 @@
 var MYAPP = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise','angularUtils.directives.dirPagination', 'ngAnimate', 'ngDialog']);
-MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll', 'ngDialog',
-    function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll, ngDialog) {
+MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll', 'ngDialog', '$rootScope',
+    function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll, ngDialog, $rootScope) {
 
         $scope.loadFinished = false;
         $scope.loadFinishedCompletly = false;
@@ -16,14 +16,47 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
         $scope.current_cat = null;
         $scope.current_sub_cat = null;
         $scope.current_firm = null;
-
         $scope.cats_list = [];
+
+        $scope.default_meta_keywords = null;
+        $scope.default_meta_description = null;
+        $rootScope.meta_keywords = null;
+        $rootScope.meta_description = null;
+
+        function set_meta_tags(){
+            var path = $location.path();
+            console.log('path',path);
+            $rootScope.meta_keywords = '';
+            $rootScope.meta_description = '';
+            $rootScope.title = 'ТеплоИнвест';
+            if(path != '/products'){
+                if($scope.default_meta_keywords) $rootScope.meta_keywords = $scope.default_meta_keywords;
+                if($scope.default_meta_description) $rootScope.meta_description = $scope.default_meta_description;
+            } else {
+                var search = $location.search();
+                [{o: 'category', m: 'categories_names'},
+                {o: 'sub_cat', m: 'sub_cats_names'},
+                {o: 'firm', m: 'firms_names'}].each(function(d){
+                    if(search[d.o]) {
+                        if($rootScope.title == 'ТеплоИнвест') {
+                            $rootScope.title += ': ';
+                            $rootScope.title +=  $scope[d.m][search[d.o]];
+                        } else $rootScope.title +=  ' - '+$scope[d.m][search[d.o]];
+                        $rootScope.meta_keywords += ($rootScope.meta_keywords ? ', ' : '')
+                            + $scope[d.m][search[d.o]];
+                        $rootScope.meta_description += $scope[d.m][search[d.o]] + '. ';
+                    }
+                });
+            }
+
+        }
 
         $scope.refresh_div_visibility = function() {
             setTimeout(function(){
-                $scope.current_cat = $location.search().category;
-                $scope.current_sub_cat = $location.search().sub_cat;
-                $scope.current_firm = $location.search().firm;
+                var search = $location.search();
+                $scope.current_cat = search.category;
+                $scope.current_sub_cat = search.sub_cat;
+                $scope.current_firm = search.firm;
 
                 var assortment = angular.element('.assortment');
                 var other_firms = assortment.find('li.active_firm');
@@ -120,6 +153,8 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 ($scope.selectedFirm ? '&firm='+$scope.selectedFirm : '');
             if(search.prod_id) {
                 $scope.open_view_product_popup(search.prod_id);
+            } else {
+                set_meta_tags();
             }
 
             $scope.refresh_div_visibility();
@@ -355,6 +390,7 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                         $scope.categories = data.categories;
                         $scope.firms = data.firms;
                         $scope.sub_cats = data.sub_cats;
+                        $scope.bindNames();
                         $scope.bindAssortment();
                         respondToAllCalbacks('load_products',$scope.products);
                         someLoadFinished('load_products');
@@ -372,6 +408,15 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             });
             return products;
         }
+
+        $scope.bindNames = function(){
+            w('categories firms sub_cats').each(function(current_list){
+                $scope[current_list+'_names'] = {};
+                $scope[current_list].each(function(ob){
+                    $scope[current_list+'_names'][ob.id] = ob.name;
+                });
+            });
+        };
 
         $scope.bindAssortment = function(){
             $scope.product_list = null;
@@ -425,6 +470,10 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             Global.main(function(res){
                 $scope.setting = res;
                 $scope.load_products();
+                $scope.default_meta_keywords = $scope.setting.meta_keywords;
+                $scope.default_meta_description = $scope.setting.meta_description;
+                $rootScope.meta_keywords = $scope.default_meta_keywords;
+                $rootScope.meta_description = $scope.default_meta_description;
                 someLoadFinished('getSettings');
             });
         };
