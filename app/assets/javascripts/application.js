@@ -542,3 +542,19 @@ $a.merge = function(a,b){
     });
     return resObj;
 };
+
+// ------------------------------------------- CSS ---------------------------------------------
+
+function get_menu_button_shadow_style(color){
+    return '-webkit-box-shadow: 0px 0px 15px 5px '+color+';' +
+    '-moz-box-shadow: 0px 0px 15px 5px '+color+';' +
+    'box-shadow: 0px 0px 15px 5px '+color+';'
+}
+
+function add_style(style_body, el){
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = style_body; // like '.cssClass { color: #F00; }';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    //document.getElementById('someElementId').className = 'cssClass';
+}

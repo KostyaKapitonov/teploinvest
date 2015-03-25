@@ -25,7 +25,6 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
 
         function set_meta_tags(){
             var path = $location.path();
-            console.log('path',path);
             $rootScope.meta_keywords = '';
             $rootScope.meta_description = '';
             $rootScope.title = 'ТеплоИнвест';
@@ -564,6 +563,19 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
                 $location.search('prod_id', null);
             });
         });
+
+        // DEMO! css start
+        $scope.get_menu_button_shadow_style = function(color){
+            return get_menu_button_shadow_style(color);
+        };
+        //var colors = w('red orange yellow green blue indigo violet grey white');
+        angular.element('.head_panel a div.head_spacer span').each(function(i,el){
+            el = angular.element(el);
+            var prefix = 'custom_'+/*colors[i]*/ 'grey';
+            el.addClass(prefix);
+            add_style('.'+prefix+':hover { background-color: #000000;'+get_menu_button_shadow_style(/*colors[i]*/'grey')+'}');
+        });
+        // DEMO! css end
 
         checkLS();
 

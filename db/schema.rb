@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150323112249) do
+ActiveRecord::Schema.define(version: 20150325141725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,14 +34,35 @@ ActiveRecord::Schema.define(version: 20150323112249) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "is_default", default: false
+    t.integer  "view_seq"
+    t.integer  "edit_seq"
+  end
+
+  create_table "custom_pages", force: :cascade do |t|
+    t.string   "label"
+    t.text     "body"
+    t.string   "title"
+    t.text     "keywords"
+    t.text     "description"
+    t.string   "color"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "type"
+    t.integer  "seq"
+    t.string   "url"
+    t.string   "visible_for", default: "all"
   end
 
   create_table "firms", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "is_default", default: false
+    t.integer  "view_seq"
+    t.integer  "edit_seq"
   end
 
   create_table "images", force: :cascade do |t|
@@ -116,8 +137,11 @@ ActiveRecord::Schema.define(version: 20150323112249) do
   create_table "sub_cats", force: :cascade do |t|
     t.integer  "category_id"
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "is_default",  default: false
+    t.integer  "view_seq"
+    t.integer  "edit_seq"
   end
 
   create_table "user_providers", force: :cascade do |t|

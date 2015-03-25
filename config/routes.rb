@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   get '/html_popup_editor' => 'products#html_popup_editor'
   get '/view_img_popup' => 'products#view_img_popup'
 
+  resources :custom_pages, except: [:edit] do
+
+  end
+
   resource :carts, only: [:index] do
     get :edit
     get 'view/:id' => 'carts#view'
@@ -25,11 +29,6 @@ Rails.application.routes.draw do
   get '/carts' => 'carts#index'
 
   devise_for :users, :controllers => {registrations: 'registrations', passwords: 'passwords'}
-
-  # resources :users, :only => [:destroy, :show] do
-  #   get 'omniauth_callbacks/vkontakte'
-  #   get 'omniauth_callbacks/facebook'
-  # end
 
   resource :users, :only => [] do
     get 'view/:id' => 'users#show'

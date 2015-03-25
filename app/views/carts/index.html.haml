@@ -21,8 +21,10 @@
     %table{style:'width: 100%;', 'x-ng-form'=>'cartForm'}
       %tr
         %td{style:'width: 65%; vertical-align: middle;'}
-          %p{'x-ng-hide'=>'cart_list.length > 0'}
+          %p{'x-ng-hide'=>'cart_list.length > 0 || currentUser.is_admin'}
             Корзина пуста.
+          %p{'x-ng-hide'=>'cart_list.length > 0 || !currentUser.is_admin'}
+            Заказы отсутствуют.
           %table.cart{'x-ng-show'=>'cart_list.length > 0'}
             %tr
               %td №

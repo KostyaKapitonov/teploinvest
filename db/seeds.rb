@@ -125,4 +125,15 @@ product_count.times do
       price: (current_valute == 'RUB' ? rnd(2000,15880) : rnd(110,880)),
       image: images.sample
   )
+
+  unless CustomPage.all.size > 0
+    CustomPage.create(label: 'Главная', color: 'lightgray', seq: 0, url: '/')
+    CustomPage.create(label: 'Все товары', color: 'lightgray', seq: 1, url: '/products')
+    %w(Контакты О\ нас Прайс-листы Оплата\ и\ доставка Монтаж).each_with_index do |name, i|
+      CustomPage.create(label: name, color: 'lightgray', seq: i+2)
+    end
+    CustomPage.create(label: 'Корзина', color: 'lightgray', seq: CustomPage.all.size, url: '/carts', visible_for: 'customers')
+    CustomPage.create(label: 'Заказы', color: 'lightgray', seq: CustomPage.all.size, url: '/carts', visible_for: 'admin')
+  end
+
 end
