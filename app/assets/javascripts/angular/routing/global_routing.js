@@ -83,6 +83,10 @@ MYAPP.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
         })
         .otherwise({
             redirectTo: '/'
+        })
+        .when('/custom_pages/:id', {
+            templateUrl: '/products/:id.html',
+            controller: 'CustomPagesController'
         });
 
 //    $locationProvider.html5Mode(true);

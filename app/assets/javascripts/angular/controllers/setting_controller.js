@@ -1,5 +1,5 @@
-MYAPP.controller('SettingController', ['$scope', '$location', 'Setting', 'Cart',
-function($scope, $location, Setting, Cart) {
+MYAPP.controller('SettingController', ['$scope', '$location', 'Setting', 'Cart', 'ngDialog',
+function($scope, $location, Setting, Cart, ngDialog) {
 
     $scope.page_name = $location.search().page;
     $scope.new_default_sort_type = $scope.$parent.setting.default_sort_type;
@@ -167,6 +167,16 @@ function($scope, $location, Setting, Cart) {
         })},0);
     }
 
-
+    $scope.open_cp_editor = function(){
+        console.log('open_cp_editor');
+        $scope.ng_dialog = ngDialog.open({template: '/custom_pages/new.html',
+            controller: 'CustomPagesController', scope: $scope,
+            className: 'ngdialog-theme-default page_editor'});
+        $scope.ng_dialog.closePromise.then(function (data) {
+            if(data.value != '$document' && data.value != '$closeButton') {
+                console.log(['data.value',data.value]);
+            }
+        });
+    }
 
 }]);

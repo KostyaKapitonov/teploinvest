@@ -87,7 +87,6 @@ function($scope, $routeParams, Products, $location, Global, ngDialog) {
             if(data.value != '$document' && data.value != '$closeButton') $scope.product[desc_name] = data.value;
             $scope.tabs.where('name',desc_name).content = $scope.product[desc_name];
         });
-        console.log('html_popup_editor - opened');
     };
 
     function isFormInvalid(){
