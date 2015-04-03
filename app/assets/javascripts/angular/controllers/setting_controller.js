@@ -167,14 +167,14 @@ function($scope, $location, Setting, Cart, ngDialog) {
         })},0);
     }
 
-    $scope.open_cp_editor = function(){
-        console.log('open_cp_editor');
+    $scope.open_cp_editor = function(page){
+        $scope.page_to_edit = page || {};
         $scope.ng_dialog = ngDialog.open({template: '/custom_pages/new.html',
             controller: 'CustomPagesController', scope: $scope,
             className: 'ngdialog-theme-default page_editor'});
         $scope.ng_dialog.closePromise.then(function (data) {
             if(data.value != '$document' && data.value != '$closeButton') {
-                console.log(['data.value',data.value]);
+                console.log(data.value);
             }
         });
     }

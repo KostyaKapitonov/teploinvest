@@ -9,9 +9,8 @@ Rails.application.routes.draw do
   get '/html_popup_editor' => 'products#html_popup_editor'
   get '/view_img_popup' => 'products#view_img_popup'
 
-  resources :custom_pages, except: [:edit] do
-
-  end
+  resources :custom_pages, except: [:edit, :show]
+  post '/custom_pages/set_order' => 'custom_pages#set_order'
 
   resource :carts, only: [:index] do
     get :edit

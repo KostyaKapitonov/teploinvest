@@ -1,6 +1,9 @@
-var MYAPP = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise','angularUtils.directives.dirPagination', 'ngAnimate', 'ngDialog']);
-MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User', 'Auth', 'Cart', '$sce', '$anchorScroll', 'ngDialog', '$rootScope',
-    function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll, ngDialog, $rootScope) {
+var MYAPP = angular.module('myapp', ['ngRoute', 'ngResource', 'ngSanitize', 'Devise',
+    'angularUtils.directives.dirPagination', 'ngAnimate', 'ngDialog']);
+MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Global', 'Products', 'User',
+    'Auth', 'Cart', '$sce', '$anchorScroll', 'ngDialog', '$rootScope', 'CustomPages', '$filter',
+    function($scope, $routeParams, $location, Global, Products, User, Auth, Cart, $sce, $anchorScroll,
+             ngDialog, $rootScope, CustomPages, $filter) {
 
         $scope.loadFinished = false;
         $scope.loadFinishedCompletly = false;
@@ -540,6 +543,15 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             }
         };
 
+        $scope.loadPages = function(){
+            someLoadStarted('loadPages');
+            CustomPages.query(function(res){
+                $scope.custom_pages = $filter('orderBy')(res, 'seq');
+                someLoadFinished('loadPages');
+            });
+        };
+        $scope.loadPages();
+
         $scope.htmlSafe = function(html_code) {
             return $sce.trustAsHtml(html_code);
         };
@@ -573,7 +585,7 @@ MYAPP.controller('MainController',['$scope', '$routeParams', '$location', 'Globa
             el = angular.element(el);
             var prefix = 'custom_'+/*colors[i]*/ 'grey';
             el.addClass(prefix);
-            add_style('.'+prefix+':hover { background-color: #000000;'+get_menu_button_shadow_style(/*colors[i]*/'grey')+'}');
+            add_style('.'+prefix+':hover { background-color: #000000;'+get_menu_button_shadow_style(/*colors[i]*/'#999999')+'}');
         });
         // DEMO! css end
 

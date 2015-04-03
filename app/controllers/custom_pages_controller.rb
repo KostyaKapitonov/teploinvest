@@ -1,21 +1,24 @@
 class CustomPagesController < ApplicationController
+  before_filter :only_admin, except: [:index]
 
-  def new
+  def new #only html
   end
 
   def create
   end
 
   def index
-  end
-
-  def show
+    render json: CustomPage.all
   end
 
   def update
   end
 
   def destroy
+  end
+
+  def set_order
+    render json: {success: CustomPage.set_order(params)}
   end
 
 end

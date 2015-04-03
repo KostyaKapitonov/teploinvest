@@ -2,13 +2,14 @@
   .button_section
     %a.button{'x-ng-click'=>'save_page()'}
       Сохранить
-    %a.button{'x-ng-href'=>'cancel()'}
+    %a.button{'x-ng-click'=>'cancel()'}
       Отмена
+  %br
   %hr
   %div
     %table.in_form
       %tr
-        =table_row 'Заголовок', (tag :input, name: 'label', 'x-ng-model' => 'page.label', 'required'=>'')
+        =table_row 'Текст ссылки', (tag :input, name: 'label', 'x-ng-model' => 'page.label', 'required'=>'')
         %td
           .errblock
             %span{'x-ng-show'=>'pageForm.name.$error.required && (pageForm.name.$touched || showErrors)'}
@@ -21,11 +22,10 @@
         =table_row 'Description', (tag :input, name: 'description', 'x-ng-model' => 'page.description')
       %tr
         =table_row 'Цвет', (tag :input, type: 'color', name: 'color', 'x-ng-model' => 'page.color')
-  %hr
   %div{'x-ng-init'=>'hide_menu()'}
     %textarea{'x-ng-model' => 'page.body', class: 'ck-editor'}
   .button_section
     %a.button{'x-ng-click'=>'save_page()'}
       Сохранить
-    %a.button{'x-ng-href'=>'cancel()'}
+    %a.button{'x-ng-click'=>'cancel()'}
       Отмена

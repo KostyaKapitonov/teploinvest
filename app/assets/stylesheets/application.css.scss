@@ -1162,3 +1162,10 @@ fieldset.display_info table {
   background-color: #dee;
   border-width: 0 2;
 }
+
+table.in_form td.input  input[type=color],
+input[type=color] {
+  padding: 0px;
+  height: 30px;
+  width: 50px;
+}
