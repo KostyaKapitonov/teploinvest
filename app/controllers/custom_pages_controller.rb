@@ -5,6 +5,8 @@ class CustomPagesController < ApplicationController
   end
 
   def create
+    render json: {obj: CustomPage.create(params.require(:page).permit(:label, :title, :keywords,
+      :description, :color, :body , :seq))}
   end
 
   def index
@@ -12,9 +14,12 @@ class CustomPagesController < ApplicationController
   end
 
   def update
+    render json: {obj: CustomPage.create(params.require(:page).permit(:label, :title, :keywords,
+      :description, :color, :body , :seq))}
   end
 
   def destroy
+    render json: {success: CustomPage.where(id: params[:id]).first.destroy}
   end
 
   def set_order

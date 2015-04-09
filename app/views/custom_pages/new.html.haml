@@ -12,7 +12,7 @@
         =table_row 'Текст ссылки', (tag :input, name: 'label', 'x-ng-model' => 'page.label', 'required'=>'')
         %td
           .errblock
-            %span{'x-ng-show'=>'pageForm.name.$error.required && (pageForm.name.$touched || showErrors)'}
+            %span{'x-ng-show'=>'pageForm.label.$error.required && (pageForm.label.$touched || showErrors)'}
               необходимо заполнить
       %tr
         =table_row 'Title', (tag :input, name: 'title', 'x-ng-model' => 'page.title')

@@ -1,5 +1,5 @@
-MYAPP.controller('SettingController', ['$scope', '$location', 'Setting', 'Cart', 'ngDialog',
-function($scope, $location, Setting, Cart, ngDialog) {
+MYAPP.controller('SettingController', ['$scope', '$location', 'Setting', 'Cart', 'ngDialog', 'CustomPages',
+function($scope, $location, Setting, Cart, ngDialog, CustomPages) {
 
     $scope.page_name = $location.search().page;
     $scope.new_default_sort_type = $scope.$parent.setting.default_sort_type;
@@ -174,7 +174,15 @@ function($scope, $location, Setting, Cart, ngDialog) {
             className: 'ngdialog-theme-default page_editor'});
         $scope.ng_dialog.closePromise.then(function (data) {
             if(data.value != '$document' && data.value != '$closeButton') {
+
                 console.log(data.value);
+                if(data.value.is_new){
+                    CustomPages.save(data.value.page,function(res){
+                        console.log(res);
+                    });
+                } else {
+
+                }
             }
         });
     }
