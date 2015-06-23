@@ -12,6 +12,13 @@
                   У вас есть права администратора.
             %tr
               =table_row 'Email', (tag :input, type: 'email', 'x-ng-model' => 'currentUser.email', 'x-ng-disabled'=>'true')
+            %tr
+              %td{colspan: 3}
+                %p
+                  %a{href:"https://oauth.yandex.ru/authorize?response_type=code&client_id=#{ENV['YANDEX_APP_ID']}"}
+                    Обновить
+                    %b
+                      Yandex Token
         %td
           .descr_block
             %table.in_form.reg_info

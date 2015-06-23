@@ -49,4 +49,15 @@ class User < ActiveRecord::Base
     result[:user] = user if success
     result
   end
+
+  def refresh_yandex_token(code)
+    xml_url = "https://oauth.yandex.ru/token?grant_type=authorization_code&code=#{code}&client_id=#{ENV['YANDEX_APP_ID']}&client_secret=#{ENV['YANDEX_APP_PASS']}"
+    url = URI.parse(xml_url)
+    req = Net::HTTP::Post.new(url.to_s)
+    req.set_form_data(grant_type: 'authorization_code', code: code, client_id: ENV['YANDEX_APP_ID'], client_secret: ENV['YANDEX_APP_PASS'])
+    res = Net::HTTP.start(url.host, url.port, use_ssl: true) {|http|
+      http.request(req)
+    }
+    p res # TODO: HERE!
+  end
 end

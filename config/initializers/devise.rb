@@ -4,9 +4,9 @@ require 'yaml'
 
 Devise.setup do |config|
 
-  oauth_data = YAML::load_file("#{Rails.root}/oauth/antalex.yaml")
-  config.omniauth :vkontakte, oauth_data['vkontakte'][:app_id], oauth_data['vkontakte'][:app_secret]
-  config.omniauth :facebook, oauth_data['facebook'][:app_id], oauth_data['facebook'][:app_secret]
+  # oauth_data = YAML::load_file("#{Rails.root}/oauth/antalex.yaml")
+  # config.omniauth :vkontakte, oauth_data['vkontakte'][:app_id], oauth_data['vkontakte'][:app_secret]
+  # config.omniauth :facebook, oauth_data['facebook'][:app_id], oauth_data['facebook'][:app_secret]
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing

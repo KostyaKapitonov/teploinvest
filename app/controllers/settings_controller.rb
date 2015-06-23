@@ -10,6 +10,9 @@ class SettingsController < ApplicationController
   end
 
   def global
+    if params[:code] && current_user && current_user.is_admin
+      current_user.refresh_yandex_token(params[:code])
+    end
   end
   def page_editor
   end
