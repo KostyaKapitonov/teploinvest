@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
     result
   end
 
-  def refresh_yandex_token(code)
+  def refresh_yandex_token(code, user)
     xml_url = "https://oauth.yandex.ru/token?grant_type=authorization_code&code=#{code}&client_id=#{ENV['YANDEX_APP_ID']}&client_secret=#{ENV['YANDEX_APP_PASS']}"
     url = URI.parse(xml_url)
     req = Net::HTTP::Post.new(url.to_s)
@@ -59,5 +59,7 @@ class User < ActiveRecord::Base
       http.request(req)
     }
     p res # TODO: HERE!
+    parsed_res = JSON.parse res.body.gsub('""','').gsub('\"','"')
+    user.update(yandex_token: parsed_res['access_token']) unless parsed_res['access_token'].blank?
   end
 end

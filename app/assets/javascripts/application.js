@@ -16,6 +16,7 @@
 //= require ang-devise/angular-devise/lib/devise
 //= require ang-paginate/dirPagination.js
 //= require ang-dialog/ngDialog.min
+//= require yandex_js_sdk
 // = require_tree .
 
 // -------------------------------------------------- System -------------------------------------------------
@@ -558,3 +559,11 @@ function add_style(style_body, el){
     document.getElementsByTagName('head')[0].appendChild(style);
     //document.getElementById('someElementId').className = 'cssClass';
 }
+
+// -------- TEMP
+
+/*
+
+
+
+*/
